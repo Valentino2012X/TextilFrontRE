@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
 import { ComentarioProyectoService } from '../../../services/comentario-proyecto-service';
-import { ComentarioProyecto } from '../../../models/comentario-proyecto';
+import { ComentarioProyecto } from '../../../models/Comentario-proyecto';
 
 @Component({
   standalone: true,

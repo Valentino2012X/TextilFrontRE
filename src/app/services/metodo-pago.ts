@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/enviroment';
 import { Observable, Subject } from 'rxjs';
-import { MetodoPago } from '../models/metodo-pago';
+import { MetodoPago } from '../models/Metodo-pago';
 
 const base_url = environment.base;
 

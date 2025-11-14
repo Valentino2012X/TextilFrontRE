@@ -1,0 +1,78 @@
+<!-- src/app/components/comprobante/comprobante-insert/comprobante-insert.html -->
+<div class="container">
+  <h1>{{ edicion ? 'Editar comprobante' : 'Nuevo comprobante' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+    <div class="row">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Número de comprobante</mat-label>
+        <input matInput formControlName="numeroComprobante" />
+        <mat-error *ngIf="form.get('numeroComprobante')?.hasError('required')">
+          El número de comprobante es obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Fecha comprobante</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaComprobante" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="form.get('fechaComprobante')?.hasError('required')">
+          La fecha es obligatoria
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Razón social</mat-label>
+        <input matInput formControlName="razonSocialComprobante" />
+        <mat-error *ngIf="form.get('razonSocialComprobante')?.hasError('required')">
+          La razón social es obligatoria
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>IGV</mat-label>
+        <input matInput type="number" formControlName="igvComprobante" step="0.01" />
+        <mat-error *ngIf="form.get('igvComprobante')?.hasError('required')">
+          El IGV es obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Total</mat-label>
+        <input matInput type="number" formControlName="totalComprobante" step="0.01" />
+        <mat-error *ngIf="form.get('totalComprobante')?.hasError('required')">
+          El total es obligatorio
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <!-- Pedido -->
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Pedido*</mat-label>
+        <mat-select formControlName="pedido">
+          <mat-option *ngFor="let p of listaPedidos" [value]="p.idPedido">
+            Pedido #{{ p.idPedido }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Tipo documento -->
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Tipo documento*</mat-label>
+        <mat-select formControlName="tipoDocumento">
+          <mat-option *ngFor="let t of listaTiposDocumento" [value]="t.idTipoDocumento">
+            {{ t.nombre }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit">Guardar</button>
+  </form>
+</div>

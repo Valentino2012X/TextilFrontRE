@@ -164,24 +164,150 @@ export const routes: Routes = [
       ),
   },
   {
-  path: 'comentarioproyecto',
-  loadComponent: () =>
-    import(
-      './components/comentario-proyecto/comentario-proyecto-listar/comentario-proyecto-listar'
-    ).then((m) => m.ComentarioProyectoListarComponent),
-},
-{
-  path: 'comentarioproyecto/new',
-  loadComponent: () =>
-    import(
-      './components/comentario-proyecto/comentario-proyecto-insert/comentario-proyecto-insert'
-    ).then((m) => m.ComentarioProyectoInsertarComponent),
-},
-{
-  path: 'comentarioproyecto/edit/:id',
-  loadComponent: () =>
-    import(
-      './components/comentario-proyecto/comentario-proyecto-insert/comentario-proyecto-insert'
-    ).then((m) => m.ComentarioProyectoInsertarComponent),
-},
+    path: 'comentarioproyecto',
+    loadComponent: () =>
+      import(
+        './components/comentario-proyecto/comentario-proyecto-listar/comentario-proyecto-listar'
+      ).then((m) => m.ComentarioProyectoListarComponent),
+  },
+  {
+    path: 'comentarioproyecto/new',
+    loadComponent: () =>
+      import(
+        './components/comentario-proyecto/comentario-proyecto-insert/comentario-proyecto-insert'
+      ).then((m) => m.ComentarioProyectoInsertarComponent),
+  },
+  {
+    path: 'comentarioproyecto/edit/:id',
+    loadComponent: () =>
+      import(
+        './components/comentario-proyecto/comentario-proyecto-insert/comentario-proyecto-insert'
+      ).then((m) => m.ComentarioProyectoInsertarComponent),
+  },
+  {
+    path: 'comprobante',
+    loadComponent: () =>
+      import('./components/comprobante/comprobante-listar/comprobante-listar').then(
+        (m) => m.ComprobanteListarComponent
+      ),
+  },
+  {
+    path: 'comprobante/new',
+    loadComponent: () =>
+      import('./components/comprobante/comprobante-insert/comprobante-insert').then(
+        (m) => m.ComprobanteInsertarComponent
+      ),
+  },
+  {
+    path: 'comprobante/edit/:id',
+    loadComponent: () =>
+      import('./components/comprobante/comprobante-insert/comprobante-insert').then(
+        (m) => m.ComprobanteInsertarComponent
+      ),
+  },
+  {
+    path: 'pedido',
+    loadComponent: () =>
+      import('./components/pedido/pedido-listar/pedido-listar').then(
+        (m) => m.PedidoListarComponent
+      ),
+  },
+  {
+    path: 'pedido/new',
+    loadComponent: () =>
+      import('./components/pedido/pedido-insert/pedido-insert').then(
+        (m) => m.PedidoInsertarComponent
+      ),
+  },
+  {
+    path: 'pedido/edit/:id',
+    loadComponent: () =>
+      import('./components/pedido/pedido-insert/pedido-insert').then(
+        (m) => m.PedidoInsertarComponent
+      ),
+  },
+  {
+    path: 'pedido-item',
+    loadComponent: () =>
+      import('./components/pedido-item/pedido-item-listar/pedido-item-listar').then(
+        (m) => m.PedidoItemListarComponent
+      ),
+  },
+  {
+    path: 'pedido-item/new',
+    loadComponent: () =>
+      import('./components/pedido-item/pedido-item-insert/pedido-item-insert').then(
+        (m) => m.PedidoItemInsertComponent
+      ),
+  },
+  {
+    path: 'pedido-item/edit/:id',
+    loadComponent: () =>
+      import('./components/pedido-item/pedido-item-insert/pedido-item-insert').then(
+        (m) => m.PedidoItemInsertComponent
+      ),
+  },
+  {
+    path: 'presupuestomensual',
+    loadComponent: () =>
+      import(
+        './components/presupuesto-mensual/presupuesto-mensual-listar/presupuesto-mensual-listar'
+      ).then((m) => m.PresupuestoMensualListarComponent),
+  },
+  {
+    path: 'presupuestomensual/new',
+    loadComponent: () =>
+      import(
+        './components/presupuesto-mensual/presupuesto-mensual-insert/presupuesto-mensual-insert'
+      ).then((m) => m.PresupuestoMensualInsertarComponent),
+  },
+  {
+    path: 'presupuestomensual/edit/:id',
+    loadComponent: () =>
+      import(
+        './components/presupuesto-mensual/presupuesto-mensual-insert/presupuesto-mensual-insert'
+      ).then((m) => m.PresupuestoMensualInsertarComponent),
+  },
+  {
+    path: 'notificacion',
+    loadComponent: () =>
+      import('./components/notificacion/notificacion-listar/notificacion-listar').then(
+        (m) => m.NotificacionListarComponent
+      ),
+  },
+  {
+    path: 'notificacion/new',
+    loadComponent: () =>
+      import('./components/notificacion/notificacion-insert/notificacion-insert').then(
+        (m) => m.NotificacionInsertarComponent
+      ),
+  },
+  {
+    path: 'notificacion/edit/:id',
+    loadComponent: () =>
+      import('./components/notificacion/notificacion-insert/notificacion-insert').then(
+        (m) => m.NotificacionInsertarComponent
+      ),
+  },
+  {
+    path: 'entrega',
+    loadComponent: () =>
+      import('./components/entrega/entrega-listar/entrega-listar').then(
+        (m) => m.EntregaListarComponent
+      ),
+  },
+  {
+    path: 'entrega/new',
+    loadComponent: () =>
+      import('./components/entrega/entrega-insert/entrega-insert').then(
+        (m) => m.EntregaInsertComponent
+      ),
+  },
+  {
+    path: 'entrega/edit/:id',
+    loadComponent: () =>
+      import('./components/entrega/entrega-insert/entrega-insert').then(
+        (m) => m.EntregaInsertComponent
+      ),
+  },
 ];

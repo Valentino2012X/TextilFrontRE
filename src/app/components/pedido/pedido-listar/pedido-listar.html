@@ -1,0 +1,99 @@
+<!-- src/app/components/pedido/pedido-listar/pedido-listar.html -->
+<div class="table-container">
+  <div class="header">
+    <h1>Pedidos</h1>
+
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/pedido/new"
+      class="btn-nuevo"
+    >
+      <mat-icon>add</mat-icon>
+      Nuevo pedido
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- ID -->
+    <ng-container matColumnDef="idPedido">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.idPedido }}</td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="estadoPedido">
+      <th mat-header-cell *matHeaderCellDef>Estado</th>
+      <td mat-cell *matCellDef="let row">{{ row.estadoPedido }}</td>
+    </ng-container>
+
+    <!-- Fecha creación -->
+    <ng-container matColumnDef="fechaCreacionPedido">
+      <th mat-header-cell *matHeaderCellDef>Fecha creación</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.fechaCreacionPedido | date : 'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+
+    <!-- Fecha pago -->
+    <ng-container matColumnDef="fechaPagoPedido">
+      <th mat-header-cell *matHeaderCellDef>Fecha pago</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.fechaPagoPedido | date : 'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+
+    <!-- Total -->
+    <ng-container matColumnDef="totalPedido">
+      <th mat-header-cell *matHeaderCellDef>Total (S/.)</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.totalPedido | number : '1.2-2' }}
+      </td>
+    </ng-container>
+
+    <!-- Vendedor -->
+    <ng-container matColumnDef="vendedor">
+      <th mat-header-cell *matHeaderCellDef>Vendedor</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.vendedor.nombreUsuario }} (ID: {{ row.vendedor.idUsuario }})
+      </td>
+    </ng-container>
+
+    <!-- Comprador -->
+    <ng-container matColumnDef="comprador">
+      <th mat-header-cell *matHeaderCellDef>Comprador</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.comprador.nombreUsuario }} (ID: {{ row.comprador.idUsuario }})
+      </td>
+    </ng-container>
+
+    <!-- Método de pago -->
+    <ng-container matColumnDef="metodoPago">
+      <th mat-header-cell *matHeaderCellDef>Método de pago</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.metodoPago.nombreMetodoPago }}
+      </td>
+    </ng-container>
+
+    <!-- ACCIONES -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          color="primary"
+          [routerLink]="['/pedido/edit', row.idPedido]"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="eliminar(row.idPedido)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
+

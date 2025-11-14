@@ -16,9 +16,9 @@ import { ComentarioProyectoService } from '../../../services/comentario-proyecto
 import { ProyectoService } from '../../../services/proyecto-service';
 import { UsuarioService } from '../../../services/usuario-service';
 
-import { Proyecto } from '../../../models/proyecto';
+import { Proyecto } from '../../../models/Proyecto';
 import { Usuario } from '../../../models/Usuario';
-import { ComentarioProyecto } from '../../../models/comentario-proyecto';
+import { ComentarioProyecto } from '../../../models/Comentario-proyecto';
 
 @Component({
   standalone: true,

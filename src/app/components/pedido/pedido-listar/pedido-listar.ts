@@ -5,54 +5,58 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
-import { ProyectoService } from '../../../services/proyecto-service';
-import { Proyecto } from '../../../models/Proyecto';
+import { PedidoService } from '../../../services/pedido-service';
+import { Pedido } from '../../../models/Pedido';
+
 
 @Component({
   standalone: true,
-  selector: 'app-proyecto-listar',
-  templateUrl: './proyecto-listar.html',
-  styleUrl: './proyecto-listar.css',
+  selector: 'app-pedido-listar',
+  templateUrl: './pedido-listar.html',
+  styleUrl: './pedido-listar.css',
   imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink],
 })
-export class ProyectoListarComponent implements OnInit {
-  dataSource: MatTableDataSource<Proyecto> = new MatTableDataSource<Proyecto>();
+export class PedidoListarComponent implements OnInit {
+  dataSource: MatTableDataSource<Pedido> = new MatTableDataSource<Pedido>();
 
   displayedColumns: string[] = [
-    'idProyecto',
-    'tituloProyecto',
-    'fechaCreacion',
-    'tipoProyecto',
-    'usuario',
+    'idPedido',
+    'estadoPedido',
+    'fechaCreacionPedido',
+    'fechaPagoPedido',
+    'totalPedido',
+    'vendedor',
+    'comprador',
+    'metodoPago',
     'acciones',
   ];
 
-  constructor(private pS: ProyectoService) {}
+  constructor(private pS: PedidoService) {}
 
   ngOnInit(): void {
-    this.pS.list().subscribe((data: Proyecto[]) => {
+    this.pS.list().subscribe((data: Pedido[]) => {
       this.dataSource = new MatTableDataSource(data);
     });
 
-    this.pS.getList().subscribe((data: Proyecto[]) => {
+    this.pS.getList().subscribe((data: Pedido[]) => {
       this.dataSource = new MatTableDataSource(data);
     });
   }
 
   eliminar(id: number) {
-    if (!confirm('¿Seguro que deseas eliminar este proyecto?')) return;
+    if (!confirm('¿Seguro que deseas eliminar este pedido?')) {
+      return;
+    }
 
     this.pS.delete(id).subscribe({
       next: () => {
-        this.pS.list().subscribe((data: Proyecto[]) => this.pS.setList(data));
+        this.pS.list().subscribe((data) => this.pS.setList(data));
       },
       error: (err) => {
         if (err.status === 404) {
           alert('El registro ya no existe (404).');
-        } else if (err.status === 409) {
-          alert(err.error);
         } else {
-          alert('Ocurrió un error al eliminar el proyecto.');
+          alert('Ocurrió un error al eliminar el pedido.');
         }
       },
     });

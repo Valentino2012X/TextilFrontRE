@@ -106,6 +106,57 @@
         Comentarios
       </button>
 
+      <!-- BOTÓN COMPROBANTE (en la toolbar o grupo que prefieras) -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú comprobante"
+        [matMenuTriggerFor]="menuComprobante"
+      >
+        <mat-icon>receipt_long</mat-icon>
+        Comprobante
+      </button>
+
+      <!-- MENÚ PEDIDO -->
+      <button mat-button class="btn-rojo" aria-label="Menú pedido" [matMenuTriggerFor]="menuPedido">
+        <mat-icon>receipt_long</mat-icon>
+        Pedido
+      </button>
+      <!-- MENÚ PEDIDO ITEM -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú pedido item"
+        [matMenuTriggerFor]="menuPedidoItem"
+      >
+        <mat-icon>list_alt</mat-icon>
+        Pedido item
+      </button>
+      <!-- MENÚ PRESUPUESTO MENSUAL -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú presupuesto mensual"
+        [matMenuTriggerFor]="menuPresupuestoMensual"
+      >
+        <mat-icon>account_balance_wallet</mat-icon>
+        Presupuesto
+      </button>
+      <!-- MENÚ NOTIFICACION -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú notificación"
+        [matMenuTriggerFor]="menuNotificacion"
+      >
+        <mat-icon>notifications</mat-icon>
+        Notificación
+      </button>
+      <!-- MENÚ ENTREGA -->
+      <button mat-button class="btn-rojo" aria-label="Menú entrega" [matMenuTriggerFor]="menuEntrega">
+        <mat-icon>local_shipping</mat-icon>
+        Entrega
+      </button>
       <!-- Aquí luego puedes seguir agregando más módulos (hasta tus 19 tablas) -->
     </div>
 
@@ -218,14 +269,82 @@
 
   <!-- SUBMENÚ COMENTARIO PROYECTO-->
   <mat-menu #menuComentarioProyecto="matMenu">
-  <button mat-menu-item routerLink="/comentarioproyecto">
-    <mat-icon>list</mat-icon>
-    Listar
-  </button>
-  <button mat-menu-item routerLink="/comentarioproyecto/new">
-    <mat-icon>add</mat-icon>
-    Registrar
-  </button>
-</mat-menu>
+    <button mat-menu-item routerLink="/comentarioproyecto">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/comentarioproyecto/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+
+  <!-- SUBMENÚ COMPROBANTE -->
+  <mat-menu #menuComprobante="matMenu">
+    <button mat-menu-item routerLink="/comprobante">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/comprobante/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+
+  <!-- SUBMENÚ PEDIDO -->
+  <mat-menu #menuPedido="matMenu">
+    <button mat-menu-item routerLink="/pedido">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/pedido/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+  <!-- SUBMENÚ PEDIDO ITEM -->
+  <mat-menu #menuPedidoItem="matMenu">
+    <button mat-menu-item routerLink="/pedido-item">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/pedido-item/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+  <!-- SUBMENÚ PRESUPUESTO MENSUAL -->
+  <mat-menu #menuPresupuestoMensual="matMenu">
+    <button mat-menu-item routerLink="/presupuestomensual">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/presupuestomensual/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+  <!-- SUBMENÚ NOTIFICACIÓN -->
+  <mat-menu #menuNotificacion="matMenu">
+    <button mat-menu-item routerLink="/notificacion">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/notificacion/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+    <!-- SUBMENÚ ENTREGA -->
+  <mat-menu #menuEntrega="matMenu">
+    <button mat-menu-item routerLink="/entrega">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/entrega/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
 
 </div>

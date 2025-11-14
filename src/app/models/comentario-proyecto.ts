@@ -1,4 +1,4 @@
-import { Proyecto } from './proyecto';
+import { Proyecto } from './Proyecto';
 import { Usuario } from './Usuario';
 
 export class ComentarioProyecto {

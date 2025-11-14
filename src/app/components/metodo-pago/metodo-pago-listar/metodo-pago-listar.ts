@@ -5,7 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
 
-import { MetodoPago } from '../../../models/metodo-pago';
+import { MetodoPago } from '../../../models/Metodo-pago';
 import { MetodoPagoService } from '../../../services/metodo-pago';
 
 @Component({

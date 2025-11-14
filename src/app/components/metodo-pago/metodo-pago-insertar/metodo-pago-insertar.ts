@@ -12,7 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 
-import { MetodoPago } from '../../../models/metodo-pago';
+import { MetodoPago } from '../../../models/Metodo-pago';
 import { MetodoPagoService } from '../../../services/metodo-pago';
 
 @Component({
