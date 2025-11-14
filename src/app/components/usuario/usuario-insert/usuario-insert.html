@@ -1,0 +1,80 @@
+<div class="container">
+  <h2>{{ edicion ? 'Edición de usuario' : 'Registrar usuario' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Nombre</mat-label>
+      <input matInput formControlName="nombreUsuario" />
+      <mat-error *ngIf="form.get('nombreUsuario')?.hasError('required')">
+        El nombre es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Email</mat-label>
+      <input matInput formControlName="emailUsuario" />
+      <mat-error *ngIf="form.get('emailUsuario')?.hasError('required')">
+        El email es obligatorio
+      </mat-error>
+      <mat-error *ngIf="form.get('emailUsuario')?.hasError('email')"> Email inválido </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Username</mat-label>
+      <input matInput formControlName="username" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput type="password" formControlName="password" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Teléfono</mat-label>
+      <input matInput formControlName="telefonoUsuario" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Dirección</mat-label>
+      <input matInput formControlName="direccionUsuario" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Fecha de registro</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="fechaRegistroUsuario" />
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Promedio calificación</mat-label>
+      <input matInput type="number" step="0.01" formControlName="promedioCalificacion" />
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Total calificaciones</mat-label>
+      <input matInput type="number" formControlName="totalCalificacion" />
+    </mat-form-field>
+
+    <mat-checkbox formControlName="enabled">Activo</mat-checkbox>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Rol</mat-label>
+      <mat-select formControlName="idRol">
+        <mat-option *ngFor="let r of listaRoles" [value]="r.idRol">
+          {{ r.nombreRol }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('idRol')?.hasError('required')">
+        Debes seleccionar un rol
+      </mat-error>
+    </mat-form-field>
+
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

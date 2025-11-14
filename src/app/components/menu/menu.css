@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+}
+
+/* Barra naranja superior */
+.custom-toolbar {
+  background-color: #ff9800;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  padding: 0 8px;
+}
+
+/* Botón de flecha izquierda/derecha */
+.nav-arrow {
+  flex: 0 0 auto;
+}
+
+/* Contenedor de los botones que hace scroll horizontal */
+.menu-scroll {
+  flex: 1 1 auto;
+  display: flex;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: none; /* Firefox */
+}
+
+/* Ocultar scrollbar en Chrome/Edge/Safari */
+.menu-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+/* Botones del menú: no se encogen y mantienen color blanco */
+.btn-rojo {
+  flex-shrink: 0;
+  color: #fff;
+}
+
+/* Separar un poco icono y texto */
+.btn-rojo mat-icon {
+  margin-right: 4px;
+}

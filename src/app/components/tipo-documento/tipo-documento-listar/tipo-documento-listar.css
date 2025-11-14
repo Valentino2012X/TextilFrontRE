@@ -1,0 +1,10 @@
+/* Puedes reutilizar el mismo estilo de usuario/tipo-producto */
+
+.container {
+  padding: 16px;
+}
+
+.full-width-table {
+  width: 100%;
+  margin-top: 16px;
+}

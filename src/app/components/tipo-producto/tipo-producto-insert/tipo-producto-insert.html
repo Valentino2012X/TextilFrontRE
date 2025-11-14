@@ -1,0 +1,13 @@
+<div class="container">
+  <h1>{{ edicion ? 'Editar tipo de producto' : 'Nuevo tipo de producto' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+
+    <mat-form-field class="full" appearance="outline">
+      <mat-label>Nombre del tipo de producto</mat-label>
+      <input matInput formControlName="nombreTipoProducto">
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Guardar</button>
+  </form>
+</div>

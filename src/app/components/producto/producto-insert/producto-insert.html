@@ -1,0 +1,83 @@
+<div class="container">
+  <h1>{{ edicion ? 'Editar producto' : 'Nuevo producto' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Nombre*</mat-label>
+        <input matInput formControlName="nombreProducto" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Descripción*</mat-label>
+        <input matInput formControlName="descripcionProducto" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Precio*</mat-label>
+        <input matInput type="number" formControlName="precioProducto" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Stock*</mat-label>
+        <input matInput type="number" formControlName="stockProducto" />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Color*</mat-label>
+        <input matInput formControlName="colorProducto" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Medida*</mat-label>
+        <input matInput formControlName="medidaProducto" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Categoría*</mat-label>
+        <input matInput formControlName="categoriaProducto" />
+      </mat-form-field>
+
+      <mat-checkbox formControlName="disponibleProducto">
+        Disponible
+      </mat-checkbox>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>URL Imagen*</mat-label>
+        <input matInput formControlName="urlTipoProducto" />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <!-- SELECT TIPO PRODUCTO -->
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Tipo producto*</mat-label>
+        <mat-select formControlName="tipoProducto">
+          <mat-option *ngFor="let tp of listaTipoProducto" [value]="tp.idTipoProducto">
+            {{ tp.nombreTipoProducto }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- SELECT USUARIO -->
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Usuario*</mat-label>
+        <mat-select formControlName="usuario">
+          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+            {{ u.nombreUsuario }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <button mat-raised-button color="primary" type="submit">
+        Guardar
+      </button>
+    </div>
+
+  </form>
+</div>

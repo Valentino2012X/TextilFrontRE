@@ -1,0 +1,56 @@
+<div class="container">
+  <button mat-raised-button color="primary" routerLink="/tipodocumento/new">
+    <mat-icon>add</mat-icon>
+    Nuevo tipo de documento
+  </button>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width-table">
+    <!-- ID -->
+    <ng-container matColumnDef="idTipoDocumento">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.idTipoDocumento }}</td>
+    </ng-container>
+
+    <!-- Nombre -->
+    <ng-container matColumnDef="nombre">
+      <th mat-header-cell *matHeaderCellDef>Nombre</th>
+      <td mat-cell *matCellDef="let row">{{ row.nombre }}</td>
+    </ng-container>
+
+    <!-- Descripción -->
+    <ng-container matColumnDef="descripcionTipoDocumento">
+      <th mat-header-cell *matHeaderCellDef>Descripción</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.descripcionTipoDocumento }}
+      </td>
+    </ng-container>
+
+    <!-- RUC -->
+    <ng-container matColumnDef="rucTipoDocumento">
+      <th mat-header-cell *matHeaderCellDef>RUC</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.rucTipoDocumento }}
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          color="primary"
+          [routerLink]="['/tipodocumento/edit', row.idTipoDocumento]"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="eliminar(row.idTipoDocumento)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

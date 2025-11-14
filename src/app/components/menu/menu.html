@@ -1,0 +1,231 @@
+<div class="container">
+  <mat-toolbar class="custom-toolbar">
+    <!-- Flecha izquierda -->
+    <button
+      mat-icon-button
+      class="nav-arrow"
+      aria-label="Desplazar menú a la izquierda"
+      (click)="scrollLeft()"
+    >
+      <mat-icon>chevron_left</mat-icon>
+    </button>
+
+    <!-- Contenedor que se desplaza horizontalmente -->
+    <div class="menu-scroll" #menuScroll>
+      <!-- MENÚ USUARIO -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú usuario"
+        [matMenuTriggerFor]="menuUsuario"
+      >
+        <mat-icon>person</mat-icon>
+        Usuario
+      </button>
+
+      <!-- MENÚ PRODUCTO -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú producto"
+        [matMenuTriggerFor]="menuProducto"
+      >
+        <mat-icon>inventory_2</mat-icon>
+        Producto
+      </button>
+
+      <!-- MENÚ TIPO PRODUCTO -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú tipo producto"
+        [matMenuTriggerFor]="menuTipoProducto"
+      >
+        <mat-icon>category</mat-icon>
+        Tipo producto
+      </button>
+
+      <!-- MENÚ ROL -->
+      <button mat-button class="btn-rojo" aria-label="Menú rol" [matMenuTriggerFor]="menuRol">
+        <mat-icon>security</mat-icon>
+        Rol
+      </button>
+
+      <!-- MENÚ MÉTODO DE PAGO -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú método de pago"
+        [matMenuTriggerFor]="menuMetodoPago"
+      >
+        <mat-icon>payments</mat-icon>
+        Método de pago
+      </button>
+
+      <!-- MENÚ TIPO PROYECTO -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú tipo proyecto"
+        [matMenuTriggerFor]="menuTipoProyecto"
+      >
+        <mat-icon>work</mat-icon>
+        Tipo proyecto
+      </button>
+
+      <!-- MENÚ PROYECTO -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú proyecto"
+        [matMenuTriggerFor]="menuProyecto"
+      >
+        <mat-icon>assignment</mat-icon>
+        Proyecto
+      </button>
+
+      <!-- MENÚ TIPO DOCUMENTO -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú tipo documento"
+        [matMenuTriggerFor]="menuTipoDocumento"
+      >
+        <mat-icon>description</mat-icon>
+        Tipo documento
+      </button>
+
+      <!-- MENÚ COMENTARIO PROYECTO -->
+      <button
+        mat-button
+        class="btn-rojo"
+        aria-label="Menú comentario proyecto"
+        [matMenuTriggerFor]="menuComentarioProyecto"
+      >
+        <mat-icon>chat</mat-icon>
+        Comentarios
+      </button>
+
+      <!-- Aquí luego puedes seguir agregando más módulos (hasta tus 19 tablas) -->
+    </div>
+
+    <!-- Flecha derecha -->
+    <button
+      mat-icon-button
+      class="nav-arrow"
+      aria-label="Desplazar menú a la derecha"
+      (click)="scrollRight()"
+    >
+      <mat-icon>chevron_right</mat-icon>
+    </button>
+  </mat-toolbar>
+
+  <!-- SUBMENÚ USUARIO -->
+  <mat-menu #menuUsuario="matMenu">
+    <button mat-menu-item routerLink="/usuarios">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/usuarios/news">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+
+  <!-- SUBMENÚ PRODUCTO -->
+  <mat-menu #menuProducto="matMenu">
+    <button mat-menu-item routerLink="/producto">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/producto/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+
+  <!-- SUBMENÚ TIPO PRODUCTO -->
+  <mat-menu #menuTipoProducto="matMenu">
+    <button mat-menu-item routerLink="/tipoproducto">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/tipoproducto/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+
+  <!-- SUBMENÚ ROL -->
+  <mat-menu #menuRol="matMenu">
+    <button mat-menu-item routerLink="/roles">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/roles/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+
+  <!-- SUBMENÚ MÉTODO DE PAGO -->
+  <mat-menu #menuMetodoPago="matMenu">
+    <button mat-menu-item routerLink="/metodopago">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/metodopago/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+
+  <!-- SUBMENÚ TIPO PROYECTO -->
+  <mat-menu #menuTipoProyecto="matMenu">
+    <button mat-menu-item routerLink="/tipoproyecto">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/tipoproyecto/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+
+  <!-- SUBMENÚ PROYECTO -->
+  <mat-menu #menuProyecto="matMenu">
+    <button mat-menu-item routerLink="/proyecto">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/proyecto/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+
+  <!-- SUBMENÚ TIPO DOCUMENTO -->
+  <mat-menu #menuTipoDocumento="matMenu">
+    <button mat-menu-item routerLink="/tipodocumento">
+      <mat-icon>list</mat-icon>
+      Listar
+    </button>
+    <button mat-menu-item routerLink="/tipodocumento/new">
+      <mat-icon>add</mat-icon>
+      Registrar
+    </button>
+  </mat-menu>
+
+  <!-- SUBMENÚ COMENTARIO PROYECTO-->
+  <mat-menu #menuComentarioProyecto="matMenu">
+  <button mat-menu-item routerLink="/comentarioproyecto">
+    <mat-icon>list</mat-icon>
+    Listar
+  </button>
+  <button mat-menu-item routerLink="/comentarioproyecto/new">
+    <mat-icon>add</mat-icon>
+    Registrar
+  </button>
+</mat-menu>
+
+</div>
