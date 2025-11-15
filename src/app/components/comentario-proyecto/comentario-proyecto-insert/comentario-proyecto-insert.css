@@ -1,0 +1,14 @@
+.container {
+  padding: 16px;
+}
+
+.row {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.full {
+  flex: 1 1 300px;
+}

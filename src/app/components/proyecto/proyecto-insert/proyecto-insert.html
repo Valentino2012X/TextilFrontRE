@@ -1,0 +1,69 @@
+<div class="container">
+  <h1>{{ edicion ? 'Editar proyecto' : 'Nuevo proyecto' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+    <div class="row">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Título</mat-label>
+        <input matInput formControlName="tituloProyecto" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput rows="3" formControlName="descripcionProyecto"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>URL proyecto</mat-label>
+        <input matInput formControlName="urlProyecto" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Visible*</mat-label>
+        <input
+          matInput
+          formControlName="visibleProyecto"
+          placeholder="Ej: Público / Privado / Sí / No"
+        />
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Fecha creación</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="fechaCreacion" />
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Tipo proyecto</mat-label>
+        <mat-select formControlName="tipoProyecto">
+          <mat-option
+            *ngFor="let tp of listaTipoProyecto"
+            [value]="tp.idTipoProyecto"
+          >
+            {{ tp.nombreTipoProyecto }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Usuario</mat-label>
+        <mat-select formControlName="usuario">
+          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+            {{ u.nombreUsuario }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+      Guardar
+    </button>
+  </form>
+</div>

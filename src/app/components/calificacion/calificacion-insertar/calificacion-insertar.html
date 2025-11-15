@@ -1,0 +1,85 @@
+<div class="form-container">
+  <h1>{{ edicion ? 'Editar calificación' : 'Nueva calificación' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+    <div class="row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Estrellas</mat-label>
+        <input matInput type="number" formControlName="estrellas" />
+        <mat-error *ngIf="campoInvalido('estrellas')">
+          Debe ser un valor entre 1 y 5.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Fecha</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerFecha"
+          formControlName="fechaCalificacion"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
+        <mat-datepicker #pickerFecha></mat-datepicker>
+        <mat-error *ngIf="campoInvalido('fechaCalificacion')">
+          La fecha es obligatoria.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="full">
+        <mat-label>Comentario</mat-label>
+        <textarea
+          matInput
+          rows="3"
+          formControlName="comentario"
+        ></textarea>
+        <mat-error *ngIf="campoInvalido('comentario')">
+          El comentario es obligatorio (máx. 100 caracteres).
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="third">
+        <mat-label>Pedido</mat-label>
+        <mat-select formControlName="idPedido">
+          <mat-option *ngFor="let p of listaPedidos" [value]="p.idPedido">
+            Pedido {{ p.idPedido }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoInvalido('idPedido')">
+          Debes seleccionar un pedido.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="third">
+        <mat-label>Calificador</mat-label>
+        <mat-select formControlName="idCalificador">
+          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+            {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoInvalido('idCalificador')">
+          Debes seleccionar el usuario que califica.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="third">
+        <mat-label>Calificado</mat-label>
+        <mat-select formControlName="idCalificado">
+          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+            {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoInvalido('idCalificado')">
+          Debes seleccionar el usuario calificado.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" class="btn-guardar">
+      Guardar
+    </button>
+  </form>
+</div>

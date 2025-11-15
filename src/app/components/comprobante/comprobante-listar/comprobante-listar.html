@@ -1,0 +1,82 @@
+<div class="container">
+  <button mat-raised-button color="primary" routerLink="/comprobante/new">
+    <mat-icon>add</mat-icon>
+    Nuevo comprobante
+  </button>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width-table">
+    <!-- ID -->
+    <ng-container matColumnDef="idComprobante">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.idComprobante }}</td>
+    </ng-container>
+
+    <!-- N° Comprobante -->
+    <ng-container matColumnDef="numeroComprobante">
+      <th mat-header-cell *matHeaderCellDef>N° Comprobante</th>
+      <td mat-cell *matCellDef="let row">{{ row.numeroComprobante }}</td>
+    </ng-container>
+
+    <!-- Fecha -->
+    <ng-container matColumnDef="fechaComprobante">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.fechaComprobante | date : 'yyyy-MM-dd' }}
+      </td>
+    </ng-container>
+
+    <!-- Razón social -->
+    <ng-container matColumnDef="razonSocialComprobante">
+      <th mat-header-cell *matHeaderCellDef>Razón social</th>
+      <td mat-cell *matCellDef="let row">{{ row.razonSocialComprobante }}</td>
+    </ng-container>
+
+    <!-- IGV -->
+    <ng-container matColumnDef="igvComprobante">
+      <th mat-header-cell *matHeaderCellDef>IGV</th>
+      <td mat-cell *matCellDef="let row">{{ row.igvComprobante }}</td>
+    </ng-container>
+
+    <!-- Total -->
+    <ng-container matColumnDef="totalComprobante">
+      <th mat-header-cell *matHeaderCellDef>Total</th>
+      <td mat-cell *matCellDef="let row">{{ row.totalComprobante }}</td>
+    </ng-container>
+
+    <!-- Pedido -->
+    <ng-container matColumnDef="pedido">
+      <th mat-header-cell *matHeaderCellDef>Pedido</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.idPedido ?? row.pedido?.idPedido ?? '-' }}
+      </td>
+    </ng-container>
+
+    <!-- Tipo documento -->
+    <ng-container matColumnDef="tipoDocumento">
+      <th mat-header-cell *matHeaderCellDef>Tipo documento</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.nombreTipoDocumento ?? row.tipoDocumento?.nombre ?? '-' }}
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          color="primary"
+          [routerLink]="['/comprobante/edit', row.idComprobante]"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="eliminar(row.idComprobante)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

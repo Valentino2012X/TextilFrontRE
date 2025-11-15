@@ -1,0 +1,118 @@
+<div class="form-container">
+  <h1>{{ edicion ? 'Editar notificación' : 'Nueva notificación' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+    <!-- FILA: TIPO / FECHA -->
+    <div class="row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Tipo de notificación**</mat-label>
+        <input matInput formControlName="tipoNotificacion" />
+
+        <mat-error
+          *ngIf="
+            tipoNotificacionField.hasError('required') &&
+            tipoNotificacionField.touched
+          "
+        >
+          El tipo de notificación es obligatorio.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            tipoNotificacionField.hasError('maxlength') &&
+            tipoNotificacionField.touched
+          "
+        >
+          Máximo 20 caracteres.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Fecha**</mat-label>
+        <input
+          matInput
+          [matDatepicker]="picker"
+          formControlName="fechaNotificacion"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="picker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+
+        <mat-error
+          *ngIf="
+            fechaNotificacionField.hasError('required') &&
+            fechaNotificacionField.touched
+          "
+        >
+          La fecha es obligatoria.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- FILA: MENSAJE (OCUPA TODA LA FILA) -->
+    <div class="row">
+      <mat-form-field
+        appearance="outline"
+        class="full-width mensaje-field"
+      >
+        <mat-label>Mensaje**</mat-label>
+        <textarea
+          matInput
+          formControlName="mensajeNotificacion"
+          rows="5"
+        ></textarea>
+
+        <mat-error
+          *ngIf="
+            mensajeNotificacionField.hasError('required') &&
+            mensajeNotificacionField.touched
+          "
+        >
+          El mensaje es obligatorio.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            mensajeNotificacionField.hasError('maxlength') &&
+            mensajeNotificacionField.touched
+          "
+        >
+          Máximo 255 caracteres.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- FILA: USUARIO (DEBAJO DEL MENSAJE) -->
+    <div class="row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Usuario**</mat-label>
+        <mat-select formControlName="usuario">
+          <mat-option
+            *ngFor="let u of listaUsuarios"
+            [value]="u.idUsuario"
+          >
+            {{ u.nombreUsuario }}
+          </mat-option>
+        </mat-select>
+
+        <mat-error
+          *ngIf="
+            usuarioField.hasError('required') &&
+            usuarioField.touched
+          "
+        >
+          Debes seleccionar un usuario.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <button
+      mat-raised-button
+      color="primary"
+      class="btn-guardar"
+      type="submit"
+    >
+      Guardar
+    </button>
+  </form>
+</div>

@@ -1,0 +1,30 @@
+.form-container {
+  max-width: 700px;
+  margin: 24px auto;
+  padding: 16px;
+  border-radius: 8px;
+  background-color: #ffffff;
+}
+
+.form-container h1 {
+  margin-bottom: 16px;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.full-width {
+  flex: 1 1 100%;
+}
+
+.half {
+  flex: 1 1 calc(50% - 8px);
+}
+
+.btn-guardar {
+  margin-top: 8px;
+}

@@ -1,0 +1,40 @@
+.form-container {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 24px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+h1 {
+  margin-bottom: 24px;
+  font-size: 26px;
+  font-weight: 600;
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.half {
+  flex: 1 1 260px;
+}
+
+.full-width {
+  flex: 1 1 100%;
+}
+
+/* Hace el textarea más grande */
+.mensaje-field textarea.mat-input-element {
+  min-height: 160px;
+}
+
+/* Botón centrado como en Entrega */
+.btn-guardar {
+  margin-top: 16px;
+  width: 100%;
+}

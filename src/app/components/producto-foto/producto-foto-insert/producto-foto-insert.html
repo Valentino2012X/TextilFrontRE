@@ -1,0 +1,63 @@
+<div class="form-container">
+  <h1>{{ edicion ? 'Editar foto de producto' : 'Nueva foto de producto' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+    <div class="row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>URL de la foto</mat-label>
+        <input matInput formControlName="urlProductoFoto" />
+        <mat-error *ngIf="campoInvalido('urlProductoFoto')">
+          La URL es obligatoria.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>¿Es principal?</mat-label>
+        <mat-select formControlName="principalProductoFoto">
+          <mat-option [value]="true">Sí</mat-option>
+          <mat-option [value]="false">No</mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoInvalido('principalProductoFoto')">
+          Debes indicar si es principal.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Fecha de subida</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerFecha"
+          formControlName="fechaSubidaProductoFoto"
+        />
+        <mat-datepicker-toggle
+          matIconSuffix
+          [for]="pickerFecha"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #pickerFecha></mat-datepicker>
+        <mat-error *ngIf="campoInvalido('fechaSubidaProductoFoto')">
+          La fecha es obligatoria.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Producto</mat-label>
+        <mat-select formControlName="idProducto">
+          <mat-option *ngFor="let p of listaProductos" [value]="p.idProducto">
+            {{ p.nombreProducto }} (ID: {{ p.idProducto }})
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoInvalido('idProducto')">
+          Debes seleccionar un producto.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" class="btn-guardar">
+      Guardar
+    </button>
+  </form>
+</div>

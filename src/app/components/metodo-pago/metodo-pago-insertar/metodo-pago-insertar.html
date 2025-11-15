@@ -1,0 +1,18 @@
+<div class="container">
+  <h2>{{ edicion ? 'Editar método de pago' : 'Registrar método de pago' }}</h2>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+    <mat-form-field appearance="outline" class="full-width-table">
+      <mat-label>Nombre del método de pago</mat-label>
+      <input matInput formControlName="nombreMetodoPago" />
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+      {{ edicion ? 'Actualizar' : 'Registrar' }}
+    </button>
+
+    <button mat-stroked-button color="warn" type="button" (click)="cancelar()" style="margin-left: 8px;">
+      Cancelar
+    </button>
+  </form>
+</div>

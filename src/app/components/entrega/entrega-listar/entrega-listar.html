@@ -1,0 +1,84 @@
+<!-- src/app/components/entrega/entrega-listar/entrega-listar.html -->
+<div class="table-container">
+  <div class="header">
+    <h1>Entregas</h1>
+
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/entrega/new"
+      class="btn-nuevo"
+    >
+      <mat-icon>add</mat-icon>
+      Nueva entrega
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!-- ID -->
+    <ng-container matColumnDef="idEntrega">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.idEntrega }}
+      </td>
+    </ng-container>
+
+    <!-- Tipo -->
+    <ng-container matColumnDef="tipoEntrega">
+      <th mat-header-cell *matHeaderCellDef> Tipo </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.tipoEntrega }}
+      </td>
+    </ng-container>
+
+    <!-- Dirección -->
+    <ng-container matColumnDef="direccionEntrega">
+      <th mat-header-cell *matHeaderCellDef> Dirección </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.direccionEntrega }}
+      </td>
+    </ng-container>
+
+    <!-- Fecha -->
+    <ng-container matColumnDef="fechaEntrega">
+      <th mat-header-cell *matHeaderCellDef> Fecha </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.fechaEntrega | date : 'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+
+    <!-- Estado -->
+    <ng-container matColumnDef="estadoEntrega">
+      <th mat-header-cell *matHeaderCellDef> Estado </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.estadoEntrega }}
+      </td>
+    </ng-container>
+
+    <!-- Pedido -->
+    <ng-container matColumnDef="pedido">
+      <th mat-header-cell *matHeaderCellDef> Pedido </th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.pedido.idPedido }}
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary" (click)="editar(row)">
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button mat-icon-button color="warn" (click)="eliminar(row.idEntrega)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

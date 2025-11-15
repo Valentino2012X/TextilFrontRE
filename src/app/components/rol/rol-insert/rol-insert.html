@@ -1,0 +1,17 @@
+<div class="container">
+  <h1>{{ edicion ? 'Editar rol' : 'Nuevo rol' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+    <mat-form-field class="full" appearance="outline">
+      <mat-label>Nombre del rol</mat-label>
+      <input matInput formControlName="nombreRol" />
+      <mat-error *ngIf="form.get('nombreRol')?.hasError('required')">
+        El nombre del rol es obligatorio
+      </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">
+      Guardar
+    </button>
+  </form>
+</div>

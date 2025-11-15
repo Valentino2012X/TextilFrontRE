@@ -1,0 +1,90 @@
+<div class="table-container">
+  <div class="header">
+    <h1>Presupuestos mensuales</h1>
+
+    <button
+      mat-raised-button
+      color="primary"
+      routerLink="/presupuestomensual/new"
+      class="btn-nuevo"
+    >
+      <mat-icon>add</mat-icon>
+      Nuevo
+    </button>
+  </div>
+
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+    <!-- ID -->
+    <ng-container matColumnDef="idPresupuestoMensual">
+      <th mat-header-cell *matHeaderCellDef>ID</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.idPresupuestoMensual }}
+      </td>
+    </ng-container>
+
+    <!-- Año -->
+    <ng-container matColumnDef="anioPresupuestoMensual">
+      <th mat-header-cell *matHeaderCellDef>Año</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.anioPresupuestoMensual }}
+      </td>
+    </ng-container>
+
+    <!-- Mes -->
+    <ng-container matColumnDef="mesPresupuestoMensual">
+      <th mat-header-cell *matHeaderCellDef>Mes</th>
+      <td mat-cell *matCellDef="let row">
+        {{ getNombreMes(row.mesPresupuestoMensual) }}
+      </td>
+    </ng-container>
+
+    <!-- Monto -->
+    <ng-container matColumnDef="montoLimitePresupuestoMensual">
+      <th mat-header-cell *matHeaderCellDef>Monto límite (S/.)</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.montoLimitePresupuestoMensual | number : '1.2-2' }}
+      </td>
+    </ng-container>
+
+    <!-- Fecha -->
+    <ng-container matColumnDef="fechaPresupuestoMensual">
+      <th mat-header-cell *matHeaderCellDef>Fecha</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.fechaPresupuestoMensual | date : 'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+
+    <!-- Usuario -->
+    <ng-container matColumnDef="usuario">
+      <th mat-header-cell *matHeaderCellDef>Usuario</th>
+      <td mat-cell *matCellDef="let row">
+        {{ row.usuario.nombreUsuario }}
+      </td>
+    </ng-container>
+
+    <!-- Acciones -->
+    <ng-container matColumnDef="acciones">
+      <th mat-header-cell *matHeaderCellDef>Acciones</th>
+      <td mat-cell *matCellDef="let row">
+        <button
+          mat-icon-button
+          color="primary"
+          [routerLink]="['/presupuestomensual/edit', row.idPresupuestoMensual]"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+
+        <button
+          mat-icon-button
+          color="warn"
+          (click)="eliminar(row.idPresupuestoMensual)"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>

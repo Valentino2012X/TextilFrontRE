@@ -1,0 +1,123 @@
+<div class="form-container">
+  <h1>{{ edicion ? 'Editar tarjeta' : 'Nueva tarjeta' }}</h1>
+
+  <form [formGroup]="form" (ngSubmit)="aceptar()">
+    <!-- ALIAS -->
+    <div class="row">
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Alias</mat-label>
+        <input matInput formControlName="aliasTarjeta" />
+        <mat-error *ngIf="campoInvalido('aliasTarjeta')">
+          El alias es obligatorio.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- TIPO / MARCA -->
+    <div class="row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="tipoTarjeta">
+          <mat-option *ngFor="let t of tiposTarjeta" [value]="t">
+            {{ t }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoInvalido('tipoTarjeta')">
+          El tipo es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Marca</mat-label>
+        <mat-select formControlName="marcaTarjeta">
+          <mat-option *ngFor="let m of marcas" [value]="m">
+            {{ m }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoInvalido('marcaTarjeta')">
+          La marca es obligatoria.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- ÚLTIMOS 4 / TOKEN -->
+    <div class="row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Últimos 4 dígitos</mat-label>
+        <input matInput formControlName="ultimos4Tarjeta" maxlength="4" />
+        <mat-error *ngIf="campoInvalido('ultimos4Tarjeta')">
+          Debe tener exactamente 4 dígitos.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Token referencia</mat-label>
+        <input matInput formControlName="tokenReferenciaTarjeta" />
+        <mat-error *ngIf="campoInvalido('tokenReferenciaTarjeta')">
+          El token es obligatorio.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- VENCIMIENTO / ACTIVA -->
+    <div class="row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Vencimiento</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerVenc"
+          formControlName="vencimientoTarjeta"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="pickerVenc"></mat-datepicker-toggle>
+        <mat-datepicker #pickerVenc></mat-datepicker>
+        <mat-error *ngIf="campoInvalido('vencimientoTarjeta')">
+          El vencimiento es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Activa</mat-label>
+        <mat-select formControlName="activaTarjeta">
+          <mat-option [value]="true">Sí</mat-option>
+          <mat-option [value]="false">No</mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoInvalido('activaTarjeta')">
+          Este campo es obligatorio.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <!-- FECHA REGISTRO / USUARIO -->
+    <div class="row">
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Fecha registro</mat-label>
+        <input
+          matInput
+          [matDatepicker]="pickerReg"
+          formControlName="fechaRegistroTarjeta"
+        />
+        <mat-datepicker-toggle matIconSuffix [for]="pickerReg"></mat-datepicker-toggle>
+        <mat-datepicker #pickerReg></mat-datepicker>
+        <mat-error *ngIf="campoInvalido('fechaRegistroTarjeta')">
+          La fecha de registro es obligatoria.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="half">
+        <mat-label>Usuario</mat-label>
+        <mat-select formControlName="usuario">
+          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+            {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="campoInvalido('usuario')">
+          Debes seleccionar un usuario.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button color="primary" type="submit" class="btn-guardar">
+      Guardar
+    </button>
+  </form>
+</div>
