@@ -48,6 +48,9 @@
         <mat-error *ngIf="campoInvalido('ultimos4Tarjeta')">
           Debe tener exactamente 4 dígitos.
         </mat-error>
+        <mat-error *ngIf="form.get('ultimos4Tarjeta')?.hasError('pattern')">
+        Solo se permiten números
+      </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="half">
@@ -66,6 +69,7 @@
         <input
           matInput
           [matDatepicker]="pickerVenc"
+          [min]="minVencimiento"
           formControlName="vencimientoTarjeta"
         />
         <mat-datepicker-toggle matIconSuffix [for]="pickerVenc"></mat-datepicker-toggle>

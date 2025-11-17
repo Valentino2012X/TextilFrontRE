@@ -6,6 +6,9 @@
     <mat-form-field class="full" appearance="outline">
       <mat-label>Nombre del tipo de producto</mat-label>
       <input matInput formControlName="nombreTipoProducto">
+      <mat-error *ngIf="form.get('nombreTipoProducto')?.hasError('required')">
+        El nombre del tipo de producto es obligatorio
+      </mat-error>
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit">Guardar</button>

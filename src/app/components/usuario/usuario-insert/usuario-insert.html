@@ -22,21 +22,42 @@
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Username</mat-label>
       <input matInput formControlName="username" />
+      <mat-error *ngIf="form.get('username')?.hasError('required')">
+        El username es obligatorio
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Password</mat-label>
       <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="form.get('password')?.hasError('required')">
+        La contraseña es obligatoria
+      </mat-error>
+      <mat-error *ngIf="form.get('password')?.hasError('minlength')">
+        La contraseña debe tener al menos 8 caracteres
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Teléfono</mat-label>
       <input matInput formControlName="telefonoUsuario" />
+      <mat-error *ngIf="form.get('telefonoUsuario')?.hasError('required')">
+        El telefono es obligatorio
+      </mat-error>
+      <mat-error *ngIf="form.get('telefonoUsuario')?.hasError('maxlength')">
+        El teléfono no puede tener más de 10 números
+      </mat-error>
+      <mat-error *ngIf="form.get('telefonoUsuario')?.hasError('pattern')">
+        Solo se permiten números
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Dirección</mat-label>
       <input matInput formControlName="direccionUsuario" />
+      <mat-error *ngIf="form.get('direccionUsuario')?.hasError('required')">
+        La dirección es obligatoria
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
@@ -49,11 +70,26 @@
     <mat-form-field appearance="outline">
       <mat-label>Promedio calificación</mat-label>
       <input matInput type="number" step="0.01" formControlName="promedioCalificacion" />
+      <mat-error *ngIf="form.get('promedioCalificacion')?.hasError('required')">
+        El promedio de calificación es obligatorio
+      </mat-error>
+        <mat-error *ngIf="form.get('promedioCalificacion')?.hasError('min')">
+           El promedio no puede ser negativo
+        </mat-error>
+      <mat-error *ngIf="form.get('promedioCalificacion')?.hasError('max')">
+          El promedio no puede tener más de 20
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline">
       <mat-label>Total calificaciones</mat-label>
       <input matInput type="number" formControlName="totalCalificacion" />
+            <mat-error *ngIf="form.get('totalCalificacion')?.hasError('required')">
+        El número total de calificaciones es obligatorio
+      </mat-error>
+        <mat-error *ngIf="form.get('totalCalificacion')?.hasError('min')">
+           El total de calificaciones no puede ser negativo
+        </mat-error>
     </mat-form-field>
 
     <mat-checkbox formControlName="enabled">Activo</mat-checkbox>

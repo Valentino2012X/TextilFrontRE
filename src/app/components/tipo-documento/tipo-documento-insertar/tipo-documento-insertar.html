@@ -6,18 +6,36 @@
       <mat-label>Nombre del tipo de documento</mat-label>
       <input matInput formControlName="nombre" />
       <mat-error *ngIf="form.get('nombre')?.hasError('required')">
-        El nombre es obligatorio
+        El nombre del tipo de documento es obligatorio
       </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width-table">
       <mat-label>Descripción</mat-label>
-      <input matInput formControlName="descripcionTipoDocumento" />
+      <textarea matInput formControlName="descripcionTipoDocumento" rows="4"></textarea>       
+       <mat-error *ngIf="form.get('descripcionTipoDocumento')?.hasError('required')">
+       La descripción es obligatorio
+      </mat-error>
+      <mat-error *ngIf="form.get('descripcionTipoDocumento')?.hasError('maxlength')">
+        La descripción no puede tener más de 200 caracteres
+      </mat-error>
+      <mat-error *ngIf="form.get('descripcionTipoDocumento')?.hasError('minlength')">
+        La descripción no puede tener menos de 10 caracteres
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width-table">
       <mat-label>RUC</mat-label>
-      <input matInput type="number" formControlName="rucTipoDocumento" />
+      <input matInput type="text" formControlName="rucTipoDocumento" maxlength="9" />
+        <mat-error *ngIf="form.get('rucTipoDocumento')?.hasError('required')">
+        El número de RUC es obligatorio
+      </mat-error>
+      <mat-error *ngIf="form.get('rucTipoDocumento')?.hasError('minlength')">
+         El RUC debe tener exactamente 9 dígitos
+      </mat-error>
+      <mat-error *ngIf="form.get('rucTipoDocumento')?.hasError('pattern')">
+        Solo se permiten números
+      </mat-error>
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
