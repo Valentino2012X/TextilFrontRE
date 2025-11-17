@@ -64,14 +64,13 @@ export class UsuarioInsertComponent implements OnInit {
       nombreUsuario: ['', Validators.required],
       emailUsuario: ['', [Validators.required, Validators.email]],
       username: ['', Validators.required],
-      password: ['', Validators.required],
-      telefonoUsuario: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      telefonoUsuario: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[0-9]*$/)]],
       direccionUsuario: ['', Validators.required],
-      fechaRegistroUsuario: ['', Validators.required],
+      fechaRegistroUsuario: [{ value: new Date(), disabled: true }],
       enabled: [true],
 
-      // 🔹 campos de calificación
-      promedioCalificacion: [0, [Validators.required, Validators.min(0)]],
+      promedioCalificacion: [0, [Validators.required, Validators.min(0), Validators.max(20)]],
       totalCalificacion: [0, [Validators.required, Validators.min(0)]],
 
       idRol: [null, Validators.required], // rol obligatorio
@@ -89,7 +88,7 @@ export class UsuarioInsertComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
-
+    const raw = this.form.getRawValue();
     const body = {
       idUsuario: this.form.value.idUsuario,
       nombreUsuario: this.form.value.nombreUsuario,
@@ -98,7 +97,7 @@ export class UsuarioInsertComponent implements OnInit {
       password: this.form.value.password,
       telefonoUsuario: this.form.value.telefonoUsuario,
       direccionUsuario: this.form.value.direccionUsuario,
-      fechaRegistroUsuario: this.form.value.fechaRegistroUsuario,
+      fechaRegistroUsuario: raw.fechaRegistroUsuario ?? new Date(),
       enabled: this.form.value.enabled,
 
       // 🔹 aseguramos que vayan como número
@@ -132,7 +131,22 @@ export class UsuarioInsertComponent implements OnInit {
   init(): void {
     if (this.edicion) {
       this.uS.listId(this.id).subscribe((data: any) => {
-        this.form.patchValue({
+          let fechaLocal: Date | null = null;
+          if (data.fechaRegistroUsuario) {
+          const iso = data.fechaRegistroUsuario.toString();
+        const yyyyMmDd = iso.substring(0, 10);
+        const parts = yyyyMmDd.split('-');
+        if (parts.length === 3) {
+          const y = Number(parts[0]);
+          const m = Number(parts[1]);
+          const d = Number(parts[2]);
+          fechaLocal = new Date(y, m - 1, d);
+        } else {
+          const dt = new Date(iso);
+          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+        }
+      }
+          this.form.patchValue({
           idUsuario: data.idUsuario,
           nombreUsuario: data.nombreUsuario,
           emailUsuario: data.emailUsuario,
@@ -140,7 +154,7 @@ export class UsuarioInsertComponent implements OnInit {
           password: data.password,
           telefonoUsuario: data.telefonoUsuario,
           direccionUsuario: data.direccionUsuario,
-          fechaRegistroUsuario: data.fechaRegistroUsuario,
+          fechaRegistroUsuario: fechaLocal,
           enabled: data.enabled,
           promedioCalificacion: data.promedioCalificacion,
           totalCalificacion: data.totalCalificacion,

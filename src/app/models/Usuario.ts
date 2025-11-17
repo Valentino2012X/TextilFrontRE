@@ -12,6 +12,6 @@ export class Usuario {
   enabled: boolean = true;
   promedioCalificacion: number = 0;
   totalCalificacion: number = 0;
-  rol: Rol = new Rol();   // 👈 para mostrar rol.nombreRol al listar
+  rol: Rol = new Rol();
   nombreRol?: string;
 }

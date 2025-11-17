@@ -5,6 +5,9 @@
     <mat-form-field class="full" appearance="outline">
       <mat-label>Nombre del tipo de proyecto</mat-label>
       <input matInput formControlName="nombreTipoProyecto" />
+      <mat-error *ngIf="form.get('nombreTipoProyecto')?.hasError('required')">
+        El nombre del tipo de proyecto es obligatorio
+      </mat-error>
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit">

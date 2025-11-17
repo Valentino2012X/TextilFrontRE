@@ -71,9 +71,6 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/rol/rol-insert/rol-insert').then((m) => m.RolInsertarComponent),
   },
-  // ===========================
-  //       MÉTODO DE PAGO
-  // ===========================
   {
     path: 'metodopago',
     loadComponent: () =>
@@ -95,7 +92,6 @@ export const routes: Routes = [
         (m) => m.MetodoPagoInsertarComponent
       ),
   },
-  // 🔹 TIPO PROYECTO (NUEVO)
   {
     path: 'tipoproyecto',
     loadComponent: () =>
@@ -139,9 +135,6 @@ export const routes: Routes = [
         (m) => m.ProyectoInsertarComponent
       ),
   },
-  // ===========================
-  //       TIPO DOCUMENTO
-  // ===========================
   {
     path: 'tipodocumento',
     loadComponent: () =>

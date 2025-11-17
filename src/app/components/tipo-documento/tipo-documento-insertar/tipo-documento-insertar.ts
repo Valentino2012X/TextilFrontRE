@@ -44,8 +44,8 @@ export class TipoDocumentoInsertarComponent implements OnInit {
     this.form = this.formBuilder.group({
       idTipoDocumento: [0],
       nombre: ['', Validators.required],
-      descripcionTipoDocumento: [''],
-      rucTipoDocumento: [''],
+      descripcionTipoDocumento: ['',[Validators.required, Validators.maxLength(200),Validators.minLength(10)]],
+      rucTipoDocumento: ['',[Validators.required, Validators.minLength(9),Validators.pattern(/^[0-9]*$/)]]
     });
 
     this.route.params.subscribe((data: Params) => {
