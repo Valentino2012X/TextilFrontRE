@@ -58,7 +58,7 @@ export class TarjetaInsertarComponent implements OnInit {
       idTarjeta: [0],
       aliasTarjeta: ['', [Validators.required, Validators.maxLength(50)]],
       tipoTarjeta: ['', Validators.required],
-      ultimos4Tarjeta: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
+      ultimos4Tarjeta: ['', [Validators.required,Validators.minLength(4), Validators.pattern(/^\d+$/)]],
       marcaTarjeta: ['', Validators.required],
       tokenReferenciaTarjeta: ['', [Validators.required, Validators.maxLength(100)]],
       vencimientoTarjeta: [hoy, Validators.required],

@@ -63,9 +63,9 @@ export class UsuarioInsertComponent implements OnInit {
       idUsuario: [''],
       nombreUsuario: ['', Validators.required],
       emailUsuario: ['', [Validators.required, Validators.email]],
-      username: ['', Validators.required],
+      username: ['', [Validators.required, Validators.maxLength(50)]],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      telefonoUsuario: ['', [Validators.required, Validators.maxLength(10), Validators.pattern(/^[0-9]*$/)]],
+      telefonoUsuario: ['', [Validators.required,Validators.minLength(9),Validators.maxLength(9),Validators.pattern(/^\d+$/)]],
       direccionUsuario: ['', Validators.required],
       fechaRegistroUsuario: [{ value: new Date(), disabled: true }],
       enabled: [true],
@@ -128,6 +128,9 @@ export class UsuarioInsertComponent implements OnInit {
     this.router.navigate(['usuarios']);
   }
 
+  get telefono() {
+  return this.form.get('telefonoUsuario');
+}
   init(): void {
     if (this.edicion) {
       this.uS.listId(this.id).subscribe((data: any) => {
