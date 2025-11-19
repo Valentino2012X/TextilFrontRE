@@ -5,6 +5,9 @@
     <mat-form-field appearance="outline" class="full-width-table">
       <mat-label>Nombre del método de pago</mat-label>
       <input matInput formControlName="nombreMetodoPago" />
+        <mat-error *ngIf="form.get('nombreMetodoPago')?.hasError('required')">
+          El método de pago es obligatorio
+        </mat-error>
     </mat-form-field>
 
     <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">

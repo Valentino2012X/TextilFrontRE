@@ -5,73 +5,119 @@
 
     <div class="row">
       <mat-form-field appearance="outline" class="field">
-        <mat-label>Nombre*</mat-label>
+        <mat-label>Nombre</mat-label>
         <input matInput formControlName="nombreProducto" />
+        <mat-error *ngIf="form.get('nombreProducto')?.hasError('required')">
+        El nombre es obligatorio
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="field">
-        <mat-label>Descripción*</mat-label>
-        <input matInput formControlName="descripcionProducto" />
+        <mat-label>Descripción</mat-label>
+        <textarea matInput formControlName="descripcionProducto" rows="4"></textarea>  
+        <mat-error *ngIf="form.get('descripcionProducto')?.hasError('required')">
+       La descripción es obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('descripcionProducto')?.hasError('maxlength')">
+        La descripción no puede tener más de 200 caracteres
+      </mat-error>
+      <mat-error *ngIf="form.get('descripcionProducto')?.hasError('minlength')">
+        La descripción no puede tener menos de 10 caracteres
+      </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="field">
-        <mat-label>Precio*</mat-label>
+        <mat-label>Precio</mat-label>
         <input matInput type="number" formControlName="precioProducto" />
+        <mat-error *ngIf="form.get('precioProducto')?.hasError('min')">
+           El precio no puede ser negativo
+        </mat-error>
+        <mat-error *ngIf="form.get('precioProducto')?.hasError('required')">
+          El precio es obligatorio
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="field">
-        <mat-label>Stock*</mat-label>
+        <mat-label>Stock</mat-label>
         <input matInput type="number" formControlName="stockProducto" />
+        <mat-error *ngIf="form.get('stockProducto')?.hasError('min')">
+           El stock no puede ser negativo
+        </mat-error>
+        <mat-error *ngIf="form.get('stockProducto')?.hasError('required')">
+          El stock es obligatorio
+        </mat-error>
       </mat-form-field>
     </div>
 
     <div class="row">
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Color*</mat-label>
-        <input matInput formControlName="colorProducto" />
-      </mat-form-field>
+  <mat-form-field appearance="outline" class="field">
+    <mat-label>Color</mat-label>
+
+    <input 
+      type="color"
+      matInput
+      formControlName="colorProducto"
+      style="height: 40px; padding: 0;"
+    />
+  </mat-form-field>
 
       <mat-form-field appearance="outline" class="field">
-        <mat-label>Medida*</mat-label>
+        <mat-label>Medida</mat-label>
         <input matInput formControlName="medidaProducto" />
+         <mat-error *ngIf="form.get('medidaProducto')?.hasError('required')">
+          La medida es obligatoria
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="field">
-        <mat-label>Categoría*</mat-label>
+        <mat-label>Categoría</mat-label>
         <input matInput formControlName="categoriaProducto" />
+        <mat-error *ngIf="form.get('categoriaProducto')?.hasError('required')">
+          La categoria es obligatoria
+        </mat-error>
       </mat-form-field>
 
       <mat-checkbox formControlName="disponibleProducto">
         Disponible
       </mat-checkbox>
+      
     </div>
 
     <div class="row">
       <mat-form-field appearance="outline" class="field">
-        <mat-label>URL Imagen*</mat-label>
+        <mat-label>URL Imagen</mat-label>
         <input matInput formControlName="urlTipoProducto" />
+        <mat-error *ngIf="form.get('urlTipoProducto')?.hasError('required')">
+          El URL es obligatorio
+        </mat-error>
       </mat-form-field>
     </div>
 
     <div class="row">
       <!-- SELECT TIPO PRODUCTO -->
       <mat-form-field appearance="outline" class="field">
-        <mat-label>Tipo producto*</mat-label>
+        <mat-label>Tipo producto</mat-label>
         <mat-select formControlName="tipoProducto">
           <mat-option *ngFor="let tp of listaTipoProducto" [value]="tp.idTipoProducto">
             {{ tp.nombreTipoProducto }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="form.get('tipoProducto')?.hasError('required')">
+          El tipo de producto es obligatorio
+        </mat-error>
       </mat-form-field>
 
       <!-- SELECT USUARIO -->
       <mat-form-field appearance="outline" class="field">
-        <mat-label>Usuario*</mat-label>
+        <mat-label>Usuario</mat-label>
         <mat-select formControlName="usuario">
           <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
             {{ u.nombreUsuario }}
           </mat-option>
         </mat-select>
+          <mat-error *ngIf="form.get('usuario')?.hasError('required')">
+          El usuario es obligatorio
+        </mat-error>
       </mat-form-field>
 
       <button mat-raised-button color="primary" type="submit">
