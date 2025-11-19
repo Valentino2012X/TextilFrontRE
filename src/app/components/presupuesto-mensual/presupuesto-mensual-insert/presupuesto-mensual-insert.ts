@@ -84,7 +84,7 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
         0,
         [Validators.required, Validators.min(0.01)],
       ],
-      fechaPresupuestoMensual: [hoy, [Validators.required]],
+      fechaPresupuestoMensual: [{ value: new Date(), disabled: true }],
       idUsuario: [null, [Validators.required]],
     });
 
@@ -101,10 +101,6 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
         this.edicion = true;
         const hoyLocal = new Date();
         this.pmS.listId(this.id).subscribe((data) => {
-          let fecha = hoyLocal;
-          if (data.fechaPresupuestoMensual) {
-            fecha = new Date(data.fechaPresupuestoMensual);
-          }
 
           let idUsuario: number | null = null;
           if (data.usuario && (data.usuario as any).idUsuario) {
@@ -113,16 +109,29 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
             // por si tu DTO usa idUsuario plano
             idUsuario = (data as any).idUsuario;
           }
-
+          let fechaLocal: Date | null = null;
+          if (data.fechaPresupuestoMensual) {
+          const iso = data.fechaPresupuestoMensual.toString();
+        const yyyyMmDd = iso.substring(0, 10);
+        const parts = yyyyMmDd.split('-');
+        if (parts.length === 3) {
+          const y = Number(parts[0]);
+          const m = Number(parts[1]);
+          const d = Number(parts[2]);
+          fechaLocal = new Date(y, m - 1, d);
+        } else {
+          const dt = new Date(iso);
+          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+        }
           this.form.patchValue({
             idPresupuestoMensual: data.idPresupuestoMensual,
             anioPresupuestoMensual: data.anioPresupuestoMensual,
             mesPresupuestoMensual: data.mesPresupuestoMensual,
             montoLimitePresupuestoMensual: data.montoLimitePresupuestoMensual,
-            fechaPresupuestoMensual: fecha,
             idUsuario: idUsuario,
           });
-        });
+          this.form.get('fechaPresupuestoMensual')?.setValue(fechaLocal);
+      }});
       }
     });
   }
@@ -148,16 +157,13 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
     }
 
     const raw = this.form.value;
-
+    const ra = this.form.getRawValue();
     const body: any = {
       idPresupuestoMensual: this.edicion ? raw.idPresupuestoMensual : 0,
       anioPresupuestoMensual: raw.anioPresupuestoMensual,
       mesPresupuestoMensual: raw.mesPresupuestoMensual,
       montoLimitePresupuestoMensual: raw.montoLimitePresupuestoMensual,
-      fechaPresupuestoMensual: this.formatDate(
-        raw.fechaPresupuestoMensual as Date
-      ),
-
+      fechaPresupuestoMensual: this.formatDate(ra.fechaPresupuestoMensual || new Date()),
       // 👇 Mandamos ambas variantes por si tu backend usa usuario o idUsuario.
       idUsuario: raw.idUsuario,
       usuario: {

@@ -74,7 +74,6 @@ export class PedidoInsertarComponent implements OnInit {
     // combos
     this.uS.list().subscribe((data) => (this.listaUsuarios = data));
     this.mS.list().subscribe((data) => (this.listaMetodos = data));
-
     // edición
     this.route.params.subscribe((params) => {
       this.id = Number(params['id']);
@@ -109,7 +108,8 @@ export class PedidoInsertarComponent implements OnInit {
       (control.touched || this.submitted)
     );
   }
-
+  minFechaPago: Date = new Date();
+  
   private formatDate(d: any): string {
     const date = d instanceof Date ? d : new Date(d);
     const year = date.getFullYear();

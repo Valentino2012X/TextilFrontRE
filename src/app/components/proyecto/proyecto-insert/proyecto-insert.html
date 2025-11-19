@@ -6,11 +6,23 @@
       <mat-form-field appearance="outline" class="full">
         <mat-label>Título</mat-label>
         <input matInput formControlName="tituloProyecto" />
+        <mat-error *ngIf="form.get('tituloProyecto')?.hasError('required')">
+          El título es obligatorio
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full">
         <mat-label>Descripción</mat-label>
         <textarea matInput rows="3" formControlName="descripcionProyecto"></textarea>
+        <mat-error *ngIf="form.get('descripcionProyecto')?.hasError('required')">
+           La descripción es obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('descripcionProyecto')?.hasError('maxlength')">
+           La descripción no puede tener más de 200 caracteres
+        </mat-error>
+        <mat-error *ngIf="form.get('descripcionProyecto')?.hasError('minlength')">
+          La descripción no puede tener menos de 10 caracteres
+         </mat-error>
       </mat-form-field>
     </div>
 
@@ -18,15 +30,21 @@
       <mat-form-field appearance="outline" class="full">
         <mat-label>URL proyecto</mat-label>
         <input matInput formControlName="urlProyecto" />
+        <mat-error *ngIf="form.get('urlProyecto')?.hasError('required')">
+          El URL es obligatorio
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full">
-        <mat-label>Visible*</mat-label>
-        <input
-          matInput
-          formControlName="visibleProyecto"
-          placeholder="Ej: Público / Privado / Sí / No"
-        />
+        <mat-label>Visible</mat-label>
+         <mat-select formControlName="visibleProyecto">
+          <mat-option *ngFor="let m of visible" [value]="m">
+            {{ m }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('visibleProyecto')?.hasError('required')">
+          La visibilidad es obligatoria
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -50,6 +68,9 @@
             {{ tp.nombreTipoProyecto }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="form.get('tipoProyecto')?.hasError('required')">
+          El tipo de proyecto es obligatorio
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full">
@@ -59,6 +80,9 @@
             {{ u.nombreUsuario }}
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="form.get('usuario')?.hasError('required')">
+          El usuario es obligatorio
+        </mat-error>
       </mat-form-field>
     </div>
 

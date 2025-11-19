@@ -10,6 +10,15 @@
           rows="3"
           formControlName="comentarioProyecto"
         ></textarea>
+        <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('required')">
+       El comentario es obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('maxlength')">
+        El comentario no puede tener más de 200 caracteres
+      </mat-error>
+      <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('minlength')">
+        El comentario no puede tener menos de 10 caracteres
+      </mat-error>
       </mat-form-field>
     </div>
 
@@ -32,6 +41,9 @@
             {{ p.tituloProyecto }} (ID: {{ p.idProyecto }})
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="form.get('proyecto')?.hasError('required')">
+       El proyecto es obligatorio
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full">
@@ -41,6 +53,9 @@
             {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
           </mat-option>
         </mat-select>
+        <mat-error *ngIf="form.get('usuario')?.hasError('required')">
+       El usuario es obligatorio
+        </mat-error>
       </mat-form-field>
     </div>
 

@@ -69,7 +69,7 @@ export class CalificacionInsertarComponent implements OnInit {
       idCalificacion: [0],
       estrellas: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
       comentario: ['', [Validators.required, Validators.maxLength(100)]],
-      fechaCalificacion: [hoy, Validators.required],
+      fechaCalificacion: [{ value: new Date(), disabled: true }],
       idPedido: [null, Validators.required],
       idCalificador: [null, Validators.required],
       idCalificado: [null, Validators.required],
@@ -84,19 +84,30 @@ export class CalificacionInsertarComponent implements OnInit {
 
       if (this.edicion) {
         this.cS.listId(this.id).subscribe((data: Calificacion) => {
-          const fecha = data.fechaCalificacion
-            ? new Date(data.fechaCalificacion as any)
-            : hoy;
-
+ let fechaLocal: Date | null = null;
+          if (data.fechaCalificacion) {
+          const iso = data.fechaCalificacion.toString();
+        const yyyyMmDd = iso.substring(0, 10);
+        const parts = yyyyMmDd.split('-');
+        if (parts.length === 3) {
+          const y = Number(parts[0]);
+          const m = Number(parts[1]);
+          const d = Number(parts[2]);
+          fechaLocal = new Date(y, m - 1, d);
+        } else {
+          const dt = new Date(iso);
+          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+        }
+      }
           this.form.patchValue({
             idCalificacion: data.idCalificacion,
             estrellas: data.estrellas,
             comentario: data.comentario,
-            fechaCalificacion: fecha,
             idPedido: data.pedido?.idPedido ?? null,
             idCalificador: data.calificador?.idUsuario ?? null,
             idCalificado: data.calificado?.idUsuario ?? null,
           });
+          this.form.get('fechaCalificacion')?.setValue(fechaLocal);
         });
       }
     });
@@ -120,12 +131,13 @@ export class CalificacionInsertarComponent implements OnInit {
 
     const raw = this.form.value;
     const idForm = Number(raw.idCalificacion) || 0;
+    const ra = this.form.getRawValue();
 
     const body: any = {
       idCalificacion: idForm,
       estrellas: raw.estrellas,
       comentario: raw.comentario,
-      fechaCalificacion: this.formatDate(raw.fechaCalificacion),
+      fechaCalificacion: ra.fechaCalificacion ?? new Date(),
       pedido: {
         idPedido: raw.idPedido,
       },

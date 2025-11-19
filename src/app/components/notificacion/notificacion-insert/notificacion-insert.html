@@ -5,7 +5,7 @@
     <!-- FILA: TIPO / FECHA -->
     <div class="row">
       <mat-form-field appearance="outline" class="half">
-        <mat-label>Tipo de notificación**</mat-label>
+        <mat-label>Tipo de notificación</mat-label>
         <input matInput formControlName="tipoNotificacion" />
 
         <mat-error
@@ -27,7 +27,7 @@
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="half">
-        <mat-label>Fecha**</mat-label>
+        <mat-label>Fecha</mat-label>
         <input
           matInput
           [matDatepicker]="picker"
@@ -56,7 +56,7 @@
         appearance="outline"
         class="full-width mensaje-field"
       >
-        <mat-label>Mensaje**</mat-label>
+        <mat-label>Mensaje</mat-label>
         <textarea
           matInput
           formControlName="mensajeNotificacion"
@@ -85,7 +85,7 @@
     <!-- FILA: USUARIO (DEBAJO DEL MENSAJE) -->
     <div class="row">
       <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Usuario**</mat-label>
+        <mat-label>Usuario</mat-label>
         <mat-select formControlName="usuario">
           <mat-option
             *ngFor="let u of listaUsuarios"

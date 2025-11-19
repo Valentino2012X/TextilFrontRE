@@ -16,7 +16,7 @@
         <mat-label>Descripción</mat-label>
         <textarea matInput formControlName="descripcionProducto" rows="4"></textarea>  
         <mat-error *ngIf="form.get('descripcionProducto')?.hasError('required')">
-       La descripción es obligatorio
+       La descripción es obligatoria
         </mat-error>
         <mat-error *ngIf="form.get('descripcionProducto')?.hasError('maxlength')">
         La descripción no puede tener más de 200 caracteres

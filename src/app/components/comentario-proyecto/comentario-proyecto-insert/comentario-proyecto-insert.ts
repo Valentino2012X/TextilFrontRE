@@ -57,7 +57,7 @@ export class ComentarioProyectoInsertarComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       idComentarioProyecto: [''],
-      comentarioProyecto: ['', Validators.required],
+      comentarioProyecto: ['', [Validators.required, Validators.maxLength(200),Validators.minLength(10)]],
       proyecto: ['', Validators.required], // idProyecto
       usuario: ['', Validators.required], // idUsuario
     });

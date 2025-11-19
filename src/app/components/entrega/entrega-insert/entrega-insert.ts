@@ -118,7 +118,7 @@ export class EntregaInsertComponent implements OnInit {
       }
     });
   }
-
+  minEntrega: Date = new Date();
   aceptar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();

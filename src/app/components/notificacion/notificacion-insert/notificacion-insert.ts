@@ -60,7 +60,7 @@ export class NotificacionInsertarComponent implements OnInit {
       idNotificacion: [''],
       tipoNotificacion: ['', [Validators.required, Validators.maxLength(20)]],
       mensajeNotificacion: ['', [Validators.required, Validators.maxLength(255)]],
-      fechaNotificacion: [hoy, Validators.required],
+      fechaNotificacion: [{ value: new Date(), disabled: true }],
       // aquí guardamos SOLO el idUsuario
       usuario: [null, Validators.required],
     });
@@ -77,17 +77,29 @@ export class NotificacionInsertarComponent implements OnInit {
 
       if (this.edicion) {
         this.nS.listId(this.id).subscribe((data) => {
+          let fechaLocal: Date | null = null;
+          if (data.fechaNotificacion) {
+          const iso = data.fechaNotificacion.toString();
+        const yyyyMmDd = iso.substring(0, 10);
+        const parts = yyyyMmDd.split('-');
+        if (parts.length === 3) {
+          const y = Number(parts[0]);
+          const m = Number(parts[1]);
+          const d = Number(parts[2]);
+          fechaLocal = new Date(y, m - 1, d);
+        } else {
+          const dt = new Date(iso);
+          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+        }
           this.form.patchValue({
             idNotificacion: data.idNotificacion,
             tipoNotificacion: data.tipoNotificacion,
             mensajeNotificacion: data.mensajeNotificacion,
             // El backend manda LocalDate -> string "yyyy-MM-dd"
-            fechaNotificacion: data.fechaNotificacion
-              ? new Date(data.fechaNotificacion as any)
-              : hoy,
             usuario: data.usuario?.idUsuario ?? null,
           });
-        });
+          this.form.get('fechaNotificacion')?.setValue(fechaLocal);
+        }});
       }
     });
   }
@@ -121,15 +133,14 @@ export class NotificacionInsertarComponent implements OnInit {
     }
 
     const raw = this.form.value;
-
-    const fecha: Date = raw.fechaNotificacion;
+        const ra = this.form.getRawValue();
 
     const body = {
       idNotificacion: raw.idNotificacion ? Number(raw.idNotificacion) : 0,
       tipoNotificacion: raw.tipoNotificacion,
       mensajeNotificacion: raw.mensajeNotificacion,
       // Mandamos string compatible con LocalDate
-      fechaNotificacion: this.formatDate(fecha),
+      fechaNotificacion: this.formatDate(ra.fechaNotificacion || new Date()),
       usuario: {
         idUsuario: Number(raw.usuario),
       },

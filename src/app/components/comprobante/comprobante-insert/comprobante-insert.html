@@ -40,6 +40,9 @@
         <mat-error *ngIf="form.get('igvComprobante')?.hasError('required')">
           El IGV es obligatorio
         </mat-error>
+        <mat-error *ngIf="form.get('igvComprobante')?.hasError('min')">
+           El IGV no puede ser negativo o cero
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full">
@@ -48,28 +51,37 @@
         <mat-error *ngIf="form.get('totalComprobante')?.hasError('required')">
           El total es obligatorio
         </mat-error>
+        <mat-error *ngIf="form.get('totalComprobante')?.hasError('min')">
+           El total no puede ser negativo o cero
+        </mat-error>
       </mat-form-field>
     </div>
 
     <div class="row">
       <!-- Pedido -->
       <mat-form-field appearance="outline" class="full">
-        <mat-label>Pedido*</mat-label>
+        <mat-label>Pedido</mat-label>
         <mat-select formControlName="pedido">
           <mat-option *ngFor="let p of listaPedidos" [value]="p.idPedido">
             Pedido #{{ p.idPedido }}
           </mat-option>
         </mat-select>
+          <mat-error *ngIf="form.get('pedido')?.hasError('required')">
+          El pedido es obligatorio
+        </mat-error>
       </mat-form-field>
 
       <!-- Tipo documento -->
       <mat-form-field appearance="outline" class="full">
-        <mat-label>Tipo documento*</mat-label>
+        <mat-label>Tipo documento</mat-label>
         <mat-select formControlName="tipoDocumento">
           <mat-option *ngFor="let t of listaTiposDocumento" [value]="t.idTipoDocumento">
             {{ t.nombre }}
           </mat-option>
         </mat-select>
+          <mat-error *ngIf="form.get('tipoDocumento')?.hasError('required')">
+          El tipo de documento es obligatorio
+        </mat-error>
       </mat-form-field>
     </div>
 
