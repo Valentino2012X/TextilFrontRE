@@ -70,7 +70,7 @@ export class FavoritoInsertarComponent implements OnInit {
 
     this.form = this.fb.group({
       idFavorito: [0],
-      fechaFavorito: [hoy, Validators.required],
+      fechaFavorito: [{ value: new Date(), disabled: true }],
       idUsuario: [null, Validators.required],
       idProducto: [null],
       idProyecto: [null],
@@ -86,17 +86,29 @@ export class FavoritoInsertarComponent implements OnInit {
 
       if (this.edicion) {
         this.fS.listId(this.id).subscribe((data: Favorito) => {
-          const fecha = data.fechaFavorito
-            ? new Date(data.fechaFavorito as any)
-            : hoy;
+let fechaLocal: Date | null = null;
+          if (data.fechaFavorito) {
+          const iso = data.fechaFavorito.toString();
+        const yyyyMmDd = iso.substring(0, 10);
+        const parts = yyyyMmDd.split('-');
+        if (parts.length === 3) {
+          const y = Number(parts[0]);
+          const m = Number(parts[1]);
+          const d = Number(parts[2]);
+          fechaLocal = new Date(y, m - 1, d);
+        } else {
+          const dt = new Date(iso);
+          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+        }
+      }
 
           this.form.patchValue({
             idFavorito: data.idFavorito,
-            fechaFavorito: fecha,
             idUsuario: data.usuario?.idUsuario ?? null,
             idProducto: data.producto?.idProducto ?? null,
             idProyecto: data.proyecto?.idProyecto ?? null,
           });
+          this.form.get('fechaFavorito')?.setValue(fechaLocal);
         });
       }
     });
@@ -120,10 +132,11 @@ export class FavoritoInsertarComponent implements OnInit {
 
     const raw = this.form.value;
     const idForm = Number(raw.idFavorito) || 0;
+        const ra = this.form.getRawValue();
 
     const body: any = {
       idFavorito: idForm,
-      fechaFavorito: this.formatDate(raw.fechaFavorito),
+      fechaFavorito: ra.fechaFavorito ?? new Date(),
       usuario: {
         idUsuario: raw.idUsuario,
       },

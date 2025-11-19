@@ -55,10 +55,10 @@ export class ComprobanteInsertarComponent implements OnInit {
     this.form = this.fb.group({
       idComprobante: [''],
       numeroComprobante: ['', Validators.required],
-      fechaComprobante: [null, Validators.required],
+      fechaComprobante: [{ value: new Date(), disabled: true }],
       razonSocialComprobante: ['', Validators.required],
-      igvComprobante: [0, [Validators.required, Validators.min(0)]],
-      totalComprobante: [0, [Validators.required, Validators.min(0)]],
+      igvComprobante: [0, [Validators.required, Validators.min(1)]],
+      totalComprobante: [0, [Validators.required, Validators.min(1)]],
       // aquí guardamos solo el ID
       pedido: ['', Validators.required],
       tipoDocumento: ['', Validators.required],
@@ -75,12 +75,25 @@ export class ComprobanteInsertarComponent implements OnInit {
 
       if (this.edicion) {
         this.cS.listId(this.id).subscribe((data: Comprobante) => {
-          const fecha = data.fechaComprobante ? new Date(data.fechaComprobante) : null;
+          let fechaLocal: Date | null = null;
+          if (data.fechaComprobante) {
+          const iso = data.fechaComprobante.toString();
+        const yyyyMmDd = iso.substring(0, 10);
+        const parts = yyyyMmDd.split('-');
+        if (parts.length === 3) {
+          const y = Number(parts[0]);
+          const m = Number(parts[1]);
+          const d = Number(parts[2]);
+          fechaLocal = new Date(y, m - 1, d);
+        } else {
+          const dt = new Date(iso);
+          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+        }
+      }
 
           this.form.patchValue({
             idComprobante: data.idComprobante,
             numeroComprobante: data.numeroComprobante,
-            fechaComprobante: fecha,
             razonSocialComprobante: data.razonSocialComprobante,
             igvComprobante: data.igvComprobante,
             totalComprobante: data.totalComprobante,
@@ -90,6 +103,7 @@ export class ComprobanteInsertarComponent implements OnInit {
 
             tipoDocumento: data.idTipoDocumento ?? data.tipoDocumento?.idTipoDocumento ?? null,
           });
+          this.form.get('fechaComprobante')?.setValue(fechaLocal);
         });
       }
     });
@@ -102,13 +116,12 @@ export class ComprobanteInsertarComponent implements OnInit {
     }
 
     const raw = this.form.value;
+    const ra = this.form.getRawValue();
 
     const body: any = {
       idComprobante: raw.idComprobante,
       numeroComprobante: raw.numeroComprobante,
-      fechaComprobante: raw.fechaComprobante
-        ? new Date(raw.fechaComprobante).toISOString().substring(0, 10)
-        : null,
+      fechaComprobante: ra.fechaComprobante ?? new Date(),
       razonSocialComprobante: raw.razonSocialComprobante,
       igvComprobante: raw.igvComprobante,
       totalComprobante: raw.totalComprobante,
