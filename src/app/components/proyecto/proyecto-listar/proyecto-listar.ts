@@ -4,7 +4,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-
+import {MatCardModule} from '@angular/material/card';
 import { ProyectoService } from '../../../services/proyecto-service';
 import { Proyecto } from '../../../models/Proyecto';
 
@@ -13,7 +13,7 @@ import { Proyecto } from '../../../models/Proyecto';
   selector: 'app-proyecto-listar',
   templateUrl: './proyecto-listar.html',
   styleUrl: './proyecto-listar.css',
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink],
+  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink,MatCardModule],
 })
 export class ProyectoListarComponent implements OnInit {
   dataSource: MatTableDataSource<Proyecto> = new MatTableDataSource<Proyecto>();

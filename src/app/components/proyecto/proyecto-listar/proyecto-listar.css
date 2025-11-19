@@ -1,8 +1,10 @@
-.container {
-  padding: 16px;
+.card-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+  margin-top: 20px;
 }
 
-.full-width-table {
-  width: 100%;
-  margin-top: 16px;
+.project-card {
+  padding: 16px;
 }

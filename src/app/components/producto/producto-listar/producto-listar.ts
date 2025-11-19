@@ -4,6 +4,7 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import {MatCardModule} from '@angular/material/card';
 
 import { ProductoService } from '../../../services/producto-service';
 
@@ -12,7 +13,7 @@ import { ProductoService } from '../../../services/producto-service';
   selector: 'app-producto-listar',
   templateUrl: './producto-listar.html',
   styleUrl: './producto-listar.css',
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink],
+  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink, MatCardModule],
 })
 export class ProductoListarComponent implements OnInit {
   dataSource: MatTableDataSource<any> = new MatTableDataSource<any>();
