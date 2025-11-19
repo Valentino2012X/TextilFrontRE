@@ -25,6 +25,9 @@
       <mat-error *ngIf="form.get('username')?.hasError('required')">
         El username es obligatorio
       </mat-error>
+      <mat-error *ngIf="form.get('username')?.hasError('maxlength')">
+        El username debe tener un máximo de 50 caracteres.
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">
@@ -40,14 +43,14 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Teléfono</mat-label>
-      <input matInput formControlName="telefonoUsuario" />
+      <input matInput formControlName="telefonoUsuario" maxlength="9"/>
       <mat-error *ngIf="form.get('telefonoUsuario')?.hasError('required')">
-        El telefono es obligatorio
+        El teléfono es obligatorio
       </mat-error>
-      <mat-error *ngIf="form.get('telefonoUsuario')?.hasError('maxlength')">
-        El teléfono no puede tener más de 10 números
+      <mat-error *ngIf="telefono?.hasError('minlength') && !telefono?.hasError('pattern')">
+        El teléfono no puede tener menos de 9 dígitos
       </mat-error>
-      <mat-error *ngIf="form.get('telefonoUsuario')?.hasError('pattern')">
+      <mat-error *ngIf="telefono?.hasError('pattern') && telefono?.value">
         Solo se permiten números
       </mat-error>
     </mat-form-field>

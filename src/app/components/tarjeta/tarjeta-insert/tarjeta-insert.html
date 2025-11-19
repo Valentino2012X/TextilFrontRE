@@ -40,16 +40,18 @@
       </mat-form-field>
     </div>
 
-    <!-- ÚLTIMOS 4 / TOKEN -->
     <div class="row">
       <mat-form-field appearance="outline" class="half">
         <mat-label>Últimos 4 dígitos</mat-label>
         <input matInput formControlName="ultimos4Tarjeta" maxlength="4" />
-        <mat-error *ngIf="campoInvalido('ultimos4Tarjeta')">
-          Debe tener exactamente 4 dígitos.
-        </mat-error>
-        <mat-error *ngIf="form.get('ultimos4Tarjeta')?.hasError('pattern')">
+      <mat-error *ngIf="(form.get('ultimos4Tarjeta')?.hasError('minlength') || form.get('ultimos4Tarjeta')?.hasError('maxlength')) &&!form.get('ultimos4Tarjeta')?.hasError('pattern')">
+        Debe tener exactamente 4 dígitos.
+      </mat-error>
+       <mat-error *ngIf="form.get('ultimos4Tarjeta')?.hasError('pattern') && form.get('ultimos4Tarjeta')?.value">
         Solo se permiten números
+      </mat-error>
+      <mat-error *ngIf="form.get('ultimos4Tarjeta')?.hasError('required')">
+        Los últimos 4 dígitos de la tarjeta son obligatorios.
       </mat-error>
       </mat-form-field>
 
@@ -62,7 +64,6 @@
       </mat-form-field>
     </div>
 
-    <!-- VENCIMIENTO / ACTIVA -->
     <div class="row">
       <mat-form-field appearance="outline" class="half">
         <mat-label>Vencimiento</mat-label>
@@ -91,7 +92,6 @@
       </mat-form-field>
     </div>
 
-    <!-- FECHA REGISTRO / USUARIO -->
     <div class="row">
       <mat-form-field appearance="outline" class="half">
         <mat-label>Fecha registro</mat-label>
