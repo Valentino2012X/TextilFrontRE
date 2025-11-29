@@ -20,6 +20,7 @@ import { Producto } from '../../../models/Producto';
 import { Proyecto } from '../../../models/Proyecto';
 import { Favorito } from '../../../models/favorito';
 import { Observable } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -35,6 +36,7 @@ import { Observable } from 'rxjs';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatIconModule,
   ],
   providers: [provideNativeDateAdapter()],
 })

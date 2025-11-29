@@ -1,23 +1,31 @@
 // src/app/components/autenticador/autenticador.ts
-import { Component, OnInit } from '@angular/core';
-import { JwtRequestDTO } from '../../models/jwtRequestDTO';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
-import { LoginService } from '../../services/login-service';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { NgIf } from '@angular/common';
+import { Router, RouterLink } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
+import { LoginService } from '../../services/login-service';
+import { JwtRequestDTO } from '../../models/jwtRequestDTO';
 
 @Component({
   selector: 'app-autenticador',
   standalone: true,
-  imports: [MatFormFieldModule, FormsModule, MatInputModule, MatButtonModule, NgIf],
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    RouterLink,
+  ],
   templateUrl: './autenticador.html',
   styleUrl: './autenticador.css',
 })
-export class Autenticador implements OnInit {
+export class Autenticador {
   username: string = '';
   password: string = '';
   mensaje: string = '';
@@ -28,48 +36,39 @@ export class Autenticador implements OnInit {
     private snackBar: MatSnackBar
   ) {}
 
-  ngOnInit(): void {
-    // opcional: limpiar sesión al entrar al login
-    sessionStorage.clear();
+  // 🔴 Esta función faltaba → arregla el (click)="cerrar()"
+  cerrar(): void {
+    this.loginService.clear();   // limpia sesión por si acaso
+    this.router.navigate(['/home']);
   }
 
-  login() {
-    let request = new JwtRequestDTO();
-    request.username = this.username;
-    request.password = this.password;
+  login(): void {
+    const req = new JwtRequestDTO();
+    req.username = this.username;
+    req.password = this.password;
 
-    this.loginService.login(request).subscribe(
-      (data: any) => {
-        // JwtResponseDTO -> campo jwttoken
-        sessionStorage.setItem('token', data.jwttoken);
+    this.loginService.login(req).subscribe({
+      next: (data: any) => {
+        // Backend devuelve JwtResponseDTO { jwttoken }
+        const token: string | undefined =
+          data?.jwttoken || data?.token || data?.jwtToken;
 
-        // 👇 AQUÍ GUARDAMOS EL ROL
-        // Opción 1: si tu backend manda data.rol = 'ADMIN'
-        if (data.rol) {
-          sessionStorage.setItem('rol', data.rol);
+        if (!token) {
+          this.mensaje = 'No se recibió el token JWT del backend.';
+          this.snackBar.open(this.mensaje, 'Cerrar', { duration: 2500 });
+          return;
         }
 
-        // Opción 2: si tu backend manda data.authorities o data.roles
-        const authorities = data.authorities || data.roles;
-        if (authorities && authorities.length) {
-          const first = authorities[0];
-          const rol =
-            typeof first === 'string'
-              ? first
-              : first.authority || first.nombreRol || '';
+        // Guardar token + usuario + roles
+        this.loginService.saveTokenAndUser(token);
 
-          if (rol) {
-            sessionStorage.setItem('rol', rol);
-          }
-        }
-
-        // Ir al dashboard (que a su vez muestra Usuarios como contenido)
-        this.router.navigate(['/usuarios']);
+        // Ir al dashboard
+        this.router.navigate(['/dashboard']);
       },
-      (error) => {
-        this.mensaje = 'Credenciales incorrectas!!!';
-        this.snackBar.open(this.mensaje, 'Aviso', { duration: 2000 });
-      }
-    );
+      error: () => {
+        this.mensaje = 'Usuario o contraseña incorrectos';
+        this.snackBar.open(this.mensaje, 'Aviso', { duration: 2500 });
+      },
+    });
   }
 }

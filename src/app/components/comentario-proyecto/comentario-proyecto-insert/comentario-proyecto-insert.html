@@ -1,62 +1,95 @@
-<div class="container">
-  <h1>{{ edicion ? 'Editar comentario' : 'Nuevo comentario' }}</h1>
+<!-- src/app/components/comentarioproyecto/comentarioproyecto-insert/comentarioproyecto-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <div class="row">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Comentario*</mat-label>
-        <textarea matInput rows="3" formControlName="comentarioProyecto"></textarea>
-        <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('required')">
-          El comentario es obligatorio
-        </mat-error>
-        <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('maxlength')">
-          El comentario no puede tener más de 200 caracteres
-        </mat-error>
-        <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('minlength')">
-          El comentario no puede tener menos de 10 caracteres
-        </mat-error>
-      </mat-form-field>
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>comment</mat-icon>
+      </div>
+
+      <div>
+        <h1 class="tc-hero-title">{{ edicion ? 'Editar comentario' : 'Nuevo comentario' }}</h1>
+        <p class="tc-hero-subtitle">Registra un comentario asociado a un proyecto y usuario.</p>
+      </div>
     </div>
 
-    <!-- Fecha solo mostrada en edición -->
-    <div class="row" *ngIf="edicion">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Fecha comentario</mat-label>
-        <input matInput [value]="fechaComentarioTexto | date : 'yyyy-MM-dd HH:mm'" disabled />
-      </mat-form-field>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
+
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Proyecto*</mat-label>
-        <mat-select formControlName="proyecto">
-          <mat-option *ngFor="let p of listaProyectos" [value]="p.idProyecto">
-            {{ p.tituloProyecto }} (ID: {{ p.idProyecto }})
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('proyecto')?.hasError('required')">
-          El proyecto es obligatorio
-        </mat-error>
-      </mat-form-field>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid">
+        <!-- Comentario -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Comentario*</mat-label>
+          <textarea matInput rows="3" formControlName="comentarioProyecto"></textarea>
 
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Usuario*</mat-label>
-        <mat-select formControlName="usuario">
-          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
-            {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('usuario')?.hasError('required')">
-          El usuario es obligatorio
-        </mat-error>
-      </mat-form-field>
-    </div>
+          <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('required')">
+            El comentario es obligatorio
+          </mat-error>
+          <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('maxlength')">
+            El comentario no puede tener más de 200 caracteres
+          </mat-error>
+          <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('minlength')">
+            El comentario no puede tener menos de 10 caracteres
+          </mat-error>
+        </mat-form-field>
 
-    <div class="buttons">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
-      </button>
-      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
-    </div>
-  </form>
+        <!-- Fecha (solo edición) -->
+        @if (edicion) {
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Fecha comentario</mat-label>
+          <input matInput [value]="fechaComentarioTexto | date : 'yyyy-MM-dd HH:mm'" disabled />
+        </mat-form-field>
+        }
+
+        <!-- Proyecto -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Proyecto*</mat-label>
+          <mat-select formControlName="proyecto" panelClass="tc-select-panel">
+            <mat-option *ngFor="let p of listaProyectos" [value]="p.idProyecto">
+              {{ p.tituloProyecto }} (ID: {{ p.idProyecto }})
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('proyecto')?.hasError('required')">
+            El proyecto es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Usuario -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Usuario*</mat-label>
+          <mat-select formControlName="usuario" panelClass="tc-select-panel">
+            <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+              {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('usuario')?.hasError('required')">
+            El usuario es obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- BOTONES -->
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

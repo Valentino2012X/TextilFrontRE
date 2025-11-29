@@ -1,33 +1,85 @@
-<div class="container">
-  <button mat-raised-button color="primary" routerLink="/tipoproducto/new">
-    <mat-icon>add</mat-icon> Nuevo tipo de producto
-  </button>
+<!-- src/app/components/tipo-producto/tipo-producto-listar/tipo-producto-listar.html -->
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width-table">
+<div class="tc-page">
+  <!-- Header -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">category</span>
+      </div>
 
-    <ng-container matColumnDef="idTipoProducto">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let row">{{ row.idTipoProducto }}</td>
-    </ng-container>
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">Tipo de producto</h1>
+        <p class="tc-hero-subtitle">
+          Gestiona los tipos para clasificar tus productos.
+        </p>
+      </div>
+    </div>
 
-    <ng-container matColumnDef="nombreTipoProducto">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let row">{{ row.nombreTipoProducto }}</td>
-    </ng-container>
+    <div class="tc-hero-right">
+      <span class="tc-total">
+        Total: <b>{{ dataSource.data.length || 0 }}</b>
+      </span>
 
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
-      <td mat-cell *matCellDef="let row">
-        <button mat-icon-button color="primary" [routerLink]="['/tipoproducto/edit', row.idTipoProducto]">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="eliminar(row.idTipoProducto)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+      <a class="tc-btn" mat-raised-button routerLink="/tipoproducto/new">
+        <mat-icon>add</mat-icon>
+        Nuevo tipo
+      </a>
+    </div>
+  </section>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+  <!-- Tabla -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Listado</span>
+    </div>
+
+    <div class="tc-table-wrap">
+      <table mat-table [dataSource]="dataSource" class="tc-table">
+
+        <!-- ID -->
+        <ng-container matColumnDef="idTipoProducto">
+          <th mat-header-cell *matHeaderCellDef class="tc-col-id">ID</th>
+          <td mat-cell *matCellDef="let row" class="tc-col-id">
+            {{ row.idTipoProducto }}
+          </td>
+        </ng-container>
+
+        <!-- Nombre -->
+        <ng-container matColumnDef="nombreTipoProducto">
+          <th mat-header-cell *matHeaderCellDef class="tc-col-name">Nombre</th>
+          <td mat-cell *matCellDef="let row" class="tc-col-name">
+            <span class="tc-chip">{{ row.nombreTipoProducto }}</span>
+          </td>
+        </ng-container>
+
+        <!-- Acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef class="tc-col-actions">Acciones</th>
+          <td mat-cell *matCellDef="let row" class="tc-col-actions tc-actions">
+            <button
+              mat-icon-button
+              class="tc-icon-btn tc-edit"
+              [routerLink]="['/tipoproducto/edit', row.idTipoProducto]"
+              aria-label="Editar"
+            >
+              <mat-icon>edit</mat-icon>
+            </button>
+
+            <button
+              mat-icon-button
+              class="tc-icon-btn tc-del"
+              (click)="eliminar(row.idTipoProducto)"
+              aria-label="Eliminar"
+            >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </section>
 </div>

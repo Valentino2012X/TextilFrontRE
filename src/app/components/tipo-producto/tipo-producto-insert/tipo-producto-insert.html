@@ -1,20 +1,51 @@
-<div class="container">
-  <h1>{{ edicion ? 'Editar tipo de producto' : 'Nuevo tipo de producto' }}</h1>
+<!-- src/app/components/tipo-producto/tipo-producto-insert/tipo-producto-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <mat-form-field class="full" appearance="outline">
-      <mat-label>Nombre del tipo de producto</mat-label>
-      <input matInput formControlName="nombreTipoProducto" />
-      <mat-error *ngIf="form.get('nombreTipoProducto')?.hasError('required')">
-        El nombre del tipo de producto es obligatorio
-      </mat-error>
-    </mat-form-field>
+<div class="tc-page">
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">add_box</span>
+      </div>
 
-    <div class="buttons">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
-      </button>
-      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">
+          {{ edicion ? 'Editar tipo de producto' : 'Nuevo tipo de producto' }}
+        </h1>
+        <p class="tc-hero-subtitle">Crea un tipo para organizar tus productos.</p>
+      </div>
     </div>
-  </form>
+
+    <div class="tc-hero-right">
+      <span class="tc-pill">{{ edicion ? 'Edición' : 'Registro' }}</span>
+    </div>
+  </section>
+
+  <section class="tc-card">
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Nombre del tipo de producto</mat-label>
+        <input matInput formControlName="nombreTipoProducto" />
+
+        <mat-error *ngIf="form.get('nombreTipoProducto')?.hasError('required')">
+          El nombre del tipo de producto es obligatorio
+        </mat-error>
+        <mat-error *ngIf="form.get('nombreTipoProducto')?.hasError('minlength')">
+          Debe tener al menos 3 caracteres
+        </mat-error>
+        <mat-error *ngIf="form.get('nombreTipoProducto')?.hasError('maxlength')">
+          Máximo 60 caracteres
+        </mat-error>
+      </mat-form-field>
+
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

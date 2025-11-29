@@ -1,0 +1,29 @@
+/* src/app/components/pago/pago-paypal/pago-paypal.css */
+@import url("../../../../assets/Styles/insert.css");
+
+:host { display: block; }
+
+.paypal-box{
+  display:flex;
+  justify-content:center;
+  padding-top: 6px;
+}
+
+.paypal-inner{
+  width: min(520px, 100%);
+}
+
+.tc-pill--ok{
+  background: rgba(141, 174, 95, 0.18);
+  border: 1px solid rgba(141, 174, 95, 0.35);
+}
+
+.tc-pill--bad{
+  background: rgba(220, 53, 69, 0.12);
+  border: 1px solid rgba(220, 53, 69, 0.28);
+}
+
+.tc-pill--pending{
+  background: rgba(13, 110, 253, 0.10);
+  border: 1px solid rgba(13, 110, 253, 0.25);
+}

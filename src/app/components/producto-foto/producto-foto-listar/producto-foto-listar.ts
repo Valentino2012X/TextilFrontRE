@@ -1,8 +1,9 @@
+// src/app/components/producto-foto/producto-foto-listar/producto-foto-listar.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 
 import { ProductoFotoService } from '../../../services/producto-foto';
@@ -13,29 +14,23 @@ import { ProductoFoto } from '../../../models/producto-foto';
   selector: 'app-producto-foto-listar',
   templateUrl: './producto-foto-listar.html',
   styleUrl: './producto-foto-listar.css',
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatCardModule, RouterLink],
 })
 export class ProductoFotoListarComponent implements OnInit {
-  dataSource: MatTableDataSource<ProductoFoto> = new MatTableDataSource<ProductoFoto>();
-
-  displayedColumns: string[] = [
-    'idProductoFoto',
-    'urlProductoFoto',
-    'principalProductoFoto',
-    'fechaSubidaProductoFoto',
-    'producto',
-    'acciones',
-  ];
+  fotos: ProductoFoto[] = [];
+  total: number = 0;
 
   constructor(private pfS: ProductoFotoService) {}
 
   ngOnInit(): void {
     this.pfS.list().subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
+      this.fotos = data;
+      this.total = data.length;
     });
 
     this.pfS.getList().subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
+      this.fotos = data;
+      this.total = data.length;
     });
   }
 
@@ -45,5 +40,9 @@ export class ProductoFotoListarComponent implements OnInit {
     this.pfS.delete(id).subscribe(() => {
       this.pfS.list().subscribe((data) => this.pfS.setList(data));
     });
+  }
+
+  getNombreProducto(f: ProductoFoto): string {
+    return f.producto?.nombreProducto || 'Producto sin nombre';
   }
 }

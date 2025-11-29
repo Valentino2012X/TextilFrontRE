@@ -1,93 +1,123 @@
-<div class="container">
-  <h1>{{ edicion ? 'Editar proyecto' : 'Nuevo proyecto' }}</h1>
+<!-- src/app/components/proyecto/proyecto-insert/proyecto-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <div class="row">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Título</mat-label>
-        <input matInput formControlName="tituloProyecto" />
-        <mat-error *ngIf="form.get('tituloProyecto')?.hasError('required')">
-          El título es obligatorio
-        </mat-error>
-      </mat-form-field>
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>assignment</mat-icon>
+      </div>
 
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Descripción</mat-label>
-        <textarea matInput rows="3" formControlName="descripcionProyecto"></textarea>
-        <mat-error *ngIf="form.get('descripcionProyecto')?.hasError('required')">
-          La descripción es obligatorio
-        </mat-error>
-        <mat-error *ngIf="form.get('descripcionProyecto')?.hasError('maxlength')">
-          La descripción no puede tener más de 200 caracteres
-        </mat-error>
-        <mat-error *ngIf="form.get('descripcionProyecto')?.hasError('minlength')">
-          La descripción no puede tener menos de 10 caracteres
-        </mat-error>
-      </mat-form-field>
+      <div>
+        <h1 class="tc-hero-title">{{ edicion ? 'Editar proyecto' : 'Nuevo proyecto' }}</h1>
+        <p class="tc-hero-subtitle">Registra título, descripción, visibilidad y responsables.</p>
+      </div>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>URL proyecto</mat-label>
-        <input matInput formControlName="urlProyecto" />
-        <mat-error *ngIf="form.get('urlProyecto')?.hasError('required')">
-          El URL es obligatorio
-        </mat-error>
-      </mat-form-field>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
 
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Visible</mat-label>
-        <mat-select formControlName="visibleProyecto">
-          <mat-option *ngFor="let m of visible" [value]="m">
-            {{ m }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('visibleProyecto')?.hasError('required')">
-          La visibilidad es obligatoria
-        </mat-error>
-      </mat-form-field>
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Fecha creación</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="fechaCreacion" />
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid">
+        <!-- Título -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Título*</mat-label>
+          <input matInput formControlName="tituloProyecto" />
+          <mat-error *ngIf="form.get('tituloProyecto')?.hasError('required')">
+            El título es obligatorio
+          </mat-error>
+        </mat-form-field>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Tipo proyecto</mat-label>
-        <mat-select formControlName="tipoProyecto">
-          <mat-option *ngFor="let tp of listaTipoProyecto" [value]="tp.idTipoProyecto">
-            {{ tp.nombreTipoProyecto }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('tipoProyecto')?.hasError('required')">
-          El tipo de proyecto es obligatorio
-        </mat-error>
-      </mat-form-field>
+        <!-- Descripción -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Descripción*</mat-label>
+          <textarea matInput rows="3" formControlName="descripcionProyecto"></textarea>
+          <mat-error *ngIf="form.get('descripcionProyecto')?.hasError('required')">
+            La descripción es obligatoria
+          </mat-error>
+          <mat-error *ngIf="form.get('descripcionProyecto')?.hasError('maxlength')">
+            La descripción no puede tener más de 200 caracteres
+          </mat-error>
+          <mat-error *ngIf="form.get('descripcionProyecto')?.hasError('minlength')">
+            La descripción no puede tener menos de 10 caracteres
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Usuario</mat-label>
-        <mat-select formControlName="usuario">
-          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
-            {{ u.nombreUsuario }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="form.get('usuario')?.hasError('required')">
-          El usuario es obligatorio
-        </mat-error>
-      </mat-form-field>
-    </div>
+        <!-- URL -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>URL proyecto*</mat-label>
+          <input matInput formControlName="urlProyecto" />
+          <mat-error *ngIf="form.get('urlProyecto')?.hasError('required')">
+            El URL es obligatorio
+          </mat-error>
+        </mat-form-field>
 
-    <div class="buttons">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
-      </button>
-      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
-    </div>
-  </form>
+        <!-- Visible -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Visible*</mat-label>
+          <mat-select formControlName="visibleProyecto" panelClass="tc-select-panel">
+            <mat-option *ngFor="let m of visible" [value]="m">{{ m }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('visibleProyecto')?.hasError('required')">
+            La visibilidad es obligatoria
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Fecha creación -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Fecha creación</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaCreacion" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Tipo proyecto -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Tipo proyecto*</mat-label>
+          <mat-select formControlName="tipoProyecto" panelClass="tc-select-panel">
+            <mat-option *ngFor="let tp of listaTipoProyecto" [value]="tp.idTipoProyecto">
+              {{ tp.nombreTipoProyecto }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('tipoProyecto')?.hasError('required')">
+            El tipo de proyecto es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Usuario -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Usuario*</mat-label>
+          <mat-select formControlName="usuario" panelClass="tc-select-panel">
+            <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+              {{ u.nombreUsuario }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('usuario')?.hasError('required')">
+            El usuario es obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- BOTONES -->
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

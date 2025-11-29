@@ -1,0 +1,203 @@
+<!-- src/app/components/home/home-community/home-community.html -->
+<div class="landing">
+  <section class="course-header">
+    <nav id="navbar">
+      <a routerLink="/home/community" class="logo">TextilConnect</a>
+
+      <ul class="nav-links" [class.open]="mobileMenuOpen">
+        <li><a routerLink="/home">Home</a></li>
+        <li><a routerLink="/home/about">Nosotros</a></li>
+        <li><a routerLink="/home/products">Productos</a></li>
+        <li><a routerLink="/home/community">Comunidad</a></li>
+        <li><a routerLink="/home/contact">Contacto</a></li>
+      </ul>
+
+      <button class="mobile-menu" type="button" (click)="toggleMenu()" aria-label="Menú">
+        <i class="fa fa-bars"></i>
+      </button>
+
+      <div class="auth-section">
+        @if (!isLoggedIn) {
+          <div class="auth-buttons">
+            <a routerLink="/autenticador" class="auth-btn login-btn">Iniciar Sesión</a>
+            <a routerLink="/registro" class="auth-btn register-btn">Registrarse</a>
+          </div>
+        }
+
+        @if (isLoggedIn) {
+          <div class="user-menu">
+            <div class="notification-icon" (click)="toggleNotifications()">
+              <i class="fas fa-bell"></i>
+              @if (notificationCount > 0) {
+                <span class="notification-badge">{{ notificationCount }}</span>
+              }
+            </div>
+
+            <div class="user-info" (click)="toggleUserMenu()">
+              <div class="user-avatar">{{ userInitials }}</div>
+              <span>{{ userName }}</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+
+            @if (userMenuOpen) {
+              <div class="dropdown-menu">
+                <a routerLink="/home/perfil" class="dropdown-item">
+                  <i class="fas fa-user"></i> Mi Perfil
+                </a>
+                <a routerLink="/home/config" class="dropdown-item">
+                  <i class="fas fa-cog"></i> Configuración
+                </a>
+                <a routerLink="/favorito" class="dropdown-item">
+                  <i class="fas fa-heart"></i> Mis Favoritos
+                </a>
+                <a routerLink="/proyecto" class="dropdown-item">
+                  <i class="fas fa-camera"></i> Mis Proyectos
+                </a>
+                <button type="button" class="dropdown-item" (click)="logout()">
+                  <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </nav>
+
+    <h1>Únete a la Comunidad</h1>
+    <p class="section-subtitle">
+      Conecta con otros diseñadores, comparte tus creaciones y forma parte de una red de creativos
+      comprometidos con la moda sostenible
+    </p>
+  </section>
+
+  <section class="community-section">
+    <div class="floating-elements">
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+      <div class="floating-element"></div>
+    </div>
+
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="assets/home/Imagenes/Diseñadores.png" alt="Seguir diseñadores" />
+          </div>
+          <h3 class="feature-title">Sigue a Diseñadores</h3>
+          <p class="feature-description">
+            Descubre y conecta con otros estudiantes de moda. Sigue a tus diseñadores favoritos y
+            mantente al día con sus últimas creaciones.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="assets/home/Imagenes/Compartir_Proyectos.png" alt="Compartir proyectos" />
+          </div>
+          <h3 class="feature-title">Comparte tus Proyectos</h3>
+          <p class="feature-description">
+            Muestra al mundo tus diseños únicos hechos con retazos. Sube fotos, comparte tu proceso
+            creativo y gana reconocimiento.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="assets/home/Imagenes/Intercambiar_Ideas.png" alt="Intercambio de ideas" />
+          </div>
+          <h3 class="feature-title">Intercambia Ideas</h3>
+          <p class="feature-description">
+            Comenta y recibe feedback de otros diseñadores. Construye una red de apoyo creativo y
+            aprende de la experiencia de otros.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="assets/home/Imagenes/Retos.png" alt="Retos creativos" />
+          </div>
+          <h3 class="feature-title">Participa en Retos</h3>
+          <p class="feature-description">
+            Únete a desafíos mensuales de diseño sostenible. Compite, aprende y gana premios
+            mientras contribuyes a la moda circular.
+          </p>
+        </div>
+
+        <div class="feature-card">
+          <div class="feature-icon">
+            <img src="assets/home/Imagenes/Red_Global.png" alt="Red global" />
+          </div>
+          <h3 class="feature-title">Red Global</h3>
+          <p class="feature-description">
+            Conecta con diseñadores de todo el mundo. Descubre técnicas, culturas y enfoques únicos
+            de la moda sostenible.
+          </p>
+        </div>
+      </div>
+
+      <div class="interactive-demo">
+        <h3 class="demo-title">Explora las Funcionalidades</h3>
+        <p style="color: rgba(255, 255, 255, 0.8); font-size: 1.1rem; margin-bottom: 30px">
+          Haz clic en cada opción para conocer más sobre nuestras características comunitarias
+        </p>
+
+        <div class="demo-grid">
+          <div class="demo-card" [class.active]="activeDemo === 'follow'" (click)="activateDemo('follow')">
+            <div class="demo-icon">👤</div>
+            <div class="demo-text">Seguir Usuarios</div>
+          </div>
+
+          <div class="demo-card" [class.active]="activeDemo === 'projects'" (click)="activateDemo('projects')">
+            <div class="demo-icon">📸</div>
+            <div class="demo-text">Ver Proyectos</div>
+          </div>
+
+          <div class="demo-card" [class.active]="activeDemo === 'share'" (click)="activateDemo('share')">
+            <div class="demo-icon">🚀</div>
+            <div class="demo-text">Subir Creaciones</div>
+          </div>
+
+          <div class="demo-card" [class.active]="activeDemo === 'challenges'" (click)="activateDemo('challenges')">
+            <div class="demo-icon">🎯</div>
+            <div class="demo-text">Retos Creativos</div>
+          </div>
+        </div>
+
+        @if (demoText) {
+          <div
+            style="
+              margin-top: 30px;
+              padding: 20px;
+              background: rgba(255, 255, 255, 0.1);
+              border-radius: 15px;
+            "
+          >
+            <p style="color: black; font-size: 1.1rem; line-height: 1.6">
+              {{ demoText }}
+            </p>
+          </div>
+        }
+      </div>
+
+      <div class="cta-section">
+        <a routerLink="/home/perfil" class="cta-button pulse-animation">Únete a la Comunidad</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    <div class="container">
+      <h4>Síguenos en Nuestras Redes</h4>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <p>
+        &copy; 2025 TextilConnect. Hecho con <i class="fas fa-heart"></i> para un futuro sostenible.
+      </p>
+    </div>
+  </section>
+</div>

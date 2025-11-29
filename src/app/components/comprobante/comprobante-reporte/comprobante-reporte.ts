@@ -12,6 +12,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 
 import { ComprobanteService } from '../../../services/comprobante-service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-comprobante-reporte',
@@ -25,7 +26,8 @@ import { MatTableDataSource } from '@angular/material/table';
     MatFormFieldModule,
     MatInputModule,
     MatDatepickerModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatIconModule
   ],
   templateUrl: './comprobante-reporte.html',
   styleUrls: ['./comprobante-reporte.css']

@@ -1,0 +1,75 @@
+.main-header h1 {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 800;
+  color: #1c1c1c;
+}
+
+.main-subtitle {
+  margin: 8px 0 0;
+  font-size: 15px;
+  color: rgba(28, 28, 28, 0.75);
+}
+
+.cards-grid {
+  margin-top: 18px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #d9d9d9;
+  border-radius: 16px;
+  padding: 18px 18px;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.08);
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 800;
+  color: #1c1c1c;
+}
+
+.card-value {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 800;
+  color: #3d6b3b;
+}
+
+.card-text {
+  margin: 0 0 14px;
+  font-size: 14px;
+  color: rgba(28, 28, 28, 0.80);
+  line-height: 1.5;
+}
+
+.card-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 800;
+  color: #3d6b3b;
+  text-decoration: none;
+}
+
+.card-link:hover {
+  text-decoration: underline;
+}
+.nav-brand-logo {
+  cursor: pointer;
+  transition: transform 0.15s ease, filter 0.2s ease;
+}
+
+.nav-brand-logo:hover {
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+}
+
+.nav-brand-logo:active {
+  transform: scale(0.98);
+}

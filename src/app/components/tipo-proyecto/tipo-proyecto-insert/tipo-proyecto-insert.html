@@ -1,20 +1,52 @@
-<div class="container">
-  <h1>{{ edicion ? 'Editar tipo de proyecto' : 'Nuevo tipo de proyecto' }}</h1>
+<div class="tc-page">
+  <!-- HERO -->
+  <div class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>category</mat-icon>
+      </div>
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <mat-form-field class="full" appearance="outline">
-      <mat-label>Nombre del tipo de proyecto</mat-label>
-      <input matInput formControlName="nombreTipoProyecto" />
-      <mat-error *ngIf="form.get('nombreTipoProyecto')?.hasError('required')">
-        El nombre del tipo de proyecto es obligatorio
-      </mat-error>
-    </mat-form-field>
-
-    <div class="buttons">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
-      </button>
-      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+      <div>
+        <h1 class="tc-hero-title">
+          {{ edicion ? 'Editar tipo de proyecto' : 'Nuevo tipo de proyecto' }}
+        </h1>
+        <p class="tc-hero-subtitle">Crea un tipo para organizar tus proyectos.</p>
+      </div>
     </div>
-  </form>
+
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </div>
+
+  <!-- CARD -->
+  <div class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
+    </div>
+
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid tc-grid-1">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Nombre del tipo de proyecto*</mat-label>
+          <input matInput formControlName="nombreTipoProyecto" />
+          <mat-error *ngIf="form.get('nombreTipoProyecto')?.hasError('required')">
+            El nombre del tipo de proyecto es obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-stroked-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </div>
 </div>

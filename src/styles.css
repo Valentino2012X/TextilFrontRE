@@ -1,4 +1,34 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===========================
+   THEME GLOBAL ANGULAR MATERIAL
+   =========================== */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Tema claro con acentos rosados */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+/* Si quieres, puedes probar este también:
+   @import '@angular/material/prebuilt-themes/pink-bluegrey.css';
+*/
+
+/* ===========================
+   BASE
+   =========================== */
+html,
+body {
+  height: 100%;
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+/* ===========================
+   ERRORES: TEXTO ROJO DENTRO DEL CAMPO
+   =========================== */
+
+/* Texto dentro del input cuando el mat-form-field está inválido */
+.mdc-text-field--invalid .mdc-text-field__input {
+  color: #d32f2f !important;   /* rojo material */
+  caret-color: #d32f2f;        /* cursor también rojo */
+}
+
+/* Texto del mat-select (por ejemplo Rol) cuando está inválido */
+.mat-mdc-select.mat-mdc-select-invalid .mat-mdc-select-value-text {
+  color: #d32f2f !important;
+}

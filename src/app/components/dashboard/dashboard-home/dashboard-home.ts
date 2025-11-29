@@ -1,26 +1,49 @@
-// src/app/components/dashboard/dashboard-home.component.ts
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+// src/app/components/dashboard/dashboard-home/dashboard-home.ts
 
-type Rol = 'ADMIN' | 'VENDEDOR' | 'COMPRADOR';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { LoginService, AppRole } from '../../../services/login-service';
+
+// Rol que usaremos solo en la VISTA
+type ViewRole = 'ADMIN' | 'VENDEDOR' | 'ESTUDIANTE' | 'UNKNOWN';
 
 @Component({
   selector: 'app-dashboard-home',
   standalone: true,
-  imports: [CommonModule],
-  templateUrl: './dashboard-home.html',
+  imports: [CommonModule, RouterLink],
+  templateUrl: './dashboard-home.html', // asegúrate que el nombre coincida
   styleUrl: './dashboard-home.css',
 })
 export class DashboardHomeComponent implements OnInit {
-  rol: Rol = 'COMPRADOR';
+  private loginService = inject(LoginService);
+
+  rol: ViewRole = 'UNKNOWN';
 
   ngOnInit(): void {
-    const raw =
-      sessionStorage.getItem('rol') || localStorage.getItem('rol') || 'COMPRADOR';
+    // getRole() devuelve: AppRole | null => 'ADMIN' | 'VENDEDOR' | 'COMPRADOR' | null
+    const role: AppRole | null = this.loginService.getRole();
 
-    const upper = raw.toUpperCase();
-    if (upper.includes('ADMIN')) this.rol = 'ADMIN';
-    else if (upper.includes('VENDEDOR')) this.rol = 'VENDEDOR';
-    else this.rol = 'COMPRADOR';
+    if (role === 'ESTUDIANTE') {
+      // 👇 Para la UI lo mostramos como ESTUDIANTE
+      this.rol = 'ESTUDIANTE';
+    } else if (role === 'ADMIN' || role === 'VENDEDOR') {
+      this.rol = role;
+    } else {
+      this.rol = 'UNKNOWN';
+    }
+  }
+
+  // Helpers opcionales por si los quieres usar en el HTML
+  isAdmin(): boolean {
+    return this.rol === 'ADMIN';
+  }
+
+  isVendedor(): boolean {
+    return this.rol === 'VENDEDOR';
+  }
+
+  isEstudiante(): boolean {
+    return this.rol === 'ESTUDIANTE';
   }
 }

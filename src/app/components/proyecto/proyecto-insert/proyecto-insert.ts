@@ -13,6 +13,7 @@ import { TipoProyectoService } from '../../../services/tipo-proyecto-service';
 import { UsuarioService } from '../../../services/usuario-service';
 import { TipoProyecto } from '../../../models/Tipo-proyecto';
 import { Usuario } from '../../../models/Usuario';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -27,6 +28,7 @@ import { Usuario } from '../../../models/Usuario';
     MatSelectModule,
     MatOptionModule,
     MatDatepickerModule,
+    MatIconModule,
   ],
   providers: [provideNativeDateAdapter()],
 })

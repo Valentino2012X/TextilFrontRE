@@ -1,56 +1,90 @@
-<div class="form-container">
-  <h1>{{ edicion ? 'Editar favorito' : 'Nuevo favorito' }}</h1>
+<!-- src/app/components/favorito/favorito-insert/favorito-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <!-- FECHA -->
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Fecha de favorito</mat-label>
-        <input matInput [matDatepicker]="pickerFecha" formControlName="fechaFavorito" />
-        <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
-        <mat-datepicker #pickerFecha></mat-datepicker>
-        <mat-error *ngIf="campoInvalido('fechaFavorito')"> La fecha es obligatoria. </mat-error>
-      </mat-form-field>
+<div class="tc-page">
+  <!-- Header -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>favorite</mat-icon>
+      </div>
+
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">
+          {{ edicion ? 'Editar favorito' : 'Nuevo favorito' }}
+        </h1>
+        <p class="tc-hero-subtitle">
+          Selecciona un usuario y opcionalmente un producto o un proyecto.
+        </p>
+      </div>
     </div>
 
-    <!-- USUARIO / PRODUCTO / PROYECTO -->
-    <div class="row">
-      <mat-form-field appearance="outline">
-        <mat-label>Usuario</mat-label>
-        <mat-select formControlName="idUsuario">
-          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
-            {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="campoInvalido('idUsuario')"> Debes seleccionar un usuario. </mat-error>
-      </mat-form-field>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
 
-      <mat-form-field appearance="outline">
-        <mat-label>Producto (opcional)</mat-label>
-        <mat-select formControlName="idProducto">
-          <mat-option [value]="null">— Ninguno —</mat-option>
-          <mat-option *ngFor="let p of listaProductos" [value]="p.idProducto">
-            {{ p.nombreProducto }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline">
-        <mat-label>Proyecto (opcional)</mat-label>
-        <mat-select formControlName="idProyecto">
-          <mat-option [value]="null">— Ninguno —</mat-option>
-          <mat-option *ngFor="let pr of listaProyectos" [value]="pr.idProyecto">
-            {{ pr.tituloProyecto }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+  <!-- Form -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <div class="buttons">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
-      </button>
-      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
-    </div>
-  </form>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid tc-grid-1">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Fecha de favorito</mat-label>
+          <input matInput [matDatepicker]="pickerFecha" formControlName="fechaFavorito" />
+          <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFecha></mat-datepicker>
+          <mat-error *ngIf="campoInvalido('fechaFavorito')">
+            La fecha es obligatoria.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="tc-grid tc-grid-3">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Usuario</mat-label>
+          <mat-select formControlName="idUsuario" panelClass="tc-select-panel">
+            <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+              {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoInvalido('idUsuario')">
+            Debes seleccionar un usuario.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Producto (opcional)</mat-label>
+          <mat-select formControlName="idProducto" panelClass="tc-select-panel">
+            <mat-option [value]="null">— Ninguno —</mat-option>
+            <mat-option *ngFor="let p of listaProductos" [value]="p.idProducto">
+              {{ p.nombreProducto }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Proyecto (opcional)</mat-label>
+          <mat-select formControlName="idProyecto" panelClass="tc-select-panel">
+            <mat-option [value]="null">— Ninguno —</mat-option>
+            <mat-option *ngFor="let pr of listaProyectos" [value]="pr.idProyecto">
+              {{ pr.tituloProyecto }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

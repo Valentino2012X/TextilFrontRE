@@ -1,0 +1,23 @@
+@import url("../../../../assets/Styles/insert.css");
+
+/* Ajustes específicos de reporte */
+.reporte-page .tc-card { overflow: hidden; }
+
+.tc-chart{
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 10px 6px 4px;
+}
+
+.tc-empty{
+  width: 100%;
+  margin-top: 8px;
+  padding: 14px 16px;
+  border-radius: 14px;
+  background: rgba(245, 245, 220, 0.6);
+  border: 1px solid rgba(61, 107, 59, 0.18);
+  text-align: center;
+  color: #1C1C1C;
+  font-weight: 600;
+}

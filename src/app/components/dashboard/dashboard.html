@@ -1,24 +1,28 @@
-<!-- src/app/components/dashboard/dashboard.component.html -->
 <div class="dashboard-root">
-  <!-- NAVBAR PROPIO DEL DASHBOARD (arriba) -->
-  <app-dashboard-navbar></app-dashboard-navbar>
+  <!-- NAVBAR -->
+  <app-dashboard-navbar [rol]="rolActual || ''"></app-dashboard-navbar>
 
-  <!-- CUERPO: SIDEBAR + CONTENIDO -->
   <div class="dashboard-body">
-    <!-- SIDEBAR -->
     <aside class="sidebar-root">
-      <!-- 🔹 Panel de usuario / rol / logout -->
+      <!-- Panel usuario -->
       <div class="user-panel">
         <div class="user-panel-left">
-          <div class="user-avatar">TC</div>
+          <div class="user-avatar">{{ userInitials }}</div>
+
           <div class="user-meta">
             <div class="user-label">Sesión activa</div>
+
+            <div class="user-name">
+              <span>{{ nombreActual || 'Usuario' }}</span>
+            </div>
+
             <div class="user-role">
               Rol:
               <span>{{ rolActual || '---' }}</span>
             </div>
           </div>
         </div>
+
         <button
           mat-icon-button
           class="logout-btn"
@@ -30,50 +34,95 @@
       </div>
 
       <div class="menu">
-        <!-- GESTIÓN DE USUARIOS -->
-        <p class="menu-section">Gestión de usuarios</p>
-        <a routerLink="/usuarios" routerLinkActive="active-link" class="menu-item">
-          <span class="material-icons">group</span>
-          <span>Usuarios</span>
-        </a>
-        <a routerLink="/roles" routerLinkActive="active-link" class="menu-item">
-          <span class="material-icons">shield</span>
-          <span>Roles</span>
-        </a>
+        <!-- ===== ADMIN ONLY ===== -->
+        <ng-container *ngIf="isAdmin">
+          <p class="menu-section">Gestión de usuarios</p>
 
-        <!-- CATÁLOGOS / PRODUCTOS -->
+          <a routerLink="/usuarios" routerLinkActive="active-link" class="menu-item">
+            <span class="material-icons">group</span>
+            <span>Usuarios</span>
+          </a>
+
+          <a routerLink="/roles" routerLinkActive="active-link" class="menu-item">
+            <span class="material-icons">shield</span>
+            <span>Roles</span>
+          </a>
+        </ng-container>
+
+        <!-- ===== Catálogo / Productos ===== -->
         <p class="menu-section">Catálogos / productos</p>
-        <a routerLink="/tipoproducto" routerLinkActive="active-link" class="menu-item">
+
+        <!-- TipoProducto solo ADMIN (según tu resumen) -->
+        <a
+          *ngIf="isAdmin"
+          routerLink="/tipoproducto"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">category</span>
           <span>Tipo producto</span>
         </a>
+
+        <!-- Producto: todos logueados -->
         <a routerLink="/producto" routerLinkActive="active-link" class="menu-item">
           <span class="material-icons">inventory_2</span>
           <span>Producto</span>
         </a>
-        <a routerLink="/productofoto" routerLinkActive="active-link" class="menu-item">
+
+        <!-- Producto foto: ADMIN + VENDEDOR -->
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/productofoto"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">photo</span>
           <span>Producto foto</span>
         </a>
-        <a routerLink="/favorito" routerLinkActive="active-link" class="menu-item">
+
+        <!-- Favorito: VENDEDOR + COMPRADOR -->
+        <a
+          *ngIf="isVendedor || isComprador"
+          routerLink="/favorito"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">favorite</span>
           <span>Favorito</span>
         </a>
+
+        <!-- Calificación: todos (admin lista+elimina; v/c insert/mod) -->
         <a routerLink="/calificacion" routerLinkActive="active-link" class="menu-item">
           <span class="material-icons">star</span>
           <span>Calificación</span>
         </a>
 
-        <!-- PROYECTOS -->
+        <!-- ===== Proyectos ===== -->
         <p class="menu-section">Proyectos</p>
-        <a routerLink="/tipoproyecto" routerLinkActive="active-link" class="menu-item">
+
+        <!-- Tipoproyecto: ADMIN + VENDEDOR -->
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/tipoproyecto"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">view_quilt</span>
           <span>Tipo proyecto</span>
         </a>
-        <a routerLink="/proyecto" routerLinkActive="active-link" class="menu-item">
+
+        <!-- Proyecto: ADMIN + VENDEDOR -->
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/proyecto"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">work</span>
           <span>Proyecto</span>
         </a>
+
+        <!-- Comentarios: todos -->
         <a
           routerLink="/comentarioproyecto"
           routerLinkActive="active-link"
@@ -83,36 +132,70 @@
           <span>Comentario proyecto</span>
         </a>
 
-        <!-- VENTAS / PEDIDOS / ENTREGA -->
+        <!-- ===== Ventas / pedidos / entrega ===== -->
         <p class="menu-section">Ventas / pedidos / entrega</p>
+
+        <!-- Pedido: todos -->
         <a routerLink="/pedido" routerLinkActive="active-link" class="menu-item">
           <span class="material-icons">shopping_cart</span>
           <span>Pedido</span>
         </a>
-        <a routerLink="/pedido-item" routerLinkActive="active-link" class="menu-item">
+
+        <!-- Pedido Item: ADMIN + COMPRADOR -->
+        <a
+          *ngIf="isAdmin || isComprador"
+          routerLink="/pedido-item"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">list</span>
           <span>Pedido item</span>
         </a>
-        <a routerLink="/comprobante" routerLinkActive="active-link" class="menu-item">
+
+        <!-- Comprobante: ADMIN + VENDEDOR -->
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/comprobante"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">receipt_long</span>
           <span>Comprobante</span>
         </a>
-        <a routerLink="/entrega" routerLinkActive="active-link" class="menu-item">
+
+        <!-- Entrega: ADMIN + VENDEDOR -->
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/entrega"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">local_shipping</span>
           <span>Entrega</span>
         </a>
-        <a routerLink="/metodopago" routerLinkActive="active-link" class="menu-item">
+
+        <!-- Método pago: ADMIN -->
+        <a
+          *ngIf="isAdmin"
+          routerLink="/metodopago"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">payments</span>
           <span>Método de pago</span>
         </a>
+
+        <!-- Tarjeta: todos (pero /tarjeta/new solo vendedor/comprador) -->
         <a routerLink="/tarjeta" routerLinkActive="active-link" class="menu-item">
           <span class="material-icons">credit_card</span>
           <span>Tarjeta</span>
         </a>
 
-        <!-- 🧾 REPORTES -->
+        <!-- ===== Reportes ===== -->
         <p class="menu-section">Reportes</p>
+
         <a
+          *ngIf="isAdmin"
           routerLink="/producto/bprecio"
           routerLinkActive="active-link"
           class="menu-item"
@@ -122,6 +205,7 @@
         </a>
 
         <a
+          *ngIf="isAdmin"
           routerLink="/comentarioproyecto/reporte"
           routerLinkActive="active-link"
           class="menu-item"
@@ -131,6 +215,7 @@
         </a>
 
         <a
+          *ngIf="isAdmin || isVendedor"
           routerLink="/comprobante/reporte"
           routerLinkActive="active-link"
           class="menu-item"
@@ -140,6 +225,7 @@
         </a>
 
         <a
+          *ngIf="isAdmin || isVendedor"
           routerLink="/comprobante/reporte2"
           routerLinkActive="active-link"
           class="menu-item"
@@ -149,6 +235,7 @@
         </a>
 
         <a
+          *ngIf="isAdmin || isVendedor"
           routerLink="/pedido/reporte"
           routerLinkActive="active-link"
           class="menu-item"
@@ -158,6 +245,7 @@
         </a>
 
         <a
+          *ngIf="isAdmin || isVendedor"
           routerLink="/entrega/reporte"
           routerLinkActive="active-link"
           class="menu-item"
@@ -167,6 +255,7 @@
         </a>
 
         <a
+          *ngIf="isAdmin"
           routerLink="/tarjeta/reporte"
           routerLinkActive="active-link"
           class="menu-item"
@@ -176,6 +265,7 @@
         </a>
 
         <a
+          *ngIf="isAdmin"
           routerLink="/tarjeta/reporte2"
           routerLinkActive="active-link"
           class="menu-item"
@@ -184,13 +274,21 @@
           <span>Reporte tarjetas (detalle)</span>
         </a>
 
-        <!-- CONFIGURACIÓN / OTROS -->
+        <!-- ===== Configuración / otros ===== -->
         <p class="menu-section">Configuración / otros</p>
-        <a routerLink="/tipodocumento" routerLinkActive="active-link" class="menu-item">
+
+        <a
+          *ngIf="isAdmin"
+          routerLink="/tipodocumento"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">description</span>
           <span>Tipo documento</span>
         </a>
+
         <a
+          *ngIf="isAdmin || isComprador"
           routerLink="/presupuestomensual"
           routerLinkActive="active-link"
           class="menu-item"
@@ -198,14 +296,19 @@
           <span class="material-icons">account_balance_wallet</span>
           <span>Presupuesto mensual</span>
         </a>
-        <a routerLink="/notificacion" routerLinkActive="active-link" class="menu-item">
+
+        <a
+          *ngIf="isAdmin"
+          routerLink="/notificacion"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
           <span class="material-icons">notifications</span>
           <span>Notificación</span>
         </a>
       </div>
     </aside>
 
-    <!-- CONTENIDO PRINCIPAL: aquí se pintan las rutas hijas -->
     <main class="dashboard-content">
       <router-outlet></router-outlet>
     </main>

@@ -1,42 +1,37 @@
+// src/app/components/pedido-item/pedido-item-listar/pedido-item-listar.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { RouterLink } from '@angular/router';
 
 import { PedidoItemService } from '../../../services/pedido-item-service';
 import { PedidoItem } from '../../../models/Pedido-item';
+import { MatHeaderCellDef, MatCellDef } from "@angular/material/table";
 
 @Component({
   standalone: true,
   selector: 'app-pedido-item-listar',
   templateUrl: './pedido-item-listar.html',
   styleUrl: './pedido-item-listar.css',
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink],
+  imports: [CommonModule, MatButtonModule, MatIconModule, MatCardModule, RouterLink, MatHeaderCellDef, MatCellDef],
 })
 export class PedidoItemListarComponent implements OnInit {
-  dataSource: MatTableDataSource<PedidoItem> =
-    new MatTableDataSource<PedidoItem>();
-
-  displayedColumns: string[] = [
-    'idPedidoItem',
-    'cantidadPedidoItem',
-    'precioPedidoItem',
-    'pedido',
-    'producto',
-    'acciones',
-  ];
+  items: PedidoItem[] = [];
+  total: number = 0;
 
   constructor(private piS: PedidoItemService) {}
 
   ngOnInit(): void {
     this.piS.list().subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
+      this.items = data;
+      this.total = data.length;
     });
 
     this.piS.getList().subscribe((data) => {
-      this.dataSource = new MatTableDataSource(data);
+      this.items = data;
+      this.total = data.length;
     });
   }
 
@@ -59,5 +54,9 @@ export class PedidoItemListarComponent implements OnInit {
         }
       },
     });
+  }
+
+  getNombreProducto(row: PedidoItem): string {
+    return row.nombreProducto || 'Producto sin nombre';
   }
 }

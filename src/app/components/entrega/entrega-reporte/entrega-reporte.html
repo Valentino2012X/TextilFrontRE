@@ -1,44 +1,91 @@
-<div class="reporte-container">
-  <h2>Entregas por rango de fecha</h2>
+<!-- src/app/components/entrega/entrega-reporte/entrega-reporte.html -->
+<div class="tc-page reporte-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">local_shipping</span>
+      </div>
 
-  <!-- Formulario de fechas -->
-  <div class="form">
-    <label>Inicio:</label>
-    <input type="date" [(ngModel)]="inicio">
-    <label>Fin:</label>
-    <input type="date" [(ngModel)]="fin">
-    <button (click)="buscar()">Buscar</button>
-  </div>
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">Reporte de entregas</h1>
+        <p class="tc-hero-subtitle">Entregas por rango de fecha: resumen y distribución.</p>
+      </div>
+    </div>
 
-  <!-- Tabla resumen -->
-  <div *ngIf="totales !== 0 || canceladas !== 0" class="resumen">
-    <h3>Resumen</h3>
-    <table>
-      <thead>
-        <tr>
-          <th>Total de entregas</th>
-          <th>Entregas canceladas</th>
-          <th>Entregas completadas</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>{{ totales }}</td>
-          <td>{{ canceladas }}</td>
-          <td>{{ totales - canceladas }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Reporte</span>
+    </div>
+  </section>
 
-  <!-- Gráfico Pie -->
-  <div *ngIf="totales !== 0 || canceladas !== 0" class="grafico">
-    <h3>Distribución</h3>
-    <canvas #pieCanvas></canvas>
-  </div>
+  <!-- CARD: FILTROS -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Filtros</span>
+    </div>
 
-  <!-- Mensaje si no hay datos -->
-  <div *ngIf="totales === 0 && canceladas === 0">
-    <p>No hay datos para mostrar en este rango de fechas.</p>
-  </div>
+    <div class="tc-form">
+      <div class="tc-filter-panel">
+        <div class="tc-field">
+          <label class="tc-label">Inicio</label>
+          <input class="tc-input" type="date" [(ngModel)]="inicio" />
+        </div>
+
+        <div class="tc-field">
+          <label class="tc-label">Fin</label>
+          <input class="tc-input" type="date" [(ngModel)]="fin" />
+        </div>
+
+        <button class="tc-btn-primary tc-btn-search" type="button" (click)="buscar()">
+          <span class="material-icons">search</span>
+          Buscar
+        </button>
+      </div>
+
+      <!-- Mensaje cuando no hay datos -->
+      <div class="tc-empty" *ngIf="totales === 0 && canceladas === 0">
+        No hay datos para mostrar en este rango de fechas.
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section class="tc-results" *ngIf="totales !== 0 || canceladas !== 0">
+    <!-- RESUMEN -->
+    <section class="tc-card">
+      <div class="tc-card-top">
+        <span class="tc-pill">Resumen</span>
+      </div>
+
+      <div class="tc-table-wrap">
+        <table class="tc-table tc-table-center">
+          <thead>
+            <tr>
+              <th>Total de entregas</th>
+              <th>Entregas canceladas</th>
+              <th>Entregas completadas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="tc-chip">{{ totales }}</span></td>
+              <td><span class="tc-chip">{{ canceladas }}</span></td>
+              <td><span class="tc-chip">{{ totales - canceladas }}</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- GRAFICO -->
+    <section class="tc-card">
+      <div class="tc-card-top">
+        <span class="tc-pill">Distribución</span>
+      </div>
+
+      <div class="tc-chart">
+        <canvas #pieCanvas></canvas>
+      </div>
+    </section>
+  </section>
 </div>

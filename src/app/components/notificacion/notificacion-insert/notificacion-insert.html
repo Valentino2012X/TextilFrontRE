@@ -1,79 +1,101 @@
-<div class="form-container">
-  <h1>{{ edicion ? 'Editar notificación' : 'Nueva notificación' }}</h1>
+<!-- src/app/components/notificacion/notificacion-insert/notificacion-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <!-- FILA: TIPO / FECHA -->
-    <div class="row">
-      <mat-form-field appearance="outline" class="half">
-        <mat-label>Tipo de notificación</mat-label>
-        <input matInput formControlName="tipoNotificacion" />
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">notifications</span>
+      </div>
 
-        <mat-error
-          *ngIf="tipoNotificacionField.hasError('required') && tipoNotificacionField.touched"
-        >
-          El tipo de notificación es obligatorio.
-        </mat-error>
-        <mat-error
-          *ngIf="tipoNotificacionField.hasError('maxlength') && tipoNotificacionField.touched"
-        >
-          Máximo 20 caracteres.
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="half">
-        <mat-label>Fecha</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="fechaNotificacion" />
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-
-        <mat-error
-          *ngIf="fechaNotificacionField.hasError('required') && fechaNotificacionField.touched"
-        >
-          La fecha es obligatoria.
-        </mat-error>
-      </mat-form-field>
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">
+          {{ edicion ? 'Editar notificación' : 'Nueva notificación' }}
+        </h1>
+        <p class="tc-hero-subtitle">
+          Registra avisos y mensajes para los usuarios.
+        </p>
+      </div>
     </div>
 
-    <!-- FILA: MENSAJE (OCUPA TODA LA FILA) -->
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width mensaje-field">
-        <mat-label>Mensaje</mat-label>
-        <textarea matInput formControlName="mensajeNotificacion" rows="5"></textarea>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
 
-        <mat-error
-          *ngIf="mensajeNotificacionField.hasError('required') && mensajeNotificacionField.touched"
-        >
-          El mensaje es obligatorio.
-        </mat-error>
-        <mat-error
-          *ngIf="mensajeNotificacionField.hasError('maxlength') && mensajeNotificacionField.touched"
-        >
-          Máximo 255 caracteres.
-        </mat-error>
-      </mat-form-field>
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <!-- FILA: USUARIO (DEBAJO DEL MENSAJE) -->
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Usuario</mat-label>
-        <mat-select formControlName="usuario">
-          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
-            {{ u.nombreUsuario }}
-          </mat-option>
-        </mat-select>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid">
+        <!-- Tipo -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Tipo de notificación</mat-label>
+          <input matInput formControlName="tipoNotificacion" />
 
-        <mat-error *ngIf="usuarioField.hasError('required') && usuarioField.touched">
-          Debes seleccionar un usuario.
-        </mat-error>
-      </mat-form-field>
-    </div>
+          <mat-error *ngIf="tipoNotificacionField.hasError('required') && tipoNotificacionField.touched">
+            El tipo de notificación es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="tipoNotificacionField.hasError('maxlength') && tipoNotificacionField.touched">
+            Máximo 20 caracteres.
+          </mat-error>
+        </mat-form-field>
 
-    <div class="buttons">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
-      </button>
-      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
-    </div>
-  </form>
+        <!-- Fecha -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Fecha</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaNotificacion" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+
+          <mat-error *ngIf="fechaNotificacionField.hasError('required') && fechaNotificacionField.touched">
+            La fecha es obligatoria.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Mensaje -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Mensaje</mat-label>
+          <textarea matInput formControlName="mensajeNotificacion" rows="5"></textarea>
+
+          <mat-error *ngIf="mensajeNotificacionField.hasError('required') && mensajeNotificacionField.touched">
+            El mensaje es obligatorio.
+          </mat-error>
+          <mat-error *ngIf="mensajeNotificacionField.hasError('maxlength') && mensajeNotificacionField.touched">
+            Máximo 255 caracteres.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Usuario -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Usuario</mat-label>
+          <mat-select formControlName="usuario" panelClass="tc-select-panel">
+            <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+              {{ u.nombreUsuario }}
+            </mat-option>
+          </mat-select>
+
+          <mat-error *ngIf="usuarioField.hasError('required') && usuarioField.touched">
+            Debes seleccionar un usuario.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- BOTONES (sin disabled frío) -->
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

@@ -15,6 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PresupuestoMensualService } from '../../../services/presupuesto-mensual-service';
 import { UsuarioService } from '../../../services/usuario-service';
 import { Usuario } from '../../../models/Usuario';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -31,6 +32,7 @@ import { Usuario } from '../../../models/Usuario';
     MatButtonModule,
     MatDatepickerModule,
     MatOptionModule,
+    MatIconModule
   ],
 })
 export class PresupuestoMensualInsertarComponent implements OnInit {

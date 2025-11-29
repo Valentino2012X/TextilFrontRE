@@ -1,36 +1,76 @@
-<div class="reporte-container">
-  <h2>Tarjetas por rango de fecha de vencimiento</h2>
+<div class="tc-page reporte-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">event</span>
+      </div>
 
-  <div class="form">
-    <label>Fecha inicio:</label>
-    <input type="date" [(ngModel)]="inicio">
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">Reporte de tarjetas</h1>
+        <p class="tc-hero-subtitle">Tarjetas por rango de fecha de vencimiento.</p>
+      </div>
+    </div>
 
-    <label>Fecha fin:</label>
-    <input type="date" [(ngModel)]="fin">
+    <div class="tc-hero-right">
+      <span class="tc-pill">Reporte</span>
+    </div>
+  </section>
 
-    <button (click)="buscar()">Buscar</button>
-  </div>
+  <!-- CARD: FILTROS -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Filtros</span>
+    </div>
 
-  <div *ngIf="hasData">
-    <table>
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>ultimos 4 digitos de la tarjeta</th>
-          <th>Vencimiento</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let tarjeta of tarjetas">
-          <td>{{ tarjeta.idTarjeta }}</td>
-          <td>{{ tarjeta.ultimos4Tarjeta }}</td>
-          <td>{{ tarjeta.vencimientoTarjeta | date:'yyyy-MM-dd' }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+    <div class="tc-form">
+      <div class="tc-filter-row">
+        <div class="tc-date-field">
+          <label class="tc-label">Inicio</label>
+          <input class="tc-input" type="date" [(ngModel)]="inicio" />
+        </div>
 
-  <div *ngIf="!hasData">
-    <p>No hay tarjetas en ese rango de fechas.</p>
-  </div>
+        <div class="tc-date-field">
+          <label class="tc-label">Fin</label>
+          <input class="tc-input" type="date" [(ngModel)]="fin" />
+        </div>
+
+        <button class="tc-btn-primary tc-btn-search" type="button" (click)="buscar()">
+          <span class="material-icons">search</span>
+          Buscar
+        </button>
+      </div>
+
+      <div class="tc-empty" *ngIf="!hasData">
+        No hay tarjetas en ese rango de fechas.
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTADOS -->
+  <section class="tc-card" *ngIf="hasData">
+    <div class="tc-card-top">
+      <span class="tc-pill">Resultados</span>
+    </div>
+
+    <div class="tc-table-wrap">
+      <table class="tc-table tc-table-center">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Últimos 4 dígitos</th>
+            <th>Vencimiento</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let tarjeta of tarjetas">
+            <td>{{ tarjeta.idTarjeta }}</td>
+            <td><span class="tc-chip">{{ tarjeta.ultimos4Tarjeta }}</span></td>
+            <td>{{ tarjeta.vencimientoTarjeta | date:'yyyy-MM-dd' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
 </div>
