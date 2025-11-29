@@ -1,0 +1,63 @@
+.reporte-container {
+  max-width: 700px;
+  margin: 40px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.reporte-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 25px;
+}
+
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.form label {
+  font-weight: bold;
+  color: #555;
+}
+
+.form input[type="date"] {
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+}
+
+.form button {
+  padding: 8px 16px;
+  background-color: #36A2EB;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s;
+}
+
+.form button:hover {
+  background-color: #2a87c9;
+}
+
+canvas {
+  display: block;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+p {
+  text-align: center;
+  color: #777;
+  font-size: 16px;
+}

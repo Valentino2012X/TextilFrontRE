@@ -1,0 +1,26 @@
+.container {
+  padding: 20px;
+}
+
+.filters {
+  margin-bottom: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.no-data {
+  text-align: center;
+  margin-top: 20px;
+  color: gray;
+}
+
+.no-data-icon {
+  font-size: 40px;
+  color: #888;
+}
+
+.chart-container {
+  width: 80%;
+  margin: auto;
+}

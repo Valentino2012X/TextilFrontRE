@@ -1,0 +1,11 @@
+<div class="reporte-container">
+  <h2>Cantidad de tarjetas por marca</h2>
+
+  <div *ngIf="hasData">
+    <canvas #pieCanvas></canvas>
+  </div>
+
+  <div *ngIf="!hasData">
+    <p>No hay datos disponibles para mostrar.</p>
+  </div>
+</div>

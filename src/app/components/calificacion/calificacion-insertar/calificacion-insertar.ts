@@ -69,7 +69,7 @@ export class CalificacionInsertarComponent implements OnInit {
       idCalificacion: [0],
       estrellas: [null, [Validators.required, Validators.min(1), Validators.max(5)]],
       comentario: ['', [Validators.required, Validators.maxLength(100)]],
-      fechaCalificacion: [{ value: new Date(), disabled: true }],
+      fechaCalificacion: [{ value: hoy, disabled: true }],
       idPedido: [null, Validators.required],
       idCalificador: [null, Validators.required],
       idCalificado: [null, Validators.required],
@@ -84,21 +84,21 @@ export class CalificacionInsertarComponent implements OnInit {
 
       if (this.edicion) {
         this.cS.listId(this.id).subscribe((data: Calificacion) => {
- let fechaLocal: Date | null = null;
+          let fechaLocal: Date | null = null;
           if (data.fechaCalificacion) {
-          const iso = data.fechaCalificacion.toString();
-        const yyyyMmDd = iso.substring(0, 10);
-        const parts = yyyyMmDd.split('-');
-        if (parts.length === 3) {
-          const y = Number(parts[0]);
-          const m = Number(parts[1]);
-          const d = Number(parts[2]);
-          fechaLocal = new Date(y, m - 1, d);
-        } else {
-          const dt = new Date(iso);
-          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
-        }
-      }
+            const iso = data.fechaCalificacion.toString();
+            const yyyyMmDd = iso.substring(0, 10);
+            const parts = yyyyMmDd.split('-');
+            if (parts.length === 3) {
+              const y = Number(parts[0]);
+              const m = Number(parts[1]);
+              const d = Number(parts[2]);
+              fechaLocal = new Date(y, m - 1, d);
+            } else {
+              const dt = new Date(iso);
+              fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+            }
+          }
           this.form.patchValue({
             idCalificacion: data.idCalificacion,
             estrellas: data.estrellas,
@@ -137,6 +137,7 @@ export class CalificacionInsertarComponent implements OnInit {
       idCalificacion: idForm,
       estrellas: raw.estrellas,
       comentario: raw.comentario,
+      // el backend igual puede poner LocalDate.now(), pero mandamos la fecha por si la usas
       fechaCalificacion: ra.fechaCalificacion ?? new Date(),
       pedido: {
         idPedido: raw.idPedido,
