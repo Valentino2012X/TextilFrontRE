@@ -30,7 +30,8 @@
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field appearance="outline" class="full-width">
+    <!-- Password (solo en registro) -->
+    <mat-form-field *ngIf="!edicion" appearance="outline" class="full-width">
       <mat-label>Password</mat-label>
       <input matInput type="password" formControlName="password" />
       <mat-error *ngIf="form.get('password')?.hasError('required')">
@@ -43,7 +44,7 @@
 
     <mat-form-field appearance="outline" class="full-width">
       <mat-label>Teléfono</mat-label>
-      <input matInput formControlName="telefonoUsuario" maxlength="9"/>
+      <input matInput formControlName="telefonoUsuario" maxlength="9" />
       <mat-error *ngIf="form.get('telefonoUsuario')?.hasError('required')">
         El teléfono es obligatorio
       </mat-error>
@@ -70,30 +71,8 @@
       <mat-datepicker #picker></mat-datepicker>
     </mat-form-field>
 
-    <mat-form-field appearance="outline">
-      <mat-label>Promedio calificación</mat-label>
-      <input matInput type="number" step="0.01" formControlName="promedioCalificacion" />
-      <mat-error *ngIf="form.get('promedioCalificacion')?.hasError('required')">
-        El promedio de calificación es obligatorio
-      </mat-error>
-        <mat-error *ngIf="form.get('promedioCalificacion')?.hasError('min')">
-           El promedio no puede ser negativo
-        </mat-error>
-      <mat-error *ngIf="form.get('promedioCalificacion')?.hasError('max')">
-          El promedio no puede tener más de 20
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="outline">
-      <mat-label>Total calificaciones</mat-label>
-      <input matInput type="number" formControlName="totalCalificacion" />
-            <mat-error *ngIf="form.get('totalCalificacion')?.hasError('required')">
-        El número total de calificaciones es obligatorio
-      </mat-error>
-        <mat-error *ngIf="form.get('totalCalificacion')?.hasError('min')">
-           El total de calificaciones no puede ser negativo
-        </mat-error>
-    </mat-form-field>
+    <!-- ⬇️ Quitamos los campos de promedio y total calificación del formulario
+         porque ahora los controla solo el backend -->
 
     <mat-checkbox formControlName="enabled">Activo</mat-checkbox>
 

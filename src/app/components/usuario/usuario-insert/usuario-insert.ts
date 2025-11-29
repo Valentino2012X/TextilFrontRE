@@ -1,10 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
@@ -54,7 +49,6 @@ export class UsuarioInsertComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // cargar roles para el combo
     this.rS.list().subscribe((data: Rol[]) => {
       this.listaRoles = data;
     });
@@ -64,21 +58,39 @@ export class UsuarioInsertComponent implements OnInit {
       nombreUsuario: ['', Validators.required],
       emailUsuario: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required, Validators.maxLength(50)]],
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      telefonoUsuario: ['', [Validators.required,Validators.minLength(9),Validators.maxLength(9),Validators.pattern(/^\d+$/)]],
+      password: ['', [Validators.required, Validators.minLength(8)]], // requerido solo en registro
+      telefonoUsuario: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(9),
+          Validators.maxLength(9),
+          Validators.pattern(/^\d+$/),
+        ],
+      ],
       direccionUsuario: ['', Validators.required],
       fechaRegistroUsuario: [{ value: new Date(), disabled: true }],
       enabled: [true],
 
+      // si decides que promedio/total los maneje solo el back, puedes dejarlos en 0 o quitarlos del body
       promedioCalificacion: [0, [Validators.required, Validators.min(0), Validators.max(20)]],
       totalCalificacion: [0, [Validators.required, Validators.min(0)]],
 
-      idRol: [null, Validators.required], // rol obligatorio
+      idRol: [null, Validators.required],
     });
 
     this.route.params.subscribe((data: Params) => {
       this.id = data['id'];
       this.edicion = data['id'] != null;
+
+      // 👇 Si es edición, password NO es obligatorio y no queremos validar nada ahí
+      if (this.edicion) {
+        const passCtrl = this.form.get('password');
+        passCtrl?.clearValidators();
+        passCtrl?.setValue(''); // lo dejamos vacío
+        passCtrl?.updateValueAndValidity();
+      }
+
       this.init();
     });
   }
@@ -88,40 +100,46 @@ export class UsuarioInsertComponent implements OnInit {
       this.form.markAllAsTouched();
       return;
     }
+
     const raw = this.form.getRawValue();
-    const body = {
+    const passwordValue: string = this.form.value.password;
+
+    // Armamos el body SIN password por defecto
+    const body: any = {
       idUsuario: this.form.value.idUsuario,
       nombreUsuario: this.form.value.nombreUsuario,
       emailUsuario: this.form.value.emailUsuario,
       username: this.form.value.username,
-      password: this.form.value.password,
       telefonoUsuario: this.form.value.telefonoUsuario,
       direccionUsuario: this.form.value.direccionUsuario,
       fechaRegistroUsuario: raw.fechaRegistroUsuario ?? new Date(),
       enabled: this.form.value.enabled,
-
-      // 🔹 aseguramos que vayan como número
       promedioCalificacion: Number(this.form.value.promedioCalificacion),
       totalCalificacion: Number(this.form.value.totalCalificacion),
-
       idRol: this.form.value.idRol,
     };
+
+    // Solo en registro mando password
+    if (!this.edicion) {
+      body.password = this.form.value.password;
+    }
+    // En edición (ADMIN), nunca mandamos password → el back no puede cambiarla
 
     if (this.edicion) {
       this.uS.update(body).subscribe(() => {
         this.uS.list().subscribe((data) => {
           this.uS.setList(data);
         });
+        this.router.navigate(['usuarios']);
       });
     } else {
       this.uS.insert(body).subscribe(() => {
         this.uS.list().subscribe((data) => {
           this.uS.setList(data);
         });
+        this.router.navigate(['usuarios']);
       });
     }
-
-    this.router.navigate(['usuarios']);
   }
 
   cancelar(): void {
@@ -129,32 +147,34 @@ export class UsuarioInsertComponent implements OnInit {
   }
 
   get telefono() {
-  return this.form.get('telefonoUsuario');
-}
+    return this.form.get('telefonoUsuario');
+  }
+
   init(): void {
     if (this.edicion) {
       this.uS.listId(this.id).subscribe((data: any) => {
-          let fechaLocal: Date | null = null;
-          if (data.fechaRegistroUsuario) {
+        let fechaLocal: Date | null = null;
+        if (data.fechaRegistroUsuario) {
           const iso = data.fechaRegistroUsuario.toString();
-        const yyyyMmDd = iso.substring(0, 10);
-        const parts = yyyyMmDd.split('-');
-        if (parts.length === 3) {
-          const y = Number(parts[0]);
-          const m = Number(parts[1]);
-          const d = Number(parts[2]);
-          fechaLocal = new Date(y, m - 1, d);
-        } else {
-          const dt = new Date(iso);
-          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+          const yyyyMmDd = iso.substring(0, 10);
+          const parts = yyyyMmDd.split('-');
+          if (parts.length === 3) {
+            const y = Number(parts[0]);
+            const m = Number(parts[1]);
+            const d = Number(parts[2]);
+            fechaLocal = new Date(y, m - 1, d);
+          } else {
+            const dt = new Date(iso);
+            fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+          }
         }
-      }
-          this.form.patchValue({
+
+        this.form.patchValue({
           idUsuario: data.idUsuario,
           nombreUsuario: data.nombreUsuario,
           emailUsuario: data.emailUsuario,
           username: data.username,
-          password: data.password,
+          // password: ''  // 👈 ya no hace falta ni tocar esto
           telefonoUsuario: data.telefonoUsuario,
           direccionUsuario: data.direccionUsuario,
           fechaRegistroUsuario: fechaLocal,

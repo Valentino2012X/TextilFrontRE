@@ -1,0 +1,36 @@
+<div class="reporte-container">
+  <h2>Tarjetas por rango de fecha de vencimiento</h2>
+
+  <div class="form">
+    <label>Fecha inicio:</label>
+    <input type="date" [(ngModel)]="inicio">
+
+    <label>Fecha fin:</label>
+    <input type="date" [(ngModel)]="fin">
+
+    <button (click)="buscar()">Buscar</button>
+  </div>
+
+  <div *ngIf="hasData">
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>ultimos 4 digitos de la tarjeta</th>
+          <th>Vencimiento</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let tarjeta of tarjetas">
+          <td>{{ tarjeta.idTarjeta }}</td>
+          <td>{{ tarjeta.ultimos4Tarjeta }}</td>
+          <td>{{ tarjeta.vencimientoTarjeta | date:'yyyy-MM-dd' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div *ngIf="!hasData">
+    <p>No hay tarjetas en ese rango de fechas.</p>
+  </div>
+</div>

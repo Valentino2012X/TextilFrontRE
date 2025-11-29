@@ -1,0 +1,85 @@
+.reporte-container {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.reporte-container h2 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.reporte-container .form {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.reporte-container .form label {
+  font-weight: bold;
+  margin-right: 5px;
+}
+
+.reporte-container .form input {
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+.reporte-container .form button {
+  padding: 6px 15px;
+  border-radius: 5px;
+  border: none;
+  background-color: #4caf50;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.reporte-container .form button:hover {
+  background-color: #45a049;
+}
+
+.reporte-container table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+.reporte-container th, 
+.reporte-container td {
+  padding: 12px 15px;
+  text-align: left;
+}
+
+.reporte-container thead {
+  background-color: #4caf50;
+  color: white;
+}
+
+.reporte-container tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+.reporte-container tbody tr:hover {
+  background-color: #e0f7fa;
+}
+
+.reporte-container p {
+  text-align: center;
+  color: #888;
+  font-style: italic;
+  margin-top: 20px;
+}

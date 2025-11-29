@@ -10,8 +10,11 @@ export class Usuario {
   direccionUsuario: string = '';
   fechaRegistroUsuario: Date = new Date();
   enabled: boolean = true;
-  promedioCalificacion: number = 0;
-  totalCalificacion: number = 0;
+
+  // 🔹 Estos campos los calcula SIEMPRE el backend (solo lectura)
+  promedioCalificacion?: number; // puede venir undefined si el backend lo omite en algún endpoint
+  totalCalificacion?: number;
+
   rol: Rol = new Rol();
   nombreRol?: string;
 }

@@ -1,0 +1,44 @@
+<div class="reporte-container">
+  <h2>Entregas por rango de fecha</h2>
+
+  <!-- Formulario de fechas -->
+  <div class="form">
+    <label>Inicio:</label>
+    <input type="date" [(ngModel)]="inicio">
+    <label>Fin:</label>
+    <input type="date" [(ngModel)]="fin">
+    <button (click)="buscar()">Buscar</button>
+  </div>
+
+  <!-- Tabla resumen -->
+  <div *ngIf="totales !== 0 || canceladas !== 0" class="resumen">
+    <h3>Resumen</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Total de entregas</th>
+          <th>Entregas canceladas</th>
+          <th>Entregas completadas</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{ totales }}</td>
+          <td>{{ canceladas }}</td>
+          <td>{{ totales - canceladas }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Gráfico Pie -->
+  <div *ngIf="totales !== 0 || canceladas !== 0" class="grafico">
+    <h3>Distribución</h3>
+    <canvas #pieCanvas></canvas>
+  </div>
+
+  <!-- Mensaje si no hay datos -->
+  <div *ngIf="totales === 0 && canceladas === 0">
+    <p>No hay datos para mostrar en este rango de fechas.</p>
+  </div>
+</div>

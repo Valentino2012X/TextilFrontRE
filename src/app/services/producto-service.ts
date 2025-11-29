@@ -43,4 +43,8 @@ export class ProductoService {
   setList(listaNueva: Producto[]) {
     this.listaCambio.next(listaNueva);
   }
+  getProductosPorRangoPrecio(min: number, max: number) {
+  return this.http.get<Producto[]>(
+  `${this.url}/bprecio?min=${min}&max=${max}`);
+  }
 }

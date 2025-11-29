@@ -1,0 +1,81 @@
+<!-- src/app/components/dashboard/dashboard-home.component.html -->
+
+<header class="main-header">
+  <h1>¡Bienvenido de nuevo!</h1>
+  <p class="main-subtitle">
+    Estás conectado como <strong>{{ rol }}</strong>.
+  </p>
+</header>
+
+<!-- ADMIN -->
+<section *ngIf="rol === 'ADMIN'" class="cards-grid">
+  <div class="card">
+    <h3>Gestión de usuarios</h3>
+    <p class="card-value">Administra cuentas y permisos</p>
+    <p class="card-text">
+      Crea, edita y deshabilita usuarios del sistema, asigna roles y revisa
+      calificaciones.
+    </p>
+    <a class="card-link" routerLink="/usuarios">Ir a usuarios →</a>
+  </div>
+
+  <div class="card">
+    <h3>Catálogo general</h3>
+    <p class="card-value">Productos y tipos</p>
+    <p class="card-text">
+      Mantén actualizado el catálogo de productos y sus tipos asociados.
+    </p>
+    <a class="card-link" routerLink="/producto">Ver productos →</a>
+  </div>
+
+  <div class="card">
+    <h3>Pedidos y entregas</h3>
+    <p class="card-value">Visión global</p>
+    <p class="card-text">
+      Supervisa pedidos, comprobantes y entregas en curso.
+    </p>
+    <a class="card-link" routerLink="/pedido">Ver pedidos →</a>
+  </div>
+</section>
+
+<!-- VENDEDOR -->
+<section *ngIf="rol === 'VENDEDOR'" class="cards-grid">
+  <div class="card">
+    <h3>Mis productos</h3>
+    <p class="card-value">Gestiona tu catálogo</p>
+    <p class="card-text">
+      Crea, actualiza y controla los productos que ofreces a los compradores.
+    </p>
+    <a class="card-link" routerLink="/producto">Gestionar productos →</a>
+  </div>
+
+  <div class="card">
+    <h3>Pedidos recibidos</h3>
+    <p class="card-value">Estado y entregas</p>
+    <p class="card-text">
+      Revisa pedidos pendientes, confirmados y entregados a tus clientes.
+    </p>
+    <a class="card-link" routerLink="/pedido">Ver pedidos →</a>
+  </div>
+</section>
+
+<!-- COMPRADOR -->
+<section *ngIf="rol === 'COMPRADOR'" class="cards-grid">
+  <div class="card">
+    <h3>Explorar catálogo</h3>
+    <p class="card-value">Nuevos productos</p>
+    <p class="card-text">
+      Encuentra productos textiles según tus preferencias y necesidades.
+    </p>
+    <a class="card-link" routerLink="/producto">Ver catálogo →</a>
+  </div>
+
+  <div class="card">
+    <h3>Mis pedidos</h3>
+    <p class="card-value">Historial</p>
+    <p class="card-text">
+      Revisa el estado de tus pedidos y comprobantes generados.
+    </p>
+    <a class="card-link" routerLink="/pedido">Ver mis pedidos →</a>
+  </div>
+</section>

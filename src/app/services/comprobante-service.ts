@@ -65,4 +65,10 @@ export class ComprobanteService {
   setList(listaNueva: Comprobante[]) {
     this.listaCambio.next(listaNueva);
   }
+  
+  sumarIgvPorFecha(fecha: string) {
+    return this.http.get<{fecha: string, totalIgv: number}>(`${this.url}/igvtotal`, {
+      params: { fecha }
+    });
+  }
 }

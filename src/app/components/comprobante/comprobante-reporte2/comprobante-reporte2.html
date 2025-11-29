@@ -1,0 +1,17 @@
+<div class="reporte-container">
+  <h2>IGV total por fecha</h2>
+
+  <div class="form">
+    <label>Fecha:</label>
+    <input type="date" [(ngModel)]="fecha">
+    <button (click)="buscar()">Buscar</button>
+  </div>
+
+  <div *ngIf="hasData">
+    <canvas #barCanvas></canvas>
+  </div>
+
+  <div *ngIf="!hasData">
+    <p>No hay datos para mostrar.</p>
+  </div>
+</div>
