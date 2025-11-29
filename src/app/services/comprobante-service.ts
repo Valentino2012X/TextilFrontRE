@@ -11,7 +11,6 @@ const base_url = environment.base;
 })
 export class ComprobanteService {
   private url = `${base_url}/comprobantes`;
-
   private listaCambio = new Subject<Comprobante[]>();
 
   constructor(private http: HttpClient) {}
@@ -24,10 +23,9 @@ export class ComprobanteService {
     return this.http.get<Comprobante>(`${this.url}/${id}`);
   }
 
-  // src/app/services/comprobante-service.ts
   insert(body: any) {
     return this.http.post(this.url, body, {
-      responseType: 'text' as 'json', // <-- no intenta parsear JSON
+      responseType: 'text' as 'json', // el back devuelve texto
     });
   }
 
@@ -43,7 +41,7 @@ export class ComprobanteService {
     });
   }
 
-  // Opcionales (por si luego usas los endpoints extra)
+  // si luego usas estos:
   listByPedido(idPedido: number) {
     return this.http.get<Comprobante[]>(`${this.url}/pedido/${idPedido}`);
   }
@@ -65,10 +63,11 @@ export class ComprobanteService {
   setList(listaNueva: Comprobante[]) {
     this.listaCambio.next(listaNueva);
   }
-  
+
   sumarIgvPorFecha(fecha: string) {
-    return this.http.get<{fecha: string, totalIgv: number}>(`${this.url}/igvtotal`, {
-      params: { fecha }
-    });
+    return this.http.get<{ fecha: string; totalIgv: number }>(
+      `${this.url}/igvtotal`,
+      { params: { fecha } }
+    );
   }
 }

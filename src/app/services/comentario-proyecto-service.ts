@@ -40,11 +40,13 @@ export class ComentarioProyectoService {
     this.listaCambio.next(listaNueva);
   }
 
-  // opcional: solo si quieres usar el endpoint /proyecto/{idProyecto}
+  // comentarios de un proyecto: GET /comentariosproyectos/proyecto/{idProyecto}
   listByProyecto(idProyecto: number) {
     return this.http.get<ComentarioProyecto[]>(`${this.url}/proyecto/${idProyecto}`);
   }
+
+  // reporte: GET /comentariosproyectos/comentarios/proyectos
   getCantidadPorProyecto() {
-  return this.http.get<any[]>(`${this.url}/comentarios/proyectos`);
-}
+    return this.http.get<any[]>(`${this.url}/comentarios/proyectos`);
+  }
 }

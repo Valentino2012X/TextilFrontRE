@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { environment } from '../../environments/enviroment';
 import { Proyecto } from '../models/Proyecto';
-import { Observable } from 'rxjs';
 
 const base_url = environment.base;
 
@@ -12,40 +11,33 @@ const base_url = environment.base;
 })
 export class ProyectoService {
   private url = `${base_url}/proyectos`;
-
   private listaCambio = new Subject<Proyecto[]>();
 
   constructor(private http: HttpClient) {}
 
-  // LISTAR
+  // GET /proyectos
   list() {
     return this.http.get<Proyecto[]>(this.url);
   }
 
-  // OBTENER POR ID
+  // POST /proyectos
+  insert(body: any) {
+    return this.http.post(this.url, body);
+  }
+
+  // GET /proyectos/{id}
   listId(id: number) {
-    return this.http.get<any>(`${this.url}/${id}`);
+    return this.http.get<Proyecto>(`${this.url}/${id}`);
   }
 
-  // INSERTAR
-  insert(proyecto: Proyecto) {
-    return this.http.post<string>(this.url, proyecto, {
-      responseType: 'text' as 'json',
-    });
+  // PUT /proyectos
+  update(body: any) {
+    return this.http.put(this.url, body, { responseType: 'text' });
   }
 
-  // ACTUALIZAR
-  update(proyecto: Proyecto) {
-    return this.http.put<string>(this.url, proyecto, {
-      responseType: 'text' as 'json',
-    });
-  }
-
-  // ELIMINAR
+  // DELETE /proyectos/{id}
   delete(id: number) {
-    return this.http.delete<string>(`${this.url}/${id}`, {
-      responseType: 'text' as 'json',
-    });
+    return this.http.delete(`${this.url}/${id}`, { responseType: 'text' });
   }
 
   // SUBJECT PARA REFRESCAR TABLA
@@ -56,7 +48,9 @@ export class ProyectoService {
   setList(listaNueva: Proyecto[]) {
     this.listaCambio.next(listaNueva);
   }
+
+  // GET /proyectos/rankingusuarios
   getUsuariosConMasProyectos() {
-  return this.http.get<any[]>(`${this.url}/rankingusuarios`);
-}
+    return this.http.get<any[]>(`${this.url}/rankingusuarios`);
+  }
 }

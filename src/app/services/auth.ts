@@ -1,51 +1,57 @@
 import { Injectable } from '@angular/core';
 
-export type Rol = 'ADMIN' | 'VENDEDOR' | 'COMPRADOR';
+export type Rol = 'ADMIN' | 'VENDEDOR' | 'ESTUDIANTE';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private tokenKey = 'token'; // donde guardas tu JWT en localStorage
+  private tokenKey = 'token'; // nombre de la clave del JWT
 
+  // ⚠️ Usamos sessionStorage para que coincida con tokenGetter en app.config.ts
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    if (typeof window === 'undefined') {
+      return null;
+    }
+    return window.sessionStorage.getItem(this.tokenKey);
   }
 
   // 🔑 Obtiene el rol principal del token JWT
   getRoleFromToken(): Rol {
     const token = this.getToken();
     if (!token) {
-      // por defecto, podría ser COMPRADOR invitado, ajusta si quieres
-      return 'COMPRADOR';
+      return 'ESTUDIANTE';
     }
 
     // JWT = header.payload.signature → decodificamos el payload
     const payloadPart = token.split('.')[1];
     if (!payloadPart) {
-      return 'COMPRADOR';
+      return 'ESTUDIANTE';
     }
 
     try {
       const payloadJson = atob(payloadPart);
       const payload = JSON.parse(payloadJson);
 
-      // ⚠️ AJUSTA ESTO SEGÚN TU CLAIM REAL
-      // ej. puede ser payload.rol, payload.role, payload.authorities[0], etc.
+      // ⚠️ AJUSTA ESTO SEGÚN EL CLAIM REAL DEL BACKEND
+      // revísalo en un jwt.io con un token real si quieres
       const rawRole: string =
-        payload.rol || payload.role || payload.authority || payload.authorities?.[0];
+        payload.rol ||
+        payload.role ||
+        payload.authority ||
+        payload.authorities?.[0];
 
       const upper = (rawRole || '').toUpperCase();
 
       if (upper.includes('ADMIN')) return 'ADMIN';
       if (upper.includes('VENDEDOR')) return 'VENDEDOR';
-      if (upper.includes('COMPRADOR')) return 'COMPRADOR';
+      if (upper.includes('COMPRADOR')) return 'ESTUDIANTE';
 
       // fallback
-      return 'COMPRADOR';
+      return 'ESTUDIANTE';
     } catch (e) {
       console.error('Error decodificando token JWT', e);
-      return 'COMPRADOR';
+      return 'ESTUDIANTE';
     }
   }
 }

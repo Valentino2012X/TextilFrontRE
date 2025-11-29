@@ -30,14 +30,14 @@ export class TipoDocumentoService {
     return this.http.get<TipoDocumento>(`${this.url}/${id}`);
   }
 
-  // PUT /tiposdocumentos  (el backend devuelve String en el body)
+  // PUT /tiposdocumentos
   update(td: TipoDocumento): Observable<string> {
     return this.http.put<string>(this.url, td, {
       responseType: 'text' as 'json',
     });
   }
 
-  // DELETE /tiposdocumentos/{id}  (el backend devuelve String en el body)
+  // DELETE /tiposdocumentos/{id}
   delete(id: number): Observable<string> {
     return this.http.delete<string>(`${this.url}/${id}`, {
       responseType: 'text' as 'json',

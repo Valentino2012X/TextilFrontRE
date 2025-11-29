@@ -20,7 +20,7 @@ export class ProductoFotoService {
   }
 
   insert(body: any) {
-    return this.http.post(this.url, body);
+    return this.http.post(this.url, body); // si el back devuelve String, puedes agregar responseType
   }
 
   listId(id: number) {
