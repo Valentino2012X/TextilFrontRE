@@ -4,8 +4,6 @@ import { Subject } from 'rxjs';
 import { environment } from '../../environments/enviroment';
 import { TipoProyecto } from '../models/Tipo-proyecto';
 
-
-
 const base_url = environment.base;
 
 @Injectable({
@@ -13,7 +11,6 @@ const base_url = environment.base;
 })
 export class TipoProyectoService {
   private url = `${base_url}/tiposproyectos`;
-
   private listaCambio = new Subject<TipoProyecto[]>();
 
   constructor(private http: HttpClient) {}

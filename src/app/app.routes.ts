@@ -225,7 +225,7 @@ export const routes: Routes = [
       {
         path: 'productofoto/new',
         canActivate: [rolesGuard],
-        data: { roles: ['VENDEDOR'] },
+        data: { roles: ['ADMIN', 'VENDEDOR'] },
         loadComponent: () =>
           import(
             './components/producto-foto/producto-foto-insert/producto-foto-insert'
@@ -257,7 +257,7 @@ export const routes: Routes = [
       {
         path: 'favorito/new',
         canActivate: [rolesGuard],
-        data: { roles: ['ESTUDIANTE'] },
+        data: { roles: ['ADMIN', 'ESTUDIANTE'] },
         loadComponent: () =>
           import('./components/favorito/favorito-insert/favorito-insert').then(
             (m) => m.FavoritoInsertarComponent
@@ -289,7 +289,7 @@ export const routes: Routes = [
       {
         path: 'calificacion/new',
         canActivate: [rolesGuard],
-        data: { roles: ['VENDEDOR', 'ESTUDIANTE'] },
+        data: { roles: ['ADMIN','VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
           import(
             './components/calificacion/calificacion-insertar/calificacion-insertar'
@@ -298,7 +298,7 @@ export const routes: Routes = [
       {
         path: 'calificacion/edit/:id',
         canActivate: [rolesGuard],
-        data: { roles: ['VENDEDOR', 'ESTUDIANTE'] },
+        data: { roles: ['ADMIN','VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
           import(
             './components/calificacion/calificacion-insertar/calificacion-insertar'
@@ -380,7 +380,7 @@ export const routes: Routes = [
       {
         path: 'comentarioproyecto/new',
         canActivate: [rolesGuard],
-        data: { roles: ['VENDEDOR', 'ESTUDIANTE'] },
+        data: { roles: ['ADMIN','VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
           import(
             './components/comentario-proyecto/comentario-proyecto-insert/comentario-proyecto-insert'
@@ -627,7 +627,7 @@ export const routes: Routes = [
       {
         path: 'tarjeta/new',
         canActivate: [rolesGuard],
-        data: { roles: ['VENDEDOR', 'ESTUDIANTE'] },
+        data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
           import('./components/tarjeta/tarjeta-insert/tarjeta-insert').then(
             (m) => m.TarjetaInsertarComponent
@@ -699,7 +699,7 @@ export const routes: Routes = [
       {
         path: 'presupuestomensual/new',
         canActivate: [rolesGuard],
-        data: { roles: ['ESTUDIANTE'] },
+        data: { roles: ['ADMIN', 'ESTUDIANTE'] },
         loadComponent: () =>
           import(
             './components/presupuesto-mensual/presupuesto-mensual-insert/presupuesto-mensual-insert'

@@ -27,7 +27,7 @@ export class TarjetaService {
     return this.http.get<Tarjeta>(`${this.url}/${id}`);
   }
 
-  // SOLO actualiza el alias (como tu backend)
+  // actualiza alias u otros campos según tu backend
   update(id: number, body: any) {
     return this.http.put(`${this.url}/${id}`, body);
   }
@@ -45,13 +45,12 @@ export class TarjetaService {
   }
 
   getCantidadPorMarca() {
-   return this.http.get<any[]>(`${this.url}/cantidad/marcas`);
+    return this.http.get<any[]>(`${this.url}/cantidad/marcas`);
   }
-  
-  buscarPorVencimiento(inicio: string, fin: string) {
-  return this.http.get<any[]>(`${this.url}/vencimiento`, {
-    params: { inicio, fin }
-  });
-}
 
+  buscarPorVencimiento(inicio: string, fin: string) {
+    return this.http.get<any[]>(`${this.url}/vencimiento`, {
+      params: { inicio, fin },
+    });
+  }
 }

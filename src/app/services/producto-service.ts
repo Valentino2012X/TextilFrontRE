@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Producto } from '../models/Producto';
 import { Subject } from 'rxjs';
+import { Producto } from '../models/Producto';
 import { environment } from '../../environments/enviroment';
 
 const base_url = environment.base;
@@ -11,12 +11,12 @@ const base_url = environment.base;
 })
 export class ProductoService {
   private url = `${base_url}/productos`;
-
   private listaCambio = new Subject<Producto[]>();
 
   constructor(private http: HttpClient) {}
 
   list() {
+    // si tu backend devuelve DTOs, por eso estás usando any[]
     return this.http.get<any[]>(this.url);
   }
 
@@ -43,8 +43,11 @@ export class ProductoService {
   setList(listaNueva: Producto[]) {
     this.listaCambio.next(listaNueva);
   }
+
+  // GET /productos/bprecio?min=X&max=Y
   getProductosPorRangoPrecio(min: number, max: number) {
-  return this.http.get<Producto[]>(
-  `${this.url}/bprecio?min=${min}&max=${max}`);
+    return this.http.get<Producto[]>(
+      `${this.url}/bprecio?min=${min}&max=${max}`
+    );
   }
 }

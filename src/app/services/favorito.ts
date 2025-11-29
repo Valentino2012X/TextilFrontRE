@@ -28,7 +28,9 @@ export class FavoritoService {
   }
 
   update(body: any) {
-    return this.http.put<string>(this.url, body, { responseType: 'text' as 'json' });
+    return this.http.put<string>(this.url, body, {
+      responseType: 'text' as 'json',
+    });
   }
 
   delete(id: number) {

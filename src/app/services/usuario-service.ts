@@ -10,7 +10,7 @@ const base_url = environment.base;
   providedIn: 'root',
 })
 export class UsuarioService {
-  private url = `${base_url}/usuario`; // ajusta si tu backend usa /usuarios
+  private url = `${base_url}/usuario`; // backend: /usuario
 
   private listaCambio = new Subject<Usuario[]>();
 
