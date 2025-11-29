@@ -2,7 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
@@ -17,6 +17,7 @@ import { TipoDocumentoService } from '../../../services/tipo-documento-service';
 import { Comprobante } from '../../../models/Comprobante';
 import { Pedido } from '../../../models/Pedido';
 import { TipoDocumento } from '../../../models/Tipo-documento';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -31,6 +32,8 @@ import { TipoDocumento } from '../../../models/Tipo-documento';
     MatSelectModule,
     MatOptionModule,
     MatDatepickerModule,
+    MatIconModule,
+    RouterModule,
   ],
   providers: [provideNativeDateAdapter()],
 })

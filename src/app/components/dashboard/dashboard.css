@@ -1,12 +1,11 @@
-/* src/app/components/dashboard/dashboard.component.css */
-
+/* TextilConnect Dashboard - Layout */
 .dashboard-root {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #020617;
-  color: #e5e7eb;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f5f5dc; /* beige claro */
+  color: #1c1c1c;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
 }
 
 /* fila: sidebar + contenido */
@@ -18,153 +17,25 @@
 
 /* SIDEBAR */
 .sidebar-root {
-  width: 270px;
-  background: #020617;
-  border-right: 1px solid #111827;
+  width: 290px;
+  background: #3d6b3b; /* verde oscuro */
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
   display: flex;
   flex-direction: column;
-  padding-top: 12px;
+  padding: 14px 12px;
 }
 
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0 16px 16px;
-}
-
-.brand-avatar {
-  width: 40px;
-  height: 40px;
-  border-radius: 999px;
-  background: #f59e0b;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  color: #111827;
-}
-
-.brand-name {
-  font-weight: 700;
-  font-size: 15px;
-}
-
-.brand-subtitle {
-  font-size: 11px;
-  color: #9ca3af;
-}
-
-.menu {
-  flex: 1;
-  overflow-y: auto;
-}
-
-.menu-section {
-  padding: 10px 16px 4px;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #6b7280;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 18px;
-  font-size: 14px;
-  color: #e5e7eb;
-  text-decoration: none;
-  border-radius: 999px;
-  margin: 2px 10px;
-}
-
-.menu-item .material-icons {
-  font-size: 20px;
-}
-
-.menu-item:hover {
-  background: #111827;
-}
-
-.active-link {
-  background: #f59e0b;
-  color: #111827;
-}
-
-/* CONTENIDO */
-.dashboard-content {
-  flex: 1;
-  padding: 24px 28px;
-  background: #020617;
-  overflow-y: auto;
-}
-
-.main-header h1 {
-  margin: 0;
-  font-size: 22px;
-  font-weight: 700;
-}
-
-.main-subtitle {
-  margin-top: 4px;
-  font-size: 14px;
-  color: #9ca3af;
-}
-
-/* CARDS */
-.cards-grid {
-  margin-top: 20px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 16px;
-}
-
-.card {
-  background: #0f172a;
-  border-radius: 16px;
-  padding: 18px 20px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-}
-
-.card h3 {
-  margin: 0 0 6px;
-  font-size: 16px;
-}
-
-.card-value {
-  font-size: 13px;
-  font-weight: 600;
-  color: #a7f3d0;
-  margin-bottom: 8px;
-}
-
-.card-text {
-  font-size: 13px;
-  color: #d1d5db;
-  margin-bottom: 10px;
-}
-
-.card-link {
-  font-size: 13px;
-  color: #6ee7b7;
-  text-decoration: none;
-}
-
-.card-link:hover {
-  text-decoration: underline;
-}
-
-/* ===== Panel de usuario en el sidebar ===== */
-
+/* panel usuario */
 .user-panel {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 14px 16px 10px 16px;
-  border-bottom: 1px solid rgba(15, 23, 42, 0.9);
-  background: #020617;
+  gap: 10px;
+  padding: 14px 12px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.10);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  margin-bottom: 12px;
 }
 
 .user-panel-left {
@@ -174,16 +45,16 @@
 }
 
 .user-avatar {
-  width: 32px;
-  height: 32px;
+  width: 38px;
+  height: 38px;
   border-radius: 999px;
-  background: #22c55e;
-  color: #020617;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 0.8rem;
+  background: #8dae5f; /* verde principal */
+  color: #1c1c1c;
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  font-size: 0.85rem;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
 }
 
 .user-meta {
@@ -193,27 +64,130 @@
 }
 
 .user-label {
-  font-size: 0.7rem;
+  font-size: 0.70rem;
   text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: #9ca3af;
+  letter-spacing: 0.10em;
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .user-role {
-  font-size: 0.8rem;
-  color: #e5e7eb;
+  font-size: 0.88rem;
+  color: rgba(255, 255, 255, 0.92);
 }
 
 .user-role span {
-  font-weight: 600;
-  color: #4ade80;
+  font-weight: 800;
+  color: #ffffff;
 }
 
+/* logout */
 .logout-btn {
-  color: #f97373;
-  border-radius: 999px;
+  color: #ffffff;
+  border-radius: 12px;
 }
 
 .logout-btn:hover {
-  background: rgba(248, 113, 113, 0.15);
+  background: rgba(0, 0, 0, 0.12);
+}
+
+/* menu scroll */
+.menu {
+  flex: 1;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.menu::-webkit-scrollbar {
+  width: 8px;
+}
+.menu::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+}
+.menu::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* secciones */
+.menu-section {
+  padding: 14px 12px 6px;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.10em;
+  color: rgba(255, 255, 255, 0.70);
+}
+
+/* item */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 12px;
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.92);
+  text-decoration: none;
+  border-radius: 14px;
+  margin: 4px 6px;
+  transition: transform 0.08s ease, background 0.2s ease, color 0.2s ease;
+}
+
+.menu-item .material-icons {
+  font-size: 20px;
+  opacity: 0.95;
+}
+
+.menu-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.menu-item:active {
+  transform: translateY(1px);
+}
+
+/* activo (TextilConnect) */
+.active-link {
+  background: #8dae5f;
+  color: #1c1c1c;
+  font-weight: 800;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+}
+
+.active-link .material-icons {
+  opacity: 1;
+}
+
+/* CONTENIDO */
+.dashboard-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 22px 26px;
+  background: #f5f5dc; /* beige */
+}
+
+/* contenedor interno tipo "card" para tablas/formularios */
+.dashboard-content > * {
+  max-width: 1200px;
+}
+
+/* responsive */
+@media (max-width: 980px) {
+  .sidebar-root {
+    width: 250px;
+  }
+}
+
+@media (max-width: 760px) {
+  .sidebar-root {
+    display: none; /* luego si quieres hacemos sidebar colapsable */
+  }
+  .dashboard-content {
+    padding: 16px;
+  }
+}
+/* === Nombre del usuario: blanco + negrita === */
+.user-name span {
+  color: #ffffff !important;      /* blanco puro */
+  font-weight: 800 !important;    /* negrita fuerte */
+  font-size: 0.95rem;             /* un poquito más grande */
+  letter-spacing: 0.3px;          /* ligero espaciamiento */
 }

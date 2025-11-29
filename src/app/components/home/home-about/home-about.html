@@ -1,0 +1,254 @@
+<!-- src/app/components/home/home-about/home-about.html -->
+<div class="landing">
+  <section class="about-header">
+    <nav id="navbar">
+      <a routerLink="/home" class="logo">TextilConnect</a>
+
+      <ul class="nav-links" [class.open]="mobileMenuOpen">
+        
+        <li><a routerLink="/home">Home</a></li>
+        <!-- ✅ SOLO LOGUEADO -->
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
+        <li><a routerLink="/home/about">Nosotros</a></li>
+        <li><a routerLink="/home/products">Productos</a></li>
+        <li><a routerLink="/home/community">Comunidad</a></li>
+        <li><a routerLink="/home/contact">Contacto</a></li>
+      </ul>
+
+      <button class="mobile-menu" type="button" (click)="toggleMenu()" aria-label="Menú">
+        <i class="fa fa-bars"></i>
+      </button>
+
+      <div class="auth-section">
+        @if (!isLoggedIn) {
+          <div class="auth-buttons">
+            <a routerLink="/autenticador" class="auth-btn login-btn">Iniciar Sesión</a>
+            <a routerLink="/registro" class="auth-btn register-btn">Registrarse</a>
+          </div>
+        }
+
+        @if (isLoggedIn) {
+          <div class="user-menu">
+            <div class="notification-icon" (click)="toggleNotifications()">
+              <i class="fas fa-bell"></i>
+              @if (notificationCount > 0) {
+                <span class="notification-badge">{{ notificationCount }}</span>
+              }
+            </div>
+
+            <div class="user-info" (click)="toggleUserMenu()">
+              <div class="user-avatar">{{ userInitials }}</div>
+              <span>{{ userName }}</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+
+            @if (userMenuOpen) {
+              <div class="dropdown-menu">
+                <a routerLink="/home/perfil" class="dropdown-item">
+                  <i class="fas fa-user"></i> Mi Perfil
+                </a>
+                <a routerLink="/home/config" class="dropdown-item">
+                  <i class="fas fa-cog"></i> Configuración
+                </a>
+                <a routerLink="/favorito" class="dropdown-item">
+                  <i class="fas fa-heart"></i> Mis Favoritos
+                </a>
+                <a routerLink="/proyecto" class="dropdown-item">
+                  <i class="fas fa-camera"></i> Mis Proyectos
+                </a>
+                <button type="button" class="dropdown-item" (click)="logout()">
+                  <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+              </div>
+            }
+          </div>
+        }
+      </div>
+    </nav>
+
+    <div class="hero-content">
+      <h1>Transformando la Industria Textil</h1>
+      <p>Conectamos talleres de confección con diseñadores para crear un futuro sostenible</p>
+      <a href="#story" class="cta-button">Conoce Nuestra Historia</a>
+    </div>
+  </section>
+
+  <section class="mission-section">
+    <div class="container">
+      <h2 class="section-title">Nuestros Pilares</h2>
+
+      <div class="mission-grid">
+        <div class="mission-card">
+          <h3><i class="fas fa-eye"></i> Visión</h3>
+          <p>
+            Ser la plataforma líder en reutilización textil en América Latina, promoviendo un
+            ecosistema colaborativo que conecte la producción local con la innovación creativa,
+            impulsando una industria textil sostenible, responsable y alineada con los principios de
+            la economía circular.
+          </p>
+        </div>
+
+        <div class="mission-card">
+          <h3><i class="fas fa-bullseye"></i> Misión</h3>
+          <p>
+            Transformar la gestión de residuos textiles mediante una plataforma digital que conecte
+            talleres de confección con estudiantes de diseño, facilitando el acceso a materiales
+            reutilizables, promoviendo la sostenibilidad ambiental y fortaleciendo el desarrollo
+            económico y educativo del sector textil.
+          </p>
+        </div>
+
+        <div class="mission-card">
+          <h3><i class="fas fa-target"></i> Objetivo</h3>
+          <p>
+            Reducir el desperdicio textil y fomentar el diseño sostenible a través de una plataforma
+            que articule la oferta de retazos con la demanda de insumos creativos, integrando
+            herramientas de gestión financiera y medición de impacto ambiental.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="story-section" id="story">
+    <div class="container">
+      <div class="story-content">
+        <div class="story-text">
+          <h2>¿Quiénes Somos?</h2>
+          <p>
+            Somos TextilConnect, una plataforma digital comprometida con la sostenibilidad textil y
+            la economía circular. Nacemos para conectar a los talleres de Gamarra con estudiantes y
+            creativos del diseño de moda, facilitando el intercambio responsable de materiales.
+          </p>
+          <p>
+            Nuestra plataforma impulsa la educación, el emprendimiento y el cuidado del medio
+            ambiente, creando un ecosistema donde la creatividad y la sostenibilidad van de la mano.
+          </p>
+          <p>
+            Creemos firmemente que la industria textil puede ser parte de la solución al cambio
+            climático, no del problema. Por eso, trabajamos incansablemente para hacer que la
+            reutilización textil sea accesible, práctica y rentable para todos.
+          </p>
+        </div>
+
+        <div class="story-image">
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&w=800&q=80"
+            alt="Equipo TextilConnect"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="team-section">
+    <div class="container">
+      <h2 class="section-title">Nuestro Equipo</h2>
+
+      <div class="team-grid">
+        <!-- VALENTINO -->
+        <div class="team-card">
+          <div class="team-avatar">
+            <img src="assets/Imagenes/Valentino.png" alt="Enrique Valentino" />
+          </div>
+          <h3>Enrique Valentino Ibarra Parravicini</h3>
+          <p class="role">Integrante del equipo · Ing. Sistemas de Información</p>
+          <p>
+            Tengo 19 años y curso el 6to ciclo de Ingeniería de Sistemas de Información. Cuento con
+            conocimientos en reparación de hardware y software informático, y me considero una
+            persona abierta a aprender temas nuevos para aplicar ese conocimiento en favor del
+            desarrollo de la tecnología.
+          </p>
+          <p class="role">Código: U202319839</p>
+        </div>
+
+        <!-- FABRIZIO (SE DEJA IGUAL) -->
+        <div class="team-card">
+          <div class="team-avatar">
+            <img src="assets/Imagenes/Fabrizio.png" alt="Fabrizio" />
+          </div>
+          <h3>Fabrizio</h3>
+          <p class="role">Co-fundador & CTO</p>
+          <p>
+            Ingeniero de sistemas apasionado por construir soluciones tecnológicas con impacto
+            social. Como el cerebro tecnológico detrás de cada funcionalidad, Fabrizio ha sido
+            fundamental en el desarrollo, la optimización y la ejecución de la infraestructura y las
+            herramientas que dan vida a todo el proyecto.
+          </p>
+        </div>
+
+        <!-- JOAN -->
+        <div class="team-card">
+          <div class="team-avatar">
+            <img src="assets/Imagenes/Joan.png" alt="Joan Enric" />
+          </div>
+          <h3>Joan Enric Marquez Guillen</h3>
+          <p class="role">Integrante del equipo · Ing. Sistemas de Información</p>
+          <p>
+            Soy estudiante de Ingeniería de Sistemas de Información y estoy llevando el curso por
+            primera vez. Me gusta trabajar en equipo, aportar ideas, escuchar a los demás y ayudar a
+            que el grupo logre sus objetivos de la mejor manera.
+          </p>
+          <p class="role">Código: U20231A132</p>
+        </div>
+
+        <!-- MATIAS -->
+        <div class="team-card">
+          <div class="team-avatar">
+            <img src="assets/Imagenes/Matias.png" alt="Matias Josue" />
+          </div>
+          <h3>Matias Amaya Huaman</h3>
+          <p class="role">Integrante del equipo · Ing. Sistemas de Información</p>
+          <p>
+            Tengo 19 años y estudio Ingeniería de Sistemas de Información en la UPC. Me considero
+            una persona con actitud positiva y un gran interés por la tecnología. Aportaré mis
+            conocimientos en programación y diseño para fortalecer el desarrollo del proyecto.
+          </p>
+          <p class="role">Código: U202318839</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="impact-section">
+    <div class="container">
+      <h2 class="section-title">Nuestro Impacto</h2>
+
+      <div class="impact-grid">
+        <div class="impact-card">
+          <div class="impact-number">500+</div>
+          <div class="impact-label">Talleres Conectados</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-number">2,000+</div>
+          <div class="impact-label">Diseñadores Activos</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-number">15T</div>
+          <div class="impact-label">Materiales Reutilizados</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-number">80%</div>
+          <div class="impact-label">Reducción de Desperdicios</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    <div class="container">
+      <h4>Síguenos en Nuestras Redes</h4>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <p>
+        &copy; 2025 TextilConnect. Hecho con <i class="fas fa-heart"></i> para un futuro sostenible.
+      </p>
+    </div>
+  </section>
+</div>

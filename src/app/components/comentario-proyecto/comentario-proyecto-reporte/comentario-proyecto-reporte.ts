@@ -2,11 +2,12 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import Chart from 'chart.js/auto';
 import { CommonModule } from '@angular/common';
 import { ComentarioProyectoService } from '../../../services/comentario-proyecto-service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-reporte-comentarios',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule,MatIconModule],
   templateUrl: './comentario-proyecto-reporte.html',
   styleUrls: ['./comentario-proyecto-reporte.css']
 })

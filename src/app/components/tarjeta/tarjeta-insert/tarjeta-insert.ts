@@ -14,6 +14,7 @@ import { TarjetaService } from '../../../services/tarjeta';
 import { UsuarioService } from '../../../services/usuario-service';
 import { Tarjeta } from '../../../models/tarjeta';
 import { Usuario } from '../../../models/Usuario';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -29,6 +30,7 @@ import { Usuario } from '../../../models/Usuario';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatIconModule
   ],
   providers: [provideNativeDateAdapter()],
 })

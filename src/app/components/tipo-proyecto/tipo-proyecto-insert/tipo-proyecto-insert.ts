@@ -5,13 +5,14 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TipoProyectoService } from '../../../services/tipo-proyecto-service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
   selector: 'app-tipo-proyecto-insertar',
   templateUrl: './tipo-proyecto-insert.html',
   styleUrl: './tipo-proyecto-insert.css',
-  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule],
+  imports: [CommonModule, ReactiveFormsModule, MatInputModule, MatButtonModule, MatIconModule,],
 })
 export class TipoProyectoInsertarComponent implements OnInit {
   form!: FormGroup;
@@ -47,6 +48,12 @@ export class TipoProyectoInsertarComponent implements OnInit {
   }
 
   aceptar() {
+    // ✅ VALIDACIÓN (no guarda si está mal)
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     const body = {
       idTipoProyecto: Number(this.form.value.idTipoProyecto),
       nombreTipoProyecto: this.form.value.nombreTipoProyecto,
@@ -64,6 +71,7 @@ export class TipoProyectoInsertarComponent implements OnInit {
 
     this.router.navigate(['tipoproyecto']);
   }
+
   cancelar(): void {
     this.router.navigate(['tipoproyecto']);
   }

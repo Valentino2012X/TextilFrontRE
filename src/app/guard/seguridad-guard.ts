@@ -1,16 +1,14 @@
-// src/app/guard/seguridad-guard.ts
-import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
+import { CanActivateFn, Router } from '@angular/router';
 import { LoginService } from '../services/login-service';
 
-export const seguridadGuard: CanActivateFn = (route, state) => {
-  const lService = inject(LoginService);
+export const seguridadGuard: CanActivateFn = (_route, state) => {
   const router = inject(Router);
+  const loginService = inject(LoginService);
 
-  const rpta = lService.verificar();
-  if (!rpta) {
-    router.navigate(['/login']);
-    return false;
-  }
-  return rpta;
+  if (loginService.verificar()) return true;
+
+  return router.createUrlTree(['/login'], {
+    queryParams: { redirect: state.url },
+  });
 };

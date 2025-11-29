@@ -1,0 +1,173 @@
+<div class="landing">
+  <section class="course-header">
+    <nav id="navbar">
+      <a class="logo" routerLink="/home/products">TextilConnect</a>
+
+      <ul class="nav-links" [class.is-open]="mobileMenuOpen">
+        <li>
+          <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
+            Home
+          </a>
+        </li>
+        <!-- ✅ SOLO LOGUEADO -->
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
+        <li><a routerLink="/home/about" routerLinkActive="active">Nosotros</a></li>
+        <li><a routerLink="/home/products" routerLinkActive="active">Productos</a></li>
+        <li><a routerLink="/home/community" routerLinkActive="active">Comunidad</a></li>
+        <li><a routerLink="/home/contact" routerLinkActive="active">Contacto</a></li>
+      </ul>
+
+      <i class="fa fa-bars mobile-menu" (click)="toggleMenu()" aria-label="Abrir menú"></i>
+
+      <div class="auth-section">
+        <!-- No logueado -->
+        <div class="auth-buttons" *ngIf="!isLoggedIn">
+          <a class="auth-btn login-btn" routerLink="/autenticador">Iniciar Sesión</a>
+          <a class="auth-btn register-btn" routerLink="/registro">Registrarse</a>
+        </div>
+
+        <!-- Logueado -->
+        <div class="user-menu" *ngIf="isLoggedIn">
+          <div class="notification-icon">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge">{{ notificationCount }}</span>
+          </div>
+
+          <div class="user-info" (click)="toggleUserMenu()">
+            <div class="user-avatar">{{ userName.charAt(0) || 'U' | uppercase }}</div>
+            <span>{{ userName }}</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+
+          <div class="dropdown-menu" *ngIf="userMenuOpen">
+            <a class="dropdown-item" routerLink="/home/perfil">
+              <i class="fas fa-user"></i> Mi Perfil
+            </a>
+            <a class="dropdown-item" routerLink="/favorito">
+              <i class="fas fa-heart"></i> Mis Favoritos
+            </a>
+            <a class="dropdown-item" routerLink="/proyecto">
+              <i class="fas fa-camera"></i> Mis Proyectos
+            </a>
+            <button type="button" class="dropdown-item" (click)="logout()">
+              <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <h1>PRODUCTOS</h1>
+    <h2>Compra tejidos y más</h2>
+    <h3>
+      Encuentra materiales circulares e innovadores, incluyendo tejidos de stock, adornos, hilos y
+      mucho más para tus proyectos creativos.
+    </h3>
+  </section>
+
+  <section class="products-section">
+    <div class="container">
+      <div class="filter-section">
+        <div class="filter-buttons">
+          <button class="filter-btn" [class.active]="selectedCategory === 'all'" (click)="setCategory('all')">
+            Todos
+          </button>
+          <button class="filter-btn" [class.active]="selectedCategory === 'tejidos'" (click)="setCategory('tejidos')">
+            Tejidos
+          </button>
+          <button class="filter-btn" [class.active]="selectedCategory === 'hilos'" (click)="setCategory('hilos')">
+            Hilos
+          </button>
+          <button class="filter-btn" [class.active]="selectedCategory === 'adornos'" (click)="setCategory('adornos')">
+            Adornos
+          </button>
+          <button class="filter-btn" [class.active]="selectedCategory === 'organicos'" (click)="setCategory('organicos')">
+            Orgánicos
+          </button>
+        </div>
+      </div>
+
+      <div class="products-grid">
+        <div class="product-card" *ngFor="let p of filteredProducts; trackBy: trackByTitle">
+          <img [src]="p.img" [alt]="p.alt" />
+
+          <div class="product-overlay">
+            <h3>{{ p.title }}</h3>
+            <div class="price">{{ p.price }}</div>
+            <p>{{ p.desc }}</p>
+
+            <button class="btn-primary" type="button" (click)="comprar(p)">Comprar Ahora</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="featured-section">
+    <div class="container">
+      <div class="featured-content">
+        <div class="featured-text">
+          <h1>Novedad: Tejidos de Lino y Orgánicos con Certificación GOTS</h1>
+          <h2>
+            Descubre las novedades, incluyendo tejidos orgánicos certificados GOTS y nuevos tejidos de lino.
+          </h2>
+
+          <a
+            class="btn-primary btn-link"
+            href="https://www.ecocert.com/es-PE/detaile-de-certification/productos-textiles-org%C3%A1nicos-gots"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Explorar Colección
+          </a>
+        </div>
+
+        <div class="featured-image">
+          <img
+            src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 500 400'><rect fill='%23f8f9fa' width='500' height='400'/><rect fill='%23e8f5e8' x='50' y='50' width='400' height='300' rx='20'/><text x='250' y='200' text-anchor='middle' font-family='Arial' font-size='20' fill='%23228b22'>Tejidos Orgánicos</text><text x='250' y='230' text-anchor='middle' font-family='Arial' font-size='16' fill='%23666'>Certificación GOTS</text></svg>"
+            alt="Tejidos Orgánicos"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testimonials">
+    <div class="container">
+      <h1>Comentarios de Nuestros Usuarios</h1>
+
+      <div class="testimonials-grid">
+        <div class="testimonial-card" *ngFor="let t of testimonials">
+          <div class="testimonial-author">
+            <img [src]="t.avatar" [alt]="t.alt" />
+            <div>
+              <h3>{{ t.name }}</h3>
+              <p>{{ t.role }}</p>
+            </div>
+          </div>
+
+          <div class="testimonial-text">
+            {{ t.text }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="footer">
+    <div class="container">
+      <h4>Síguenos en Nuestras Redes</h4>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <p>
+        &copy; 2025 TextilConnect. Hecho con <i class="fas fa-heart"></i> para un futuro sostenible.
+      </p>
+    </div>
+  </section>
+</div>

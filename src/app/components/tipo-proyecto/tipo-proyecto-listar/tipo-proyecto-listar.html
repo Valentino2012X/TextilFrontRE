@@ -1,36 +1,58 @@
-<div class="container">
-  <button mat-raised-button color="primary" routerLink="/tipoproyecto/new">
-    <mat-icon>add</mat-icon> Nuevo tipo de proyecto
-  </button>
+<div class="tc-page">
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon"><mat-icon>category</mat-icon></div>
+      <div>
+        <h1 class="tc-hero-title">Tipo de proyecto</h1>
+        <p class="tc-hero-subtitle">Gestiona los tipos para clasificar tus proyectos.</p>
+      </div>
+    </div>
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width-table">
-    <ng-container matColumnDef="idTipoProyecto">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let row">{{ row.idTipoProyecto }}</td>
-    </ng-container>
+    <div class="tc-hero-right">
+      <span class="tc-total">Total: {{ dataSource.data.length }}</span>
+      <button mat-raised-button class="tc-btn-primary" routerLink="/tipoproyecto/new">
+        <mat-icon>add</mat-icon>
+        Nuevo tipo
+      </button>
+    </div>
+  </section>
 
-    <ng-container matColumnDef="nombreTipoProyecto">
-      <th mat-header-cell *matHeaderCellDef>Nombre</th>
-      <td mat-cell *matCellDef="let row">{{ row.nombreTipoProyecto }}</td>
-    </ng-container>
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Listado</span>
+    </div>
 
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
-      <td mat-cell *matCellDef="let row">
-        <button
-          mat-icon-button
-          color="primary"
-          [routerLink]="['/tipoproyecto/edit', row.idTipoProyecto]"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="eliminar(row.idTipoProyecto)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+    <div class="tc-table-wrap">
+      <table mat-table [dataSource]="dataSource" class="tc-table tc-table-center">
+        <ng-container matColumnDef="idTipoProyecto">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.idTipoProyecto }}</td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+        <ng-container matColumnDef="nombreTipoProyecto">
+          <th mat-header-cell *matHeaderCellDef>Nombre</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="tc-chip">{{ row.nombreTipoProyecto }}</span>
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="tc-actions">
+              <button mat-icon-button class="tc-icon-btn tc-edit" [routerLink]="['/tipoproyecto/edit', row.idTipoProyecto]">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-icon-button class="tc-icon-btn tc-del" (click)="eliminar(row.idTipoProyecto)">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </section>
 </div>

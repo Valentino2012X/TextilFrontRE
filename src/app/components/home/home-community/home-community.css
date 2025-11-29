@@ -1,0 +1,260 @@
+@import url('../../../../assets/Styles/home-common.css');
+
+/* Empuja el contenido debajo del navbar fixed */
+.course-header{
+  min-height: 72vh;
+  padding-top: 92px;
+  padding-bottom: 46px;
+
+  display: grid;
+  place-items: center;
+  text-align: center;
+
+  background: radial-gradient(circle at 20% 50%, rgba(141,174,95,.30) 0%, transparent 52%),
+              radial-gradient(circle at 80% 20%, rgba(14,114,52,.35) 0%, transparent 55%),
+              linear-gradient(135deg, #06402B 0%, #0e7234 50%, #06402B 100%);
+  color: white;
+  position: relative;
+  overflow: hidden;
+}
+
+.course-header::before{
+  content:'';
+  position:absolute;
+  inset:0;
+  background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.35));
+  pointer-events:none;
+}
+
+.course-header > *{
+  position: relative;
+  z-index: 1;
+}
+
+.course-header h1{
+  font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+  font-weight: 900;
+  margin: 0 0 10px 0;
+  text-shadow: 0 10px 30px rgba(0,0,0,.25);
+}
+
+.section-subtitle{
+  max-width: 760px;
+  margin: 0 auto;
+  opacity: .95;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* ✅ Mobile menu class fix: tu HTML usa .open, mi common usa .is-open */
+@media (max-width: 768px){
+  .landing .nav-links.open{ transform: translateX(0); }
+}
+
+/* ===================== COMMUNITY SECTION ===================== */
+.community-section{
+  position: relative;
+  padding: 70px 0;
+  background: white;
+  overflow: hidden;
+}
+
+/* floating */
+.floating-elements{
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.floating-element{
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #06402B, var(--tc-green));
+  opacity: .35;
+  animation: float-random 10s infinite linear;
+}
+
+.floating-element:nth-child(1){ top: 12%; left: 10%; animation-delay: 0s; }
+.floating-element:nth-child(2){ top: 18%; right: 16%; animation-delay: 2s; }
+.floating-element:nth-child(3){ bottom: 22%; left: 22%; animation-delay: 4s; }
+.floating-element:nth-child(4){ bottom: 10%; right: 12%; animation-delay: 6s; }
+
+@keyframes float-random{
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-20px) rotate(90deg); }
+  50% { transform: translateY(-40px) rotate(180deg); }
+  75% { transform: translateY(-20px) rotate(270deg); }
+}
+
+.community-section .container{
+  position: relative;
+  z-index: 1;
+}
+
+/* ===================== FEATURES GRID ===================== */
+.features-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 18px;
+  margin-bottom: 40px;
+}
+
+.feature-card{
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: var(--tc-shadow);
+  border: 1px solid rgba(0,0,0,.06);
+  padding: 20px;
+  text-align: center;
+  transition: .25s ease;
+  border-top: 5px solid #06402B;
+}
+
+.feature-card:hover{
+  transform: translateY(-8px);
+  box-shadow: 0 18px 45px rgba(0,0,0,.16);
+}
+
+.feature-icon{
+  width: 78px;
+  height: 78px;
+  margin: 0 auto 12px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #06402B, var(--tc-green));
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.feature-icon img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.feature-title{
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin: 0 0 8px 0;
+  color: #06402B;
+}
+
+.feature-description{
+  margin: 0;
+  color: #4a4a4a;
+  line-height: 1.65;
+}
+
+/* ===================== INTERACTIVE DEMO ===================== */
+.interactive-demo{
+  background: #06402B;
+  color: white;
+  border-radius: 18px;
+  padding: 26px;
+  box-shadow: 0 18px 55px rgba(0,0,0,.18);
+  border: 1px solid rgba(0,0,0,.06);
+  margin-bottom: 26px;
+}
+
+.demo-title{
+  font-size: 1.8rem;
+  font-weight: 900;
+  margin: 0 0 8px 0;
+}
+
+.demo-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.demo-card{
+  background: rgba(255,255,255,.10);
+  border: 2px solid rgba(255,255,255,.14);
+  border-radius: 14px;
+  padding: 14px;
+  cursor: pointer;
+  transition: .2s ease;
+  text-align: center;
+  backdrop-filter: blur(8px);
+}
+
+.demo-card:hover{
+  transform: translateY(-4px);
+  background: rgba(255,255,255,.16);
+  border-color: rgba(255,255,255,.28);
+}
+
+.demo-card.active{
+  background: linear-gradient(135deg, rgba(141,174,95,.35), rgba(255,255,255,.12));
+  border-color: rgba(141,174,95,.75);
+  box-shadow: 0 16px 35px rgba(0,0,0,.20);
+}
+
+.demo-icon{
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.demo-text{
+  font-weight: 900;
+}
+
+/* Tu div con estilos inline (demoText) — lo mejoramos sin tocar HTML */
+.interactive-demo [ng-reflect-ng-if] + div p,
+.interactive-demo p{
+  color: rgba(255,255,255,.92);
+}
+
+/* OJO: tú pusiste el texto del demo en color black inline.
+   Esto para que SIEMPRE se vea en blanco dentro del demo box: */
+.interactive-demo div[style] p{
+  color: white !important;
+}
+
+/* ===================== CTA ===================== */
+.cta-section{
+  text-align: center;
+  padding: 12px 0 28px;
+}
+
+.cta-button{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 22px;
+  border-radius: 999px;
+  font-weight: 900;
+  text-decoration: none;
+  background: linear-gradient(135deg, var(--tc-green), #b9d27b);
+  color: #102012;
+  box-shadow: 0 14px 30px rgba(0,0,0,.18);
+  transition: .25s ease;
+}
+
+.cta-button:hover{
+  transform: translateY(-3px);
+  box-shadow: 0 18px 40px rgba(0,0,0,.22);
+}
+
+.pulse-animation{
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse{
+  0%{ transform: scale(1); }
+  50%{ transform: scale(1.04); }
+  100%{ transform: scale(1); }
+}
+
+/* ===================== RESPONSIVE ===================== */
+@media (max-width: 768px){
+  .features-grid{ grid-template-columns: 1fr; }
+  .interactive-demo{ padding: 20px; }
+  .demo-grid{ grid-template-columns: repeat(2, 1fr); }
+}

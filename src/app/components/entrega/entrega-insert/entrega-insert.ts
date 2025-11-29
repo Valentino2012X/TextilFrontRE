@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute, Params, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { EntregaService } from '../../../services/entrega-service';
 import { PedidoService } from '../../../services/pedido-service';
@@ -23,6 +23,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
+
+// ✅ Google Maps
+import { GoogleMapsModule } from '@angular/google-maps';
 
 @Component({
   standalone: true,
@@ -39,6 +42,7 @@ import { MatOptionModule, provideNativeDateAdapter } from '@angular/material/cor
     MatIconModule,
     MatDatepickerModule,
     MatOptionModule,
+    GoogleMapsModule, // ✅
   ],
   providers: [provideNativeDateAdapter()],
 })
@@ -48,6 +52,13 @@ export class EntregaInsertComponent implements OnInit {
   edicion: boolean = false;
 
   listaPedidos: Pedido[] = [];
+
+  // ✅ MAPA
+  zoom = 15;
+  center: google.maps.LatLngLiteral = { lat: -12.0464, lng: -77.0428 }; // Lima
+  markerPosition: google.maps.LatLngLiteral | null = null;
+
+  minEntrega: Date = new Date();
 
   constructor(
     private fb: FormBuilder,
@@ -92,6 +103,9 @@ export class EntregaInsertComponent implements OnInit {
       pedido: ['', Validators.required], // guardamos solo el idPedido
     });
 
+    // ✅ Si el usuario cambia lat/lng manualmente, mueve el marcador
+    this.form.valueChanges.subscribe(() => this.syncMarkerFromForm(false));
+
     // llenar pedidos
     this.pS.list().subscribe((data) => {
       this.listaPedidos = data;
@@ -114,11 +128,60 @@ export class EntregaInsertComponent implements OnInit {
             estadoEntrega: data.estadoEntrega,
             pedido: data.pedido.idPedido,
           });
+
+          // ✅ centra el mapa y coloca marcador en edición
+          this.syncMarkerFromForm(true);
         });
+      } else {
+        // ✅ opcional: centrar mapa con ubicación actual (no rellena el form)
+        this.trySetCurrentLocation();
       }
     });
   }
-  minEntrega: Date = new Date();
+
+  // ✅ Click en el mapa → actualiza lat/lng del form + marcador
+  onMapClick(event: google.maps.MapMouseEvent): void {
+    if (!event.latLng) return;
+
+    const lat = Number(event.latLng.lat().toFixed(6));
+    const lng = Number(event.latLng.lng().toFixed(6));
+
+    this.markerPosition = { lat, lng };
+    this.center = { lat, lng };
+
+    this.form.patchValue({
+      latitudEntrega: lat,
+      longitudEntrega: lng,
+    });
+  }
+
+  private syncMarkerFromForm(force: boolean): void {
+    const lat = Number(this.latitudEntregaField.value);
+    const lng = Number(this.longitudEntregaField.value);
+
+    if (!isFinite(lat) || !isFinite(lng)) return;
+    if (!force && (lat === 0 || lng === 0)) return;
+
+    this.markerPosition = { lat, lng };
+    this.center = { lat, lng };
+  }
+
+  private trySetCurrentLocation(): void {
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition(
+      (pos) => {
+        const lat = Number(pos.coords.latitude.toFixed(6));
+        const lng = Number(pos.coords.longitude.toFixed(6));
+        this.center = { lat, lng };
+      },
+      () => {
+        // sin permiso -> no pasa nada
+      },
+      { enableHighAccuracy: true, timeout: 8000 }
+    );
+  }
+
   aceptar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -143,10 +206,11 @@ export class EntregaInsertComponent implements OnInit {
     request.subscribe(() => {
       this.eS.list().subscribe((data) => {
         this.eS.setList(data);
-        this.router.navigate(['entrega']);
+        this.router.navigate(['entrega']); // ✅ vuelve al listado
       });
     });
   }
+
   cancelar(): void {
     this.router.navigate(['entrega']);
   }

@@ -1,0 +1,85 @@
+<div class="registro-wrapper">
+  <div class="registro-card">
+    <div class="registro-logo">
+      <div class="logo-badge">TC</div>
+    </div>
+
+    <h2 class="registro-title">Crear cuenta</h2>
+    <p class="registro-subtitle">Regístrate como <b>Estudiante</b> o <b>Vendedor</b>.</p>
+
+    <form [formGroup]="form" (ngSubmit)="registrar()">
+      <!-- Nombre -->
+      <label class="label">Nombre completo</label>
+      <input class="dark-input" type="text" formControlName="nombreUsuario" placeholder="Ej: Juan Pérez" />
+      <div class="input-hint error" *ngIf="f.nombreUsuario.touched && f.nombreUsuario.invalid">
+        Nombre obligatorio (2–100).
+      </div>
+
+      <!-- Email -->
+      <label class="label">Correo</label>
+      <input class="dark-input" type="email" formControlName="emailUsuario" placeholder="correo@ejemplo.com" />
+      <div class="input-hint error" *ngIf="f.emailUsuario.touched && f.emailUsuario.invalid">
+        Correo inválido.
+      </div>
+
+      <!-- Username -->
+      <label class="label">Usuario</label>
+      <input class="dark-input" type="text" formControlName="username" placeholder="Ej: juanp" />
+      <div class="input-hint error" *ngIf="f.username.touched && f.username.invalid">
+        Usuario obligatorio (3–50).
+      </div>
+
+      <!-- Password -->
+      <label class="label">Contraseña</label>
+      <input class="dark-input" type="password" formControlName="password" placeholder="Mínimo 6 caracteres" />
+      <div class="input-hint error" *ngIf="f.password.touched && f.password.invalid">
+        Contraseña mínimo 6 caracteres.
+      </div>
+
+      <!-- Teléfono -->
+      <label class="label">Teléfono</label>
+      <input class="dark-input" type="text" formControlName="telefonoUsuario" placeholder="Ej: 999888777" />
+      <div class="input-hint error" *ngIf="f.telefonoUsuario.touched && f.telefonoUsuario.invalid">
+        Teléfono obligatorio.
+      </div>
+
+      <!-- Dirección -->
+      <label class="label">Dirección</label>
+      <input class="dark-input" type="text" formControlName="direccionUsuario" placeholder="Ej: Av. Siempre Viva 123" />
+      <div class="input-hint error" *ngIf="f.direccionUsuario.touched && f.direccionUsuario.invalid">
+        Dirección obligatoria.
+      </div>
+
+      <!-- Rol -->
+      <label class="label">Rol</label>
+      <select class="dark-input" formControlName="idRol">
+        <option [ngValue]="null">Selecciona…</option>
+        <option *ngFor="let r of roles" [ngValue]="r.idRol">
+          {{ r.nombreRol }}
+        </option>
+      </select>
+      <div class="input-hint error" *ngIf="f.idRol.touched && f.idRol.invalid">
+        Debes elegir ESTUDIANTE o VENDEDOR.
+      </div>
+
+      <!-- mensajes -->
+      <div class="msg success" *ngIf="successMsg">{{ successMsg }}</div>
+      <div class="msg error" *ngIf="errorMsg">{{ errorMsg }}</div>
+
+      <!-- acciones -->
+      <div class="acciones">
+        <button type="button" class="btn-cancelar" (click)="cancelar()">Cancelar</button>
+
+        <!-- OJO: no está disabled frío; validamos al submit -->
+        <button type="submit" class="btn-guardar" [class.is-loading]="cargando">
+          {{ cargando ? 'Registrando…' : 'Registrarse' }}
+        </button>
+      </div>
+
+      <p class="login-link">
+        ¿Ya tienes cuenta?
+        <a routerLink="/login">Inicia sesión</a>
+      </p>
+    </form>
+  </div>
+</div>

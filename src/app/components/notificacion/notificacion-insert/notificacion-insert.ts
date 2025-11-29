@@ -20,6 +20,7 @@ import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material
 import { NotificacionService } from '../../../services/notificacion-service';
 import { UsuarioService } from '../../../services/usuario-service';
 import { Usuario } from '../../../models/Usuario';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -35,6 +36,7 @@ import { Usuario } from '../../../models/Usuario';
     MatSelectModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatIconModule
   ],
   providers: [provideNativeDateAdapter()],
 })

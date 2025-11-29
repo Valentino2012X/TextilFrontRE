@@ -24,6 +24,7 @@ import { MetodoPagoService } from '../../../services/metodo-pago';
 import { Pedido } from '../../../models/Pedido';
 import { Usuario } from '../../../models/Usuario';
 import { MetodoPago } from '../../../models/Metodo-pago';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-pedido-insert',
@@ -39,6 +40,7 @@ import { MetodoPago } from '../../../models/Metodo-pago';
     MatDatepickerModule,
     MatButtonModule,
     MatOptionModule,
+    MatIconModule,
   ],
   providers: [provideNativeDateAdapter()],
 })

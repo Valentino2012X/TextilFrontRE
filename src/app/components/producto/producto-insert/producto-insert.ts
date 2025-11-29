@@ -14,6 +14,7 @@ import { UsuarioService } from '../../../services/usuario-service';
 
 import { TipoProducto } from '../../../models/Tipo-producto';
 import { Usuario } from '../../../models/Usuario';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -27,6 +28,7 @@ import { Usuario } from '../../../models/Usuario';
     MatButtonModule,
     MatSelectModule,
     MatCheckboxModule,
+    MatIconModule,
   ],
 })
 export class ProductoInsertarComponent implements OnInit {
@@ -102,7 +104,13 @@ export class ProductoInsertarComponent implements OnInit {
     });
   }
 
-  aceptar() {
+  aceptar(): void {
+    // 1) Validar antes de enviar
+    if (this.form.invalid) {
+      this.form.markAllAsTouched(); // fuerza a que salgan los mat-error
+      return;
+    }
+
     const fv = this.form.value;
 
     const body = {
@@ -120,17 +128,21 @@ export class ProductoInsertarComponent implements OnInit {
       usuario: { idUsuario: Number(fv.usuario) },
     };
 
-    if (this.edicion) {
-      this.pS.update(body).subscribe(() => {
-        this.pS.list().subscribe((data) => this.pS.setList(data));
-      });
-    } else {
-      this.pS.insert(body).subscribe(() => {
-        this.pS.list().subscribe((data) => this.pS.setList(data));
-      });
-    }
+    const request$ = this.edicion ? this.pS.update(body) : this.pS.insert(body);
 
-    this.router.navigate(['producto']);
+    // 2) Esperar respuesta y recién redirigir
+    request$.subscribe({
+      next: () => {
+        this.pS.list().subscribe((data) => {
+          this.pS.setList(data);
+          this.router.navigate(['producto']); // ✅ ahora sí, después de guardar
+        });
+      },
+      error: (err) => {
+        // opcional: aquí muestras un snackbar/toast
+        console.error(err);
+      },
+    });
   }
   cancelar(): void {
     this.router.navigate(['producto']);

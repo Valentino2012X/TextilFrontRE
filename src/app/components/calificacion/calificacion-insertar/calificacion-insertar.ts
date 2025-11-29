@@ -7,7 +7,7 @@ import {
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -24,6 +24,7 @@ import { PedidoService } from '../../../services/pedido-service';
 import { Calificacion } from '../../../models/calificacion';
 import { Usuario } from '../../../models/Usuario';
 import { Pedido } from '../../../models/Pedido';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-calificacion-insertar',
@@ -39,6 +40,8 @@ import { Pedido } from '../../../models/Pedido';
     MatDatepickerModule,
     MatButtonModule,
     MatOptionModule,
+    MatIconModule,
+    NgIf,
   ],
   providers: [provideNativeDateAdapter()],
 })

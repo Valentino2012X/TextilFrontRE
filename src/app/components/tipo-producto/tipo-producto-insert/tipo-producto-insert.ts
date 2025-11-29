@@ -47,6 +47,12 @@ export class TipoProductoInsertarComponent implements OnInit {
   }
 
   aceptar() {
+    // ✅ VALIDACIÓN (no guarda si está mal)
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+
     let body = {
       idTipoProducto: Number(this.form.value.idTipoProducto),
       nombreTipoProducto: this.form.value.nombreTipoProducto,
@@ -64,6 +70,7 @@ export class TipoProductoInsertarComponent implements OnInit {
 
     this.router.navigate(['tipoproducto']);
   }
+
   cancelar(): void {
     this.router.navigate(['tipoproducto']);
   }

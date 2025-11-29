@@ -1,23 +1,34 @@
-<div class="container" style="text-align: center">
-    <div>
-      <img src="/assets/cocoelefanto.png" alt="Logo de la empresa" >
+<!-- src/app/components/autenticador/autenticador.html -->
+<div class="auth-bg">
+  <div class="auth-card">
+    <!-- (Opcional) si no quieres la X, borra este botón y el método cerrar() -->
+    <button class="close-btn" type="button" aria-label="Cerrar" (click)="cerrar()">
+      ✕
+    </button>
 
+    <div class="brand">
+      <img class="logo" src="/assets/Logo2.png" alt="Logo de la empresa" />
     </div>
-    <h2>Inicie sesión</h2>
-    <mat-form-field class="example-full-width">
+
+    <h2 class="title">Iniciar Sesión</h2>
+
+    <mat-form-field appearance="outline" class="full">
       <mat-label>Usuario</mat-label>
       <input matInput placeholder="Username" [(ngModel)]="username" />
     </mat-form-field>
-    <br />
-    <mat-form-field class="example-full-width">
-      <mat-label>Password</mat-label>
-      <input
-        type="password"
-        matInput
-        placeholder="Password"
-        [(ngModel)]="password"
-      />
+
+    <mat-form-field appearance="outline" class="full">
+      <mat-label>Contraseña</mat-label>
+      <input matInput type="password" placeholder="Password" [(ngModel)]="password" />
     </mat-form-field>
-    <br />
-    <button mat-raised-button class="custom-button" (click)="login()">Ingresar</button>
+
+    <button mat-raised-button class="btn-login" type="button" (click)="login()">
+      Ingresar
+    </button>
+
+    <p class="signup">
+      ¿No tienes cuenta?
+      <a class="signup-link" routerLink="/registro">Regístrate aquí</a>
+    </p>
   </div>
+</div>

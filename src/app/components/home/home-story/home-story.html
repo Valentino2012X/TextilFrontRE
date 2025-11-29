@@ -1,0 +1,112 @@
+<div class="landing">
+  <!-- src/app/components/home/home-story/home-story.html -->
+
+  <nav id="navbar">
+    <a class="logo" routerLink="/home/story">TextilConnect</a>
+
+    <ul class="nav-links" [class.is-open]="mobileMenuOpen">
+      <li>
+        <a routerLink="/home" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }"
+          >Home</a
+        >
+      </li>
+      <li><a routerLink="/home/about" routerLinkActive="active">Nosotros</a></li>
+      <li><a routerLink="/home/products" routerLinkActive="active">Productos</a></li>
+      <li><a routerLink="/home/community" routerLinkActive="active">Comunidad</a></li>
+      <li><a routerLink="/home/contact" routerLinkActive="active">Contacto</a></li>
+    </ul>
+
+    <i class="fa fa-bars mobile-menu" (click)="toggleMenu()" aria-label="Abrir menú"></i>
+
+    <div class="auth-section">
+      <!-- No logueado -->
+      <div class="auth-buttons" *ngIf="!isLoggedIn">
+        <a class="auth-btn login-btn" routerLink="/autenticador">Iniciar Sesión</a>
+        <a class="auth-btn register-btn" routerLink="/registro">Registrarse</a>
+      </div>
+
+      <!-- Logueado (demo visual) -->
+      <div class="user-menu" *ngIf="isLoggedIn">
+        <div class="notification-icon">
+          <i class="fas fa-bell"></i>
+          <span class="notification-badge">{{ notificationCount }}</span>
+        </div>
+
+        <div class="user-info">
+          <div class="user-avatar">{{ userName.charAt(0) || 'U' | uppercase }}</div>
+          <span>{{ userName }}</span>
+          <i class="fas fa-chevron-down"></i>
+        </div>
+
+        <div class="dropdown-menu">
+          <a class="dropdown-item" routerLink="/home/perfil"
+            ><i class="fas fa-user"></i> Mi Perfil</a
+          >
+          <a class="dropdown-item" routerLink="/favorito"
+            ><i class="fas fa-heart"></i> Mis Favoritos</a
+          >
+          <a class="dropdown-item" routerLink="/proyecto"
+            ><i class="fas fa-camera"></i> Mis Proyectos</a
+          >
+          <a class="dropdown-item" (click)="logout()"
+            ><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a
+          >
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      <h1 class="hero-title">TextilConnect</h1>
+      <p class="hero-subtitle">Transformando la industria textil hacia un futuro sostenible</p>
+    </div>
+  </section>
+
+  <!-- Timeline Section -->
+  <section class="timeline">
+    <div
+      class="timeline-item fade-in"
+      *ngFor="let t of timeline; trackBy: trackByYear"
+      [ngClass]="t.side"
+    >
+      <div class="timeline-dot"></div>
+      <div class="timeline-year">{{ t.year }}</div>
+      <h3 class="timeline-title">{{ t.title }}</h3>
+      <div class="timeline-content">
+        {{ t.content }}
+      </div>
+    </div>
+  </section>
+
+  <!-- Problemática -->
+  <section class="problem-section">
+    <div class="container">
+      <h2 class="section-title">La Problemática que Enfrentamos</h2>
+
+      <div class="problem-grid">
+        <div class="problem-card fade-in" *ngFor="let p of problems; trackBy: trackByTitle">
+          <h3 class="problem-title">{{ p.title }}</h3>
+          <p class="problem-description">{{ p.description }}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <section class="footer">
+    <div class="container">
+      <h4>Síguenos en Nuestras Redes</h4>
+      <div class="social-icons">
+        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <p>
+        &copy; 2025 TextilConnect. Hecho con <i class="fas fa-heart"></i> para un futuro sostenible.
+      </p>
+    </div>
+  </section>
+</div>

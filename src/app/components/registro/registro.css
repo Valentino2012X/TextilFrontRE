@@ -1,0 +1,188 @@
+/* === REGISTRO TextilConnect (estilo unificado) === */
+.registro-wrapper {
+  width: 100%;
+  height: 100vh;
+  background: #f5f5dc; /* beige claro */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 22px;
+  box-sizing: border-box;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+}
+
+/* CARD */
+.registro-card {
+  width: 100%;
+  max-width: 560px;
+  background: #ffffff; /* blanco */
+  padding: 34px 40px;
+  border-radius: 22px;
+  box-shadow: 0 14px 34px rgba(0,0,0,0.14);
+  border: 1px solid rgba(28,28,28,0.10);
+  box-sizing: border-box;
+}
+
+/* LOGO */
+.registro-logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.logo-badge {
+  width: 70px;
+  height: 70px;
+  border-radius: 22px;
+  background: #8DAE5F;
+  color: #1C1C1C;
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
+  font-weight: 800;
+  box-shadow: 0 10px 22px rgba(0,0,0,0.16);
+}
+
+/* TEXTOS */
+.registro-title {
+  text-align: center;
+  margin: 0;
+  color: #1C1C1C;
+  font-size: 28px;
+  font-weight: 800;
+}
+
+.registro-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #3D6B3B;
+  margin-bottom: 22px;
+  margin-top: 6px;
+}
+
+/* LABEL */
+.label {
+  display: block;
+  color: #1C1C1C;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 14px 0 6px;
+}
+
+/* INPUT (versión beige) */
+.dark-input {
+  width: 100%;
+  padding: 12px 14px;
+  background: #F5F5DC;
+  border: 1px solid rgba(28,28,28,.16);
+  border-radius: 14px;
+  font-size: 14px;
+  color: #1C1C1C;
+  outline: none;
+  transition: all .15s ease;
+}
+
+.dark-input:focus {
+  border-color: #8DAE5F;
+  box-shadow: 0 0 0 3px rgba(141,174,95,.28);
+}
+
+/* HINT */
+.input-hint {
+  font-size: 12px;
+  margin-top: 6px;
+  color: #3D6B3B;
+}
+
+.input-hint.error {
+  color: #c53030;
+}
+
+/* MENSAJES */
+.msg {
+  margin-top: 14px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-size: 13px;
+}
+
+.msg.success {
+  background: rgba(141, 174, 95, 0.20);
+  border: 1px solid rgba(141, 174, 95, 0.45);
+  color: #3D6B3B;
+}
+
+.msg.error {
+  background: rgba(255, 150, 150, 0.2);
+  border: 1px solid rgba(255, 100, 100, 0.35);
+  color: #b82e2e;
+}
+
+/* BOTONES */
+.acciones {
+  display: flex;
+  gap: 12px;
+  margin-top: 22px;
+}
+
+.btn-guardar {
+  flex: 1;
+  background: #8DAE5F;
+  color: #1C1C1C;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: none;
+  font-weight: 800;
+  cursor: pointer;
+  transition: background .2s ease;
+  font-size: 15px;
+}
+
+.btn-guardar:hover {
+  background: #7FA452;
+}
+
+.btn-guardar.is-loading {
+  opacity: .75;
+  cursor: progress;
+}
+
+.btn-cancelar {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(28,28,28,.28);
+  background: #ffffff;
+  color: #1C1C1C;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all .2s ease;
+}
+
+.btn-cancelar:hover {
+  background: #f1f1e4;
+}
+
+/* LINK LOGIN */
+.login-link {
+  margin-top: 18px;
+  text-align: center;
+  font-size: 14px;
+  color: #1C1C1C;
+}
+
+.login-link a {
+  color: #3D6B3B;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+/* RESPONSIVE */
+@media (max-width: 520px) {
+  .registro-card {
+    padding: 26px 20px;
+  }
+  .acciones {
+    flex-direction: column;
+  }
+}
