@@ -40,8 +40,7 @@ export class Autenticador implements OnInit {
   }
 
   cerrar() {
-    // si no tienes /home, cámbialo por /login o /dashboard
-    this.router.navigate(['/home']);
+    this.router.navigate(['/login']); // ✅ mejor: volver al login
   }
 
   login() {
@@ -79,7 +78,7 @@ export class Autenticador implements OnInit {
           if (rol) sessionStorage.setItem('rol', rol);
         }
 
-        this.router.navigate(['/usuarios']);
+        this.router.navigate(['/home']); // ✅ ANTES: ['/usuarios']
       },
       () => {
         this.mensaje = 'Usuario o contraseña incorrectos.';
