@@ -72,6 +72,23 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- ✅ MAPA (click para llenar lat/long) -->
+        <div class="full tc-span-2 tc-map-wrap">
+          <google-map
+            [height]="'320px'"
+            [width]="'100%'"
+            [zoom]="zoom"
+            [center]="center"
+            (mapClick)="onMapClick($event)"
+          >
+            <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
+          </google-map>
+
+          <div class="tc-map-hint">
+            Haz clic en el mapa para seleccionar la ubicación. Se llenará Latitud y Longitud automáticamente.
+          </div>
+        </div>
+
         <!-- Fecha entrega -->
         <mat-form-field appearance="outline" class="full">
           <mat-label>Fecha de entrega</mat-label>
