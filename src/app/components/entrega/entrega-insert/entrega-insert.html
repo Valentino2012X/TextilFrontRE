@@ -29,7 +29,7 @@
       <div class="tc-grid">
         <!-- Tipo entrega -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Tipo de entrega*</mat-label>
+          <mat-label>Tipo de entrega</mat-label>
           <input matInput formControlName="tipoEntrega" />
           <mat-error *ngIf="tipoEntregaField.invalid && (tipoEntregaField.dirty || tipoEntregaField.touched)">
             El tipo de entrega es obligatorio.
@@ -38,7 +38,7 @@
 
         <!-- Estado -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Estado*</mat-label>
+          <mat-label>Estado</mat-label>
           <input matInput formControlName="estadoEntrega" />
           <mat-error *ngIf="estadoEntregaField.invalid && (estadoEntregaField.dirty || estadoEntregaField.touched)">
             El estado de la entrega es obligatorio.
@@ -47,7 +47,7 @@
 
         <!-- Dirección -->
         <mat-form-field appearance="outline" class="full tc-span-2">
-          <mat-label>Dirección de entrega*</mat-label>
+          <mat-label>Dirección de entrega</mat-label>
           <input matInput formControlName="direccionEntrega" />
           <mat-error *ngIf="direccionEntregaField.invalid && (direccionEntregaField.dirty || direccionEntregaField.touched)">
             La dirección es obligatoria.
@@ -56,7 +56,7 @@
 
         <!-- Latitud -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Latitud*</mat-label>
+          <mat-label>Latitud</mat-label>
           <input matInput type="number" step="0.01" formControlName="latitudEntrega" />
           <mat-error *ngIf="latitudEntregaField.invalid && (latitudEntregaField.dirty || latitudEntregaField.touched)">
             La latitud es obligatoria.
@@ -65,7 +65,7 @@
 
         <!-- Longitud -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Longitud*</mat-label>
+          <mat-label>Longitud</mat-label>
           <input matInput type="number" step="0.01" formControlName="longitudEntrega" />
           <mat-error *ngIf="longitudEntregaField.invalid && (longitudEntregaField.dirty || longitudEntregaField.touched)">
             La longitud es obligatoria.
@@ -74,7 +74,7 @@
 
         <!-- Fecha entrega -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Fecha de entrega*</mat-label>
+          <mat-label>Fecha de entrega</mat-label>
           <input
             matInput
             [matDatepicker]="pickerEntrega"
@@ -90,8 +90,8 @@
 
         <!-- Pedido -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Pedido*</mat-label>
-          <mat-select formControlName="pedido">
+          <mat-label>Pedido</mat-label>
+          <mat-select formControlName="pedido" panelClass="tc-select-panel">
             <mat-option *ngFor="let p of listaPedidos" [value]="p.idPedido">
               #{{ p.idPedido }} - {{ p.estadoPedido }}
             </mat-option>

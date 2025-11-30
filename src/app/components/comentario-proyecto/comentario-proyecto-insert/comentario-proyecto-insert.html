@@ -54,7 +54,7 @@
         <!-- Proyecto -->
         <mat-form-field appearance="outline" class="full">
           <mat-label>Proyecto*</mat-label>
-          <mat-select formControlName="proyecto">
+          <mat-select formControlName="proyecto" panelClass="tc-select-panel">
             <mat-option *ngFor="let p of listaProyectos" [value]="p.idProyecto">
               {{ p.tituloProyecto }} (ID: {{ p.idProyecto }})
             </mat-option>
@@ -67,7 +67,7 @@
         <!-- Usuario -->
         <mat-form-field appearance="outline" class="full">
           <mat-label>Usuario*</mat-label>
-          <mat-select formControlName="usuario">
+          <mat-select formControlName="usuario" panelClass="tc-select-panel">
             <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
               {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
             </mat-option>

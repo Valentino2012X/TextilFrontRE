@@ -33,7 +33,7 @@
       <div class="tc-grid">
         <!-- Año -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Año*</mat-label>
+          <mat-label>Año</mat-label>
           <input
             matInput
             type="number"
@@ -48,7 +48,7 @@
 
         <!-- Mes -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Mes*</mat-label>
+          <mat-label>Mes</mat-label>
           <mat-select formControlName="mesPresupuestoMensual">
             <mat-option *ngFor="let m of meses" [value]="m.valor">
               {{ m.label }}
@@ -61,7 +61,7 @@
 
         <!-- Monto -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Monto límite (S/.)*</mat-label>
+          <mat-label>Monto límite (S/.)</mat-label>
           <input
             matInput
             type="number"
@@ -75,7 +75,7 @@
 
         <!-- Fecha -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Fecha presupuesto*</mat-label>
+          <mat-label>Fecha presupuesto</mat-label>
           <input matInput [matDatepicker]="pickerFecha" formControlName="fechaPresupuestoMensual" />
           <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
           <mat-datepicker #pickerFecha></mat-datepicker>
@@ -86,8 +86,8 @@
 
         <!-- Usuario -->
         <mat-form-field appearance="outline" class="full tc-span-2">
-          <mat-label>Usuario*</mat-label>
-          <mat-select formControlName="idUsuario">
+          <mat-label>Usuario</mat-label>
+          <mat-select formControlName="idUsuario" panelClass="tc-select-panel">
             <mat-option *ngFor="let u of usuarios" [value]="u.idUsuario">
               {{ u.nombreUsuario }}
             </mat-option>
