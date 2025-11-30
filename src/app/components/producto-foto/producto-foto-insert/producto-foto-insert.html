@@ -6,9 +6,7 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>URL de la foto</mat-label>
         <input matInput formControlName="urlProductoFoto" />
-        <mat-error *ngIf="campoInvalido('urlProductoFoto')">
-          La URL es obligatoria.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('urlProductoFoto')"> La URL es obligatoria. </mat-error>
       </mat-form-field>
     </div>
 
@@ -26,15 +24,8 @@
 
       <mat-form-field appearance="outline" class="half">
         <mat-label>Fecha de subida</mat-label>
-        <input
-          matInput
-          [matDatepicker]="pickerFecha"
-          formControlName="fechaSubidaProductoFoto"
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="pickerFecha"
-        ></mat-datepicker-toggle>
+        <input matInput [matDatepicker]="pickerFecha" formControlName="fechaSubidaProductoFoto" />
+        <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
         <mat-datepicker #pickerFecha></mat-datepicker>
         <mat-error *ngIf="campoInvalido('fechaSubidaProductoFoto')">
           La fecha es obligatoria.
@@ -50,14 +41,15 @@
             {{ p.nombreProducto }} (ID: {{ p.idProducto }})
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="campoInvalido('idProducto')">
-          Debes seleccionar un producto.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('idProducto')"> Debes seleccionar un producto. </mat-error>
       </mat-form-field>
     </div>
 
-    <button mat-raised-button color="primary" type="submit" class="btn-guardar">
-      Guardar
-    </button>
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
   </form>
 </div>

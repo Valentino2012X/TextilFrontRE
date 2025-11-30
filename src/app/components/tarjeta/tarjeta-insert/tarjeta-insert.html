@@ -7,9 +7,7 @@
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Alias</mat-label>
         <input matInput formControlName="aliasTarjeta" />
-        <mat-error *ngIf="campoInvalido('aliasTarjeta')">
-          El alias es obligatorio.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('aliasTarjeta')"> El alias es obligatorio. </mat-error>
       </mat-form-field>
     </div>
 
@@ -22,9 +20,7 @@
             {{ t }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="campoInvalido('tipoTarjeta')">
-          El tipo es obligatorio.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('tipoTarjeta')"> El tipo es obligatorio. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="half">
@@ -34,9 +30,7 @@
             {{ m }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="campoInvalido('marcaTarjeta')">
-          La marca es obligatoria.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('marcaTarjeta')"> La marca es obligatoria. </mat-error>
       </mat-form-field>
     </div>
 
@@ -44,15 +38,25 @@
       <mat-form-field appearance="outline" class="half">
         <mat-label>Últimos 4 dígitos</mat-label>
         <input matInput formControlName="ultimos4Tarjeta" maxlength="4" />
-      <mat-error *ngIf="(form.get('ultimos4Tarjeta')?.hasError('minlength') || form.get('ultimos4Tarjeta')?.hasError('maxlength')) &&!form.get('ultimos4Tarjeta')?.hasError('pattern')">
-        Debe tener exactamente 4 dígitos.
-      </mat-error>
-       <mat-error *ngIf="form.get('ultimos4Tarjeta')?.hasError('pattern') && form.get('ultimos4Tarjeta')?.value">
-        Solo se permiten números
-      </mat-error>
-      <mat-error *ngIf="form.get('ultimos4Tarjeta')?.hasError('required')">
-        Los últimos 4 dígitos de la tarjeta son obligatorios.
-      </mat-error>
+        <mat-error
+          *ngIf="
+            (form.get('ultimos4Tarjeta')?.hasError('minlength') ||
+              form.get('ultimos4Tarjeta')?.hasError('maxlength')) &&
+            !form.get('ultimos4Tarjeta')?.hasError('pattern')
+          "
+        >
+          Debe tener exactamente 4 dígitos.
+        </mat-error>
+        <mat-error
+          *ngIf="
+            form.get('ultimos4Tarjeta')?.hasError('pattern') && form.get('ultimos4Tarjeta')?.value
+          "
+        >
+          Solo se permiten números
+        </mat-error>
+        <mat-error *ngIf="form.get('ultimos4Tarjeta')?.hasError('required')">
+          Los últimos 4 dígitos de la tarjeta son obligatorios.
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="half">
@@ -86,20 +90,14 @@
           <mat-option [value]="true">Sí</mat-option>
           <mat-option [value]="false">No</mat-option>
         </mat-select>
-        <mat-error *ngIf="campoInvalido('activaTarjeta')">
-          Este campo es obligatorio.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('activaTarjeta')"> Este campo es obligatorio. </mat-error>
       </mat-form-field>
     </div>
 
     <div class="row">
       <mat-form-field appearance="outline" class="half">
         <mat-label>Fecha registro</mat-label>
-        <input
-          matInput
-          [matDatepicker]="pickerReg"
-          formControlName="fechaRegistroTarjeta"
-        />
+        <input matInput [matDatepicker]="pickerReg" formControlName="fechaRegistroTarjeta" />
         <mat-datepicker-toggle matIconSuffix [for]="pickerReg"></mat-datepicker-toggle>
         <mat-datepicker #pickerReg></mat-datepicker>
         <mat-error *ngIf="campoInvalido('fechaRegistroTarjeta')">
@@ -114,14 +112,15 @@
             {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="campoInvalido('usuario')">
-          Debes seleccionar un usuario.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('usuario')"> Debes seleccionar un usuario. </mat-error>
       </mat-form-field>
     </div>
 
-    <button mat-raised-button color="primary" type="submit" class="btn-guardar">
-      Guardar
-    </button>
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
   </form>
 </div>

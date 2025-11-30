@@ -34,33 +34,26 @@
           </mat-option>
         </mat-select>
 
-        <mat-error *ngIf="campoInvalido('pedido')">
-          Debes seleccionar un pedido.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('pedido')"> Debes seleccionar un pedido. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Producto</mat-label>
         <mat-select formControlName="producto">
-          <mat-option
-            *ngFor="let prod of listaProductos"
-            [value]="prod.idProducto"
-          >
+          <mat-option *ngFor="let prod of listaProductos" [value]="prod.idProducto">
             {{ prod.nombreProducto }}
           </mat-option>
         </mat-select>
 
-        <mat-error *ngIf="campoInvalido('producto')">
-          Debes seleccionar un producto.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('producto')"> Debes seleccionar un producto. </mat-error>
       </mat-form-field>
     </div>
 
-    <button
-      mat-raised-button
-      color="primary"
-      class="btn-guardar"
-      type="submit"
-    >
-      Guardar
-    </button>
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
+  </form>
+</div>

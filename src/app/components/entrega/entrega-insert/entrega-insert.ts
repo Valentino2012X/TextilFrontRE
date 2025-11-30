@@ -147,4 +147,7 @@ export class EntregaInsertComponent implements OnInit {
       });
     });
   }
+  cancelar(): void {
+    this.router.navigate(['entrega']);
+  }
 }

@@ -79,27 +79,28 @@ export class NotificacionInsertarComponent implements OnInit {
         this.nS.listId(this.id).subscribe((data) => {
           let fechaLocal: Date | null = null;
           if (data.fechaNotificacion) {
-          const iso = data.fechaNotificacion.toString();
-        const yyyyMmDd = iso.substring(0, 10);
-        const parts = yyyyMmDd.split('-');
-        if (parts.length === 3) {
-          const y = Number(parts[0]);
-          const m = Number(parts[1]);
-          const d = Number(parts[2]);
-          fechaLocal = new Date(y, m - 1, d);
-        } else {
-          const dt = new Date(iso);
-          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
-        }
-          this.form.patchValue({
-            idNotificacion: data.idNotificacion,
-            tipoNotificacion: data.tipoNotificacion,
-            mensajeNotificacion: data.mensajeNotificacion,
-            // El backend manda LocalDate -> string "yyyy-MM-dd"
-            usuario: data.usuario?.idUsuario ?? null,
-          });
-          this.form.get('fechaNotificacion')?.setValue(fechaLocal);
-        }});
+            const iso = data.fechaNotificacion.toString();
+            const yyyyMmDd = iso.substring(0, 10);
+            const parts = yyyyMmDd.split('-');
+            if (parts.length === 3) {
+              const y = Number(parts[0]);
+              const m = Number(parts[1]);
+              const d = Number(parts[2]);
+              fechaLocal = new Date(y, m - 1, d);
+            } else {
+              const dt = new Date(iso);
+              fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+            }
+            this.form.patchValue({
+              idNotificacion: data.idNotificacion,
+              tipoNotificacion: data.tipoNotificacion,
+              mensajeNotificacion: data.mensajeNotificacion,
+              // El backend manda LocalDate -> string "yyyy-MM-dd"
+              usuario: data.usuario?.idUsuario ?? null,
+            });
+            this.form.get('fechaNotificacion')?.setValue(fechaLocal);
+          }
+        });
       }
     });
   }
@@ -133,7 +134,7 @@ export class NotificacionInsertarComponent implements OnInit {
     }
 
     const raw = this.form.value;
-        const ra = this.form.getRawValue();
+    const ra = this.form.getRawValue();
 
     const body = {
       idNotificacion: raw.idNotificacion ? Number(raw.idNotificacion) : 0,
@@ -169,5 +170,8 @@ export class NotificacionInsertarComponent implements OnInit {
         },
       });
     }
+  }
+  cancelar(): void {
+    this.router.navigate(['notificacion']);
   }
 }

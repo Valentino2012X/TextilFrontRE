@@ -5,20 +5,16 @@
     <div class="row">
       <mat-form-field appearance="outline" class="full">
         <mat-label>Comentario*</mat-label>
-        <textarea
-          matInput
-          rows="3"
-          formControlName="comentarioProyecto"
-        ></textarea>
+        <textarea matInput rows="3" formControlName="comentarioProyecto"></textarea>
         <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('required')">
-       El comentario es obligatorio
+          El comentario es obligatorio
         </mat-error>
         <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('maxlength')">
-        El comentario no puede tener más de 200 caracteres
-      </mat-error>
-      <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('minlength')">
-        El comentario no puede tener menos de 10 caracteres
-      </mat-error>
+          El comentario no puede tener más de 200 caracteres
+        </mat-error>
+        <mat-error *ngIf="form.get('comentarioProyecto')?.hasError('minlength')">
+          El comentario no puede tener menos de 10 caracteres
+        </mat-error>
       </mat-form-field>
     </div>
 
@@ -28,21 +24,18 @@
         <mat-label>Fecha comentario</mat-label>
         <input matInput [value]="fechaComentarioTexto | date : 'yyyy-MM-dd HH:mm'" disabled />
       </mat-form-field>
-    </div>  
+    </div>
 
     <div class="row">
       <mat-form-field appearance="outline" class="full">
         <mat-label>Proyecto*</mat-label>
         <mat-select formControlName="proyecto">
-          <mat-option
-            *ngFor="let p of listaProyectos"
-            [value]="p.idProyecto"
-          >
+          <mat-option *ngFor="let p of listaProyectos" [value]="p.idProyecto">
             {{ p.tituloProyecto }} (ID: {{ p.idProyecto }})
           </mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('proyecto')?.hasError('required')">
-       El proyecto es obligatorio
+          El proyecto es obligatorio
         </mat-error>
       </mat-form-field>
 
@@ -54,13 +47,16 @@
           </mat-option>
         </mat-select>
         <mat-error *ngIf="form.get('usuario')?.hasError('required')">
-       El usuario es obligatorio
+          El usuario es obligatorio
         </mat-error>
       </mat-form-field>
     </div>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-      Guardar
-    </button>
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
   </form>
 </div>

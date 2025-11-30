@@ -77,19 +77,19 @@ export class ComprobanteInsertarComponent implements OnInit {
         this.cS.listId(this.id).subscribe((data: Comprobante) => {
           let fechaLocal: Date | null = null;
           if (data.fechaComprobante) {
-          const iso = data.fechaComprobante.toString();
-        const yyyyMmDd = iso.substring(0, 10);
-        const parts = yyyyMmDd.split('-');
-        if (parts.length === 3) {
-          const y = Number(parts[0]);
-          const m = Number(parts[1]);
-          const d = Number(parts[2]);
-          fechaLocal = new Date(y, m - 1, d);
-        } else {
-          const dt = new Date(iso);
-          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
-        }
-      }
+            const iso = data.fechaComprobante.toString();
+            const yyyyMmDd = iso.substring(0, 10);
+            const parts = yyyyMmDd.split('-');
+            if (parts.length === 3) {
+              const y = Number(parts[0]);
+              const m = Number(parts[1]);
+              const d = Number(parts[2]);
+              fechaLocal = new Date(y, m - 1, d);
+            } else {
+              const dt = new Date(iso);
+              fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+            }
+          }
 
           this.form.patchValue({
             idComprobante: data.idComprobante,
@@ -145,5 +145,8 @@ export class ComprobanteInsertarComponent implements OnInit {
         alert('Ocurrió un error al guardar el comprobante');
       },
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['comprobante']); // ej: '/producto', '/tipoproducto', etc.
   }
 }

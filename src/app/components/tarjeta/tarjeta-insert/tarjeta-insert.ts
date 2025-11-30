@@ -58,7 +58,10 @@ export class TarjetaInsertarComponent implements OnInit {
       idTarjeta: [0],
       aliasTarjeta: ['', [Validators.required, Validators.maxLength(50)]],
       tipoTarjeta: ['', Validators.required],
-      ultimos4Tarjeta: ['', [Validators.required,Validators.minLength(4), Validators.pattern(/^\d+$/)]],
+      ultimos4Tarjeta: [
+        '',
+        [Validators.required, Validators.minLength(4), Validators.pattern(/^\d+$/)],
+      ],
       marcaTarjeta: ['', Validators.required],
       tokenReferenciaTarjeta: ['', [Validators.required, Validators.maxLength(100)]],
       vencimientoTarjeta: [hoy, Validators.required],
@@ -74,11 +77,11 @@ export class TarjetaInsertarComponent implements OnInit {
     this.route.params.subscribe((params: Params) => {
       this.id = Number(params['id']);
       this.edicion = this.id > 0;
-      
+
       if (this.edicion) {
         this.tS.listId(this.id).subscribe((data: Tarjeta) => {
-const venc = this.parseFechaLocal(data.vencimientoTarjeta) ?? hoy;
-const fechaReg = this.parseFechaLocal(data.fechaRegistroTarjeta) ?? hoy;
+          const venc = this.parseFechaLocal(data.vencimientoTarjeta) ?? hoy;
+          const fechaReg = this.parseFechaLocal(data.fechaRegistroTarjeta) ?? hoy;
 
           this.form.patchValue({
             idTarjeta: data.idTarjeta,
@@ -96,29 +99,29 @@ const fechaReg = this.parseFechaLocal(data.fechaRegistroTarjeta) ?? hoy;
       }
     });
   }
-private parseFechaLocal(fechaIso: any): Date | null {
-  if (!fechaIso) return null;
+  private parseFechaLocal(fechaIso: any): Date | null {
+    if (!fechaIso) return null;
 
-  const iso = fechaIso.toString();
-  const yyyyMmDd = iso.substring(0, 10); 
+    const iso = fechaIso.toString();
+    const yyyyMmDd = iso.substring(0, 10);
 
-  const parts = yyyyMmDd.split('-');
-  if (parts.length === 3) {
-    const y = Number(parts[0]);
-    const m = Number(parts[1]);
-    const d = Number(parts[2]);
-    return new Date(y, m - 1, d); 
+    const parts = yyyyMmDd.split('-');
+    if (parts.length === 3) {
+      const y = Number(parts[0]);
+      const m = Number(parts[1]);
+      const d = Number(parts[2]);
+      return new Date(y, m - 1, d);
+    }
+
+    const dt = new Date(iso);
+    return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
   }
 
-  const dt = new Date(iso);
-  return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
-}
-
-private formatDate(date: any): string {
-  const d = new Date(date);
-  const corrected = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  return corrected.toISOString().split('T')[0];
-}
+  private formatDate(date: any): string {
+    const d = new Date(date);
+    const corrected = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    return corrected.toISOString().split('T')[0];
+  }
 
   campoInvalido(campo: string): boolean {
     const control = this.form.get(campo);
@@ -174,5 +177,8 @@ private formatDate(date: any): string {
         alert(err.error || 'Ocurrió un error al registrar la tarjeta');
       },
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['tarjeta']);
   }
 }

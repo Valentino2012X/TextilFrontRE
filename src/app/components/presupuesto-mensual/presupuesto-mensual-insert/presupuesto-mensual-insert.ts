@@ -1,12 +1,7 @@
 // src/app/components/presupuesto-mensual/presupuesto-mensual-insert/presupuesto-mensual-insert.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -80,10 +75,7 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
         [Validators.required, Validators.min(2000), Validators.max(2100)],
       ],
       mesPresupuestoMensual: [month, [Validators.required]],
-      montoLimitePresupuestoMensual: [
-        0,
-        [Validators.required, Validators.min(0.01)],
-      ],
+      montoLimitePresupuestoMensual: [0, [Validators.required, Validators.min(0.01)]],
       fechaPresupuestoMensual: [{ value: new Date(), disabled: true }],
       idUsuario: [null, [Validators.required]],
     });
@@ -101,7 +93,6 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
         this.edicion = true;
         const hoyLocal = new Date();
         this.pmS.listId(this.id).subscribe((data) => {
-
           let idUsuario: number | null = null;
           if (data.usuario && (data.usuario as any).idUsuario) {
             idUsuario = (data.usuario as any).idUsuario;
@@ -111,27 +102,28 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
           }
           let fechaLocal: Date | null = null;
           if (data.fechaPresupuestoMensual) {
-          const iso = data.fechaPresupuestoMensual.toString();
-        const yyyyMmDd = iso.substring(0, 10);
-        const parts = yyyyMmDd.split('-');
-        if (parts.length === 3) {
-          const y = Number(parts[0]);
-          const m = Number(parts[1]);
-          const d = Number(parts[2]);
-          fechaLocal = new Date(y, m - 1, d);
-        } else {
-          const dt = new Date(iso);
-          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
-        }
-          this.form.patchValue({
-            idPresupuestoMensual: data.idPresupuestoMensual,
-            anioPresupuestoMensual: data.anioPresupuestoMensual,
-            mesPresupuestoMensual: data.mesPresupuestoMensual,
-            montoLimitePresupuestoMensual: data.montoLimitePresupuestoMensual,
-            idUsuario: idUsuario,
-          });
-          this.form.get('fechaPresupuestoMensual')?.setValue(fechaLocal);
-      }});
+            const iso = data.fechaPresupuestoMensual.toString();
+            const yyyyMmDd = iso.substring(0, 10);
+            const parts = yyyyMmDd.split('-');
+            if (parts.length === 3) {
+              const y = Number(parts[0]);
+              const m = Number(parts[1]);
+              const d = Number(parts[2]);
+              fechaLocal = new Date(y, m - 1, d);
+            } else {
+              const dt = new Date(iso);
+              fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+            }
+            this.form.patchValue({
+              idPresupuestoMensual: data.idPresupuestoMensual,
+              anioPresupuestoMensual: data.anioPresupuestoMensual,
+              mesPresupuestoMensual: data.mesPresupuestoMensual,
+              montoLimitePresupuestoMensual: data.montoLimitePresupuestoMensual,
+              idUsuario: idUsuario,
+            });
+            this.form.get('fechaPresupuestoMensual')?.setValue(fechaLocal);
+          }
+        });
       }
     });
   }
@@ -171,9 +163,7 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
       },
     };
 
-    const peticion = this.edicion
-      ? this.pmS.update(body)
-      : this.pmS.insert(body);
+    const peticion = this.edicion ? this.pmS.update(body) : this.pmS.insert(body);
 
     peticion.subscribe({
       next: () => {
@@ -192,5 +182,8 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
         }
       },
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['presupuestomensual']);
   }
 }

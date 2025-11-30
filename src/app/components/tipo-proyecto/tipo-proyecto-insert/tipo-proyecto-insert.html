@@ -10,8 +10,11 @@
       </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">
-      Guardar
-    </button>
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
   </form>
 </div>

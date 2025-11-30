@@ -6,19 +6,10 @@
     <div class="row">
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Fecha de favorito</mat-label>
-        <input
-          matInput
-          [matDatepicker]="pickerFecha"
-          formControlName="fechaFavorito"
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="pickerFecha"
-        ></mat-datepicker-toggle>
+        <input matInput [matDatepicker]="pickerFecha" formControlName="fechaFavorito" />
+        <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
         <mat-datepicker #pickerFecha></mat-datepicker>
-        <mat-error *ngIf="campoInvalido('fechaFavorito')">
-          La fecha es obligatoria.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('fechaFavorito')"> La fecha es obligatoria. </mat-error>
       </mat-form-field>
     </div>
 
@@ -31,9 +22,7 @@
             {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="campoInvalido('idUsuario')">
-          Debes seleccionar un usuario.
-        </mat-error>
+        <mat-error *ngIf="campoInvalido('idUsuario')"> Debes seleccionar un usuario. </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline">
@@ -50,23 +39,18 @@
         <mat-label>Proyecto (opcional)</mat-label>
         <mat-select formControlName="idProyecto">
           <mat-option [value]="null">— Ninguno —</mat-option>
-          <mat-option
-            *ngFor="let pr of listaProyectos"
-            [value]="pr.idProyecto"
-          >
+          <mat-option *ngFor="let pr of listaProyectos" [value]="pr.idProyecto">
             {{ pr.tituloProyecto }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
 
-    <button
-      mat-raised-button
-      color="primary"
-      type="submit"
-      class="btn-guardar"
-    >
-      Guardar
-    </button>
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
   </form>
 </div>
