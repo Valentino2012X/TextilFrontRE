@@ -40,6 +40,13 @@ export class UsuarioInsertComponent implements OnInit {
   edicion: boolean = false;
   id: number = 0;
 
+  // 🔹 Upload de foto (modo admin)
+  selectedFile?: File;
+  previewUrl: string | null = null;
+  subiendo = false;
+  uploadError = '';
+  uploadSuccess = '';
+
   constructor(
     private formBuilder: FormBuilder,
     private uS: UsuarioService,
@@ -58,7 +65,7 @@ export class UsuarioInsertComponent implements OnInit {
       nombreUsuario: ['', Validators.required],
       emailUsuario: ['', [Validators.required, Validators.email]],
       username: ['', [Validators.required, Validators.maxLength(50)]],
-      password: ['', [Validators.required, Validators.minLength(8)]], // requerido solo en registro
+      password: ['', [Validators.required, Validators.minLength(8)]],
       telefonoUsuario: [
         '',
         [
@@ -72,22 +79,23 @@ export class UsuarioInsertComponent implements OnInit {
       fechaRegistroUsuario: [{ value: new Date(), disabled: true }],
       enabled: [true],
 
-      // si decides que promedio/total los maneje solo el back, puedes dejarlos en 0 o quitarlos del body
       promedioCalificacion: [0, [Validators.required, Validators.min(0), Validators.max(20)]],
       totalCalificacion: [0, [Validators.required, Validators.min(0)]],
 
       idRol: [null, Validators.required],
+
+      // opcional
+      fotoUrl: [''],
     });
 
     this.route.params.subscribe((data: Params) => {
       this.id = data['id'];
       this.edicion = data['id'] != null;
 
-      // 👇 Si es edición, password NO es obligatorio y no queremos validar nada ahí
       if (this.edicion) {
         const passCtrl = this.form.get('password');
         passCtrl?.clearValidators();
-        passCtrl?.setValue(''); // lo dejamos vacío
+        passCtrl?.setValue('');
         passCtrl?.updateValueAndValidity();
       }
 
@@ -102,9 +110,7 @@ export class UsuarioInsertComponent implements OnInit {
     }
 
     const raw = this.form.getRawValue();
-    const passwordValue: string = this.form.value.password;
 
-    // Armamos el body SIN password por defecto
     const body: any = {
       idUsuario: this.form.value.idUsuario,
       nombreUsuario: this.form.value.nombreUsuario,
@@ -117,13 +123,14 @@ export class UsuarioInsertComponent implements OnInit {
       promedioCalificacion: Number(this.form.value.promedioCalificacion),
       totalCalificacion: Number(this.form.value.totalCalificacion),
       idRol: this.form.value.idRol,
+
+      // si el admin mete una URL manual
+      fotoUrl: this.form.value.fotoUrl || null,
     };
 
-    // Solo en registro mando password
     if (!this.edicion) {
       body.password = this.form.value.password;
     }
-    // En edición (ADMIN), nunca mandamos password → el back no puede cambiarla
 
     if (this.edicion) {
       this.uS.update(body).subscribe(() => {
@@ -174,7 +181,6 @@ export class UsuarioInsertComponent implements OnInit {
           nombreUsuario: data.nombreUsuario,
           emailUsuario: data.emailUsuario,
           username: data.username,
-          // password: ''  // 👈 ya no hace falta ni tocar esto
           telefonoUsuario: data.telefonoUsuario,
           direccionUsuario: data.direccionUsuario,
           fechaRegistroUsuario: fechaLocal,
@@ -182,8 +188,61 @@ export class UsuarioInsertComponent implements OnInit {
           promedioCalificacion: data.promedioCalificacion,
           totalCalificacion: data.totalCalificacion,
           idRol: data.idRol ?? data.rol?.idRol,
+          fotoUrl: data.fotoUrl,
         });
+
+        // preview inicial (si ya tenía fotoUrl)
+        if (data.fotoUrl) {
+          this.previewUrl = data.fotoUrl;
+        }
       });
     }
+  }
+
+  // ====== MANEJO DE FOTO DE PERFIL (UPLOAD ADMIN) ======
+
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files || input.files.length === 0) {
+      this.selectedFile = undefined;
+      return;
+    }
+
+    this.selectedFile = input.files[0];
+    this.uploadError = '';
+    this.uploadSuccess = '';
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      this.previewUrl = e.target?.result as string;
+    };
+    reader.readAsDataURL(this.selectedFile);
+  }
+
+  subirFoto(): void {
+    if (!this.edicion || !this.id || !this.selectedFile) return;
+
+    this.subiendo = true;
+    this.uploadError = '';
+    this.uploadSuccess = '';
+
+    this.uS.uploadFoto(this.id, this.selectedFile).subscribe({
+      next: (url: string) => {
+        this.subiendo = false;
+        this.uploadSuccess = 'Foto actualizada correctamente.';
+
+        // actualizamos form y preview con la URL real
+        this.form.patchValue({ fotoUrl: url });
+        this.previewUrl = url;
+        this.selectedFile = undefined;
+      },
+      error: (err) => {
+        this.subiendo = false;
+        console.error(err);
+        this.uploadError =
+          (typeof err?.error === 'string' && err.error) ||
+          'Ocurrió un error al subir la foto.';
+      },
+    });
   }
 }

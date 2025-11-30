@@ -4,9 +4,10 @@ import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
-import {MatCardModule} from '@angular/material/card';
+import { MatCardModule } from '@angular/material/card';
 
 import { ProductoService } from '../../../services/producto-service';
+import { LoginService } from '../../../services/login-service';
 
 @Component({
   standalone: true,
@@ -28,7 +29,10 @@ export class ProductoListarComponent implements OnInit {
     'acciones',
   ];
 
-  constructor(private pS: ProductoService) {}
+  constructor(
+    private pS: ProductoService,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
     this.pS.list().subscribe((data) => {
@@ -57,5 +61,16 @@ export class ProductoListarComponent implements OnInit {
         }
       },
     });
+  }
+
+  // ==== Banderas por rol (para el HTML) ====
+  get isAdmin(): boolean {
+    return this.loginService.hasAnyRole('ADMIN');
+  }
+  get isVendedor(): boolean {
+    return this.loginService.hasAnyRole('VENDEDOR');
+  }
+  get isComprador(): boolean {
+    return this.loginService.hasAnyRole('ESTUDIANTE');
   }
 }

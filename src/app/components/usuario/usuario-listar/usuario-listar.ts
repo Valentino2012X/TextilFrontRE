@@ -21,6 +21,7 @@ export class UsuarioListarComponent implements OnInit {
   // 👇 CAMBIO: usamos ids de columna "promedio" y "total"
   displayedColumns: string[] = [
     'idUsuario',
+    'foto',
     'nombreUsuario',
     'emailUsuario',
     'username',

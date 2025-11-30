@@ -11,7 +11,11 @@
       <div class="tc-hero-text">
         <h1 class="tc-hero-title">{{ edicion ? 'Editar usuario' : 'Nuevo usuario' }}</h1>
         <p class="tc-hero-subtitle">
-          {{ edicion ? 'Actualiza la información del usuario.' : 'Registra un nuevo usuario en el sistema.' }}
+          {{
+            edicion
+              ? 'Actualiza la información del usuario.'
+              : 'Registra un nuevo usuario en el sistema.'
+          }}
         </p>
       </div>
     </div>
@@ -24,7 +28,6 @@
   <!-- Form -->
   <section class="tc-card">
     <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
-
       <div class="tc-grid">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Nombre</mat-label>
@@ -90,6 +93,52 @@
           </mat-error>
         </mat-form-field>
 
+        <!-- URL de foto -->
+        <mat-form-field appearance="outline" class="full-width tc-span-2">
+          <mat-label>URL de foto de perfil (opcional)</mat-label>
+          <input matInput formControlName="fotoUrl" placeholder="https://ejemplo.com/mi-foto.jpg" />
+        </mat-form-field>
+
+        <!-- Upload de foto (solo útil sobre todo en edición, porque ya hay id) -->
+        <div class="tc-span-2 usuario-foto-upload">
+          <label class="perfil-upload-label">Foto de perfil (upload opcional)</label>
+
+          <div class="usuario-foto-row">
+            <img
+              class="usuario-foto-preview"
+              [src]="previewUrl || form.value.fotoUrl || 'assets/avatar-default.png'"
+              alt="Foto de perfil"
+            />
+
+            <div class="usuario-foto-actions">
+              <input
+                type="file"
+                accept="image/*"
+                (change)="onFileSelected($event)"
+                class="perfil-file-input"
+              />
+
+              <button
+                mat-raised-button
+                type="button"
+                class="tc-btn-ghost"
+                (click)="subirFoto()"
+                [disabled]="!selectedFile || !edicion || subiendo"
+              >
+                {{ subiendo ? 'Subiendo...' : 'Subir foto' }}
+              </button>
+
+              <div class="perfil-msg success" *ngIf="uploadSuccess">
+                {{ uploadSuccess }}
+              </div>
+              <div class="perfil-msg error" *ngIf="uploadError">
+                {{ uploadError }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fecha de registro (solo una vez) -->
         <mat-form-field appearance="outline" class="full-width tc-span-2">
           <mat-label>Fecha de registro</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="fechaRegistroUsuario" />

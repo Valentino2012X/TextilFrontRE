@@ -50,6 +50,30 @@
         Dirección obligatoria.
       </div>
 
+      <!-- URL de foto -->
+      <label class="label">URL de foto (opcional)</label>
+      <input
+        class="dark-input"
+        type="text"
+        formControlName="fotoUrl"
+        placeholder="https://ejemplo.com/mi-foto.jpg"
+      />
+      <div class="input-hint">
+        Si no colocas nada, usaremos una imagen por defecto en tu perfil.
+      </div>
+
+      <!-- 🖼 Preview de la foto -->
+      <div class="input-hint" style="margin-top: 8px;">
+        Vista previa:
+      </div>
+      <div style="display:flex; justify-content:center; margin-bottom: 10px;">
+        <img
+          [src]="form.value.fotoUrl || 'assets/avatar-default.png'"
+          alt="Preview foto"
+          style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover;"
+        />
+      </div>
+
       <!-- Rol -->
       <label class="label">Rol</label>
       <select class="dark-input" formControlName="idRol">
@@ -70,7 +94,6 @@
       <div class="acciones">
         <button type="button" class="btn-cancelar" (click)="cancelar()">Cancelar</button>
 
-        <!-- OJO: no está disabled frío; validamos al submit -->
         <button type="submit" class="btn-guardar" [class.is-loading]="cargando">
           {{ cargando ? 'Registrando…' : 'Registrarse' }}
         </button>

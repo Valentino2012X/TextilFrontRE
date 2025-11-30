@@ -1,0 +1,98 @@
+<!-- src/app/components/perfil/perfil.html -->
+<div class="tc-page perfil-page">
+  <!-- Encabezado tipo hero interno -->
+  <section class="tc-hero perfil-hero">
+    <div class="tc-hero-main">
+      <h1>Mi perfil</h1>
+      <p>
+        Gestiona tu información como usuario de <strong>TextilConnect</strong>.
+      </p>
+    </div>
+  </section>
+
+  <div *ngIf="loading" class="perfil-loading">
+    Cargando perfil...
+  </div>
+
+  <div *ngIf="!loading && usuario" class="perfil-content">
+    <div class="tc-card perfil-card">
+      <div class="perfil-header">
+        <div class="perfil-avatar-wrapper">
+          <img
+            class="perfil-avatar"
+            [src]="usuario.fotoUrl || 'assets/avatar-default.png'"
+            alt="Foto de perfil"
+          />
+        </div>
+
+        <div class="perfil-main-info">
+          <h2>{{ usuario.nombreUsuario }}</h2>
+          <p class="perfil-email">{{ usuario.emailUsuario }}</p>
+
+          <div class="perfil-role-pill" *ngIf="usuario.nombreRol">
+            {{ usuario.nombreRol }}
+          </div>
+
+          <!-- 👇 NUEVO: input de archivo -->
+          <div class="perfil-upload">
+            <label class="perfil-upload-label">
+              Cambiar foto
+              <input
+                type="file"
+                accept="image/*"
+                (change)="onFileSelected($event)"
+                [disabled]="subiendoFoto"
+                hidden
+              />
+            </label>
+            <span *ngIf="subiendoFoto" class="perfil-upload-status">Subiendo foto...</span>
+          </div>
+
+          <!-- mensajes de upload -->
+          <div *ngIf="successFoto" class="perfil-msg success">
+            {{ successFoto }}
+          </div>
+          <div *ngIf="errorFoto" class="perfil-msg error">
+            {{ errorFoto }}
+          </div>
+        </div>
+      </div>
+
+      <div class="perfil-body">
+        <div class="perfil-row">
+          <span class="perfil-label">Usuario:</span>
+          <span class="perfil-value">{{ usuario.username }}</span>
+        </div>
+
+        <div class="perfil-row">
+          <span class="perfil-label">Teléfono:</span>
+          <span class="perfil-value">{{ usuario.telefonoUsuario }}</span>
+        </div>
+
+        <div class="perfil-row" *ngIf="usuario.promedioCalificacion !== undefined">
+          <span class="perfil-label">Promedio de calificación:</span>
+          <span class="perfil-value">
+            {{ usuario.promedioCalificacion | number : '1.1-2' }}
+          </span>
+        </div>
+
+        <div class="perfil-row" *ngIf="usuario.totalCalificacion !== undefined">
+          <span class="perfil-label">N.º de calificaciones:</span>
+          <span class="perfil-value">
+            {{ usuario.totalCalificacion }}
+          </span>
+        </div>
+      </div>
+
+      <div class="perfil-actions">
+        <button class="perfil-btn-primary" (click)="irAEditar()">
+          Editar datos
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!loading && !usuario" class="perfil-empty">
+    No se pudo encontrar la información del usuario.
+  </div>
+</div>

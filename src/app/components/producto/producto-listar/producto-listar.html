@@ -19,7 +19,13 @@
         Total: <b>{{ dataSource.data.length || 0 }}</b>
       </span>
 
-      <a class="tc-btn" mat-raised-button routerLink="/producto/new">
+      <!-- Solo VENDEDOR puede crear nuevos productos (opcional) -->
+      <a
+        class="tc-btn"
+        mat-raised-button
+        routerLink="/producto/new"
+        *ngIf="isAdmin||isVendedor"
+      >
         <mat-icon>add</mat-icon>
         Nuevo producto
       </a>
@@ -69,26 +75,30 @@
           <td mat-cell *matCellDef="let row">{{ row.nombreUsuario }}</td>
         </ng-container>
 
+        <!-- ACCIONES -->
         <ng-container matColumnDef="acciones">
           <th mat-header-cell *matHeaderCellDef>Acciones</th>
           <td mat-cell *matCellDef="let row" class="tc-actions">
-            <button
-              mat-icon-button
-              class="tc-icon-btn tc-edit"
-              [routerLink]="['/producto/edit', row.idProducto]"
-              aria-label="Editar"
-            >
-              <mat-icon>edit</mat-icon>
-            </button>
+            <!-- 👇 Solo VENDEDOR ve estos botones -->
+            <ng-container >
+              <button
+                mat-icon-button
+                class="tc-icon-btn tc-edit"
+                [routerLink]="['/producto/edit', row.idProducto]"
+                aria-label="Editar"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
 
-            <button
-              mat-icon-button
-              class="tc-icon-btn tc-del"
-              (click)="eliminar(row.idProducto)"
-              aria-label="Eliminar"
-            >
-              <mat-icon>delete</mat-icon>
-            </button>
+              <button
+                mat-icon-button
+                class="tc-icon-btn tc-del"
+                (click)="eliminar(row.idProducto)"
+                aria-label="Eliminar"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </ng-container>
           </td>
         </ng-container>
 

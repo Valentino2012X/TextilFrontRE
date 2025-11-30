@@ -1,3 +1,4 @@
+// src/app/services/registro-service.ts
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -13,6 +14,9 @@ export interface UsuarioDTOInsert {
   fechaRegistroUsuario: string; // LocalDate => "YYYY-MM-DD"
   enabled: boolean;
   idRol: number; // FK
+
+  // 👇 NUEVO, opcional
+  fotoUrl?: string;
 }
 
 const base_url = environment.base;
@@ -24,7 +28,6 @@ export class RegistroService {
   constructor(private http: HttpClient) {}
 
   registrar(payload: UsuarioDTOInsert): Observable<any> {
-    // observe + text para evitar problemas si el backend responde vacío
     return this.http.post(this.baseUrl, payload, {
       observe: 'response',
       responseType: 'text',

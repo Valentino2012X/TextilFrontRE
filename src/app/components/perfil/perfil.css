@@ -1,0 +1,163 @@
+/* src/app/components/perfil/perfil.css */
+
+.perfil-page {
+  padding: 1.5rem;
+}
+
+.perfil-hero .tc-hero-main h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.25rem;
+  color: #1c1c1c;
+}
+
+.perfil-hero .tc-hero-main p {
+  margin: 0;
+  font-size: 0.95rem;
+  color: #4a4a4a;
+}
+
+.perfil-loading,
+.perfil-empty {
+  margin-top: 1.5rem;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #4a4a4a;
+}
+
+.perfil-content {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: center;
+}
+
+.perfil-card {
+  width: 100%;
+  max-width: 700px;
+  padding: 1.5rem 1.75rem;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+}
+
+/* Header con avatar + info principal */
+.perfil-header {
+  display: flex;
+  gap: 1.25rem;
+  align-items: center;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 1rem;
+}
+
+.perfil-avatar-wrapper {
+  flex-shrink: 0;
+}
+
+.perfil-avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #8dae5f;
+  background: #f5f5dc;
+}
+
+.perfil-main-info h2 {
+  margin: 0;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1c1c1c;
+}
+
+.perfil-email {
+  margin: 0.15rem 0 0.4rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* Pill de rol */
+.perfil-role-pill {
+  display: inline-flex;
+  padding: 0.2rem 0.7rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  background-color: #f5f5dc;
+  color: #3d6b3b;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* Sección de datos */
+.perfil-body {
+  margin-top: 1rem;
+}
+
+.perfil-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.3rem 0;
+  font-size: 0.9rem;
+}
+
+.perfil-label {
+  font-weight: 600;
+  color: #1c1c1c;
+}
+
+.perfil-value {
+  color: #444;
+  text-align: right;
+}
+
+/* Botón de acción */
+.perfil-actions {
+  margin-top: 1.25rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.perfil-btn-primary {
+  padding: 0.5rem 1.2rem;
+  border-radius: 999px;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: #3d6b3b;
+  color: #ffffff;
+  transition: transform 0.1s ease, box-shadow 0.1s ease,
+    background-color 0.15s ease;
+}
+
+.perfil-btn-primary:hover {
+  background-color: #2f5230;
+  box-shadow: 0 4px 10px rgba(61, 107, 59, 0.35);
+  transform: translateY(-1px);
+}
+
+.perfil-btn-primary:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+  .perfil-card {
+    padding: 1.25rem 1rem;
+  }
+
+  .perfil-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .perfil-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .perfil-value {
+    text-align: left;
+  }
+}

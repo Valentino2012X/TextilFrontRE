@@ -17,4 +17,5 @@ export class Usuario {
 
   rol: Rol = new Rol();
   nombreRol?: string;
+  fotoUrl?: string;
 }

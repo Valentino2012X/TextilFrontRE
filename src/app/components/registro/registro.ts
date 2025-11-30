@@ -1,3 +1,4 @@
+// src/app/components/registro/registro.ts
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -18,7 +19,6 @@ export class RegistroComponent {
   private router = inject(Router);
   private registroService = inject(RegistroService);
 
-  // ✅ Solo se permite registrarse como ESTUDIANTE o VENDEDOR
   roles: RolOpcion[] = [
     { idRol: 2, nombreRol: 'ESTUDIANTE' },
     { idRol: 3, nombreRol: 'VENDEDOR' },
@@ -36,10 +36,10 @@ export class RegistroComponent {
     telefonoUsuario: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(20)]],
     direccionUsuario: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(200)]],
     idRol: [null as number | null, [Validators.required]],
+    fotoUrl: ['', [Validators.maxLength(500)]],
   });
 
   private todayLocalDate(): string {
-    // "YYYY-MM-DD" para LocalDate del backend
     return new Date().toISOString().slice(0, 10);
   }
 
@@ -74,6 +74,7 @@ export class RegistroComponent {
       fechaRegistroUsuario: this.todayLocalDate(),
       enabled: true,
       idRol,
+      fotoUrl: this.form.value.fotoUrl?.trim() || undefined,
     };
 
     this.cargando = true;
@@ -82,14 +83,10 @@ export class RegistroComponent {
       next: () => {
         this.cargando = false;
         this.successMsg = '✅ Registro exitoso. Ahora inicia sesión.';
-
-        // NO loguea automáticamente. Te manda a login.
         setTimeout(() => this.router.navigate(['/login']), 700);
       },
       error: (err) => {
         this.cargando = false;
-
-        // backend podría mandar string (ej: conflicto/duplicado)
         const msg =
           (typeof err?.error === 'string' && err.error) ||
           err?.error?.message ||
@@ -99,7 +96,6 @@ export class RegistroComponent {
     });
   }
 
-  // helpers de template
   get f() {
     return this.form.controls;
   }

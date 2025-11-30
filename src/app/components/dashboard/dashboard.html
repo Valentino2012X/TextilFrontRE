@@ -1,13 +1,25 @@
+<!-- src/app/components/dashboard/dashboard.html -->
 <div class="dashboard-root">
   <!-- NAVBAR -->
   <app-dashboard-navbar [rol]="rolActual || ''"></app-dashboard-navbar>
 
   <div class="dashboard-body">
+    <!-- ========== SIDEBAR ========== -->
     <aside class="sidebar-root">
       <!-- Panel usuario -->
       <div class="user-panel">
         <div class="user-panel-left">
-          <div class="user-avatar">{{ userInitials }}</div>
+          <!-- Avatar con fallback -->
+          <div class="user-avatar" *ngIf="!fotoUrlActual">
+            {{ userInitials }}
+          </div>
+
+          <img
+            *ngIf="fotoUrlActual"
+            class="user-avatar-img"
+            [src]="fotoUrlActual"
+            alt="Foto de perfil"
+          />
 
           <div class="user-meta">
             <div class="user-label">Sesión activa</div>
@@ -20,6 +32,12 @@
               Rol:
               <span>{{ rolActual || '---' }}</span>
             </div>
+
+            <!-- Botón Mi perfil -->
+            <button type="button" class="user-profile-link" (click)="irAPerfil()">
+              <span class="material-icons">person</span>
+              <span>Mi perfil</span>
+            </button>
           </div>
         </div>
 
@@ -33,6 +51,7 @@
         </button>
       </div>
 
+      <!-- Menú lateral -->
       <div class="menu">
         <!-- ===== ADMIN ONLY ===== -->
         <ng-container *ngIf="isAdmin">
@@ -52,7 +71,7 @@
         <!-- ===== Catálogo / Productos ===== -->
         <p class="menu-section">Catálogos / productos</p>
 
-        <!-- TipoProducto solo ADMIN (según tu resumen) -->
+        <!-- TipoProducto solo ADMIN -->
         <a
           *ngIf="isAdmin"
           routerLink="/tipoproducto"
@@ -91,7 +110,7 @@
           <span>Favorito</span>
         </a>
 
-        <!-- Calificación: todos (admin lista+elimina; v/c insert/mod) -->
+        <!-- Calificación: todos -->
         <a routerLink="/calificacion" routerLinkActive="active-link" class="menu-item">
           <span class="material-icons">star</span>
           <span>Calificación</span>
@@ -111,9 +130,9 @@
           <span>Tipo proyecto</span>
         </a>
 
-        <!-- Proyecto: ADMIN + VENDEDOR -->
+        <!-- Proyecto: ADMIN + VENDEDOR + ESTUDIANTE (según tu config de rutas) -->
         <a
-          *ngIf="isAdmin || isVendedor"
+          *ngIf="isAdmin || isVendedor || isComprador"
           routerLink="/proyecto"
           routerLinkActive="active-link"
           class="menu-item"
@@ -185,7 +204,7 @@
           <span>Método de pago</span>
         </a>
 
-        <!-- Tarjeta: todos (pero /tarjeta/new solo vendedor/comprador) -->
+        <!-- Tarjeta: todos -->
         <a routerLink="/tarjeta" routerLinkActive="active-link" class="menu-item">
           <span class="material-icons">credit_card</span>
           <span>Tarjeta</span>
@@ -309,6 +328,7 @@
       </div>
     </aside>
 
+    <!-- ========== CONTENIDO PRINCIPAL ========== -->
     <main class="dashboard-content">
       <router-outlet></router-outlet>
     </main>

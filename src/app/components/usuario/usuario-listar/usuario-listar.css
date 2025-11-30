@@ -10,6 +10,12 @@
   --tc-border: rgba(28, 28, 28, 0.16);
   --tc-shadow: 0 14px 34px rgba(0, 0, 0, 0.10);
 }
+.usuario-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
 
 /* ✅ MISMO TAMAÑO/ANCHO QUE ROLES */
 .tc-page{

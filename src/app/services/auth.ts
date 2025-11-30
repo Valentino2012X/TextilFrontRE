@@ -23,7 +23,6 @@ export class AuthService {
       return 'ESTUDIANTE';
     }
 
-    // JWT = header.payload.signature → decodificamos el payload
     const payloadPart = token.split('.')[1];
     if (!payloadPart) {
       return 'ESTUDIANTE';
@@ -33,8 +32,6 @@ export class AuthService {
       const payloadJson = atob(payloadPart);
       const payload = JSON.parse(payloadJson);
 
-      // ⚠️ AJUSTA ESTO SEGÚN EL CLAIM REAL DEL BACKEND
-      // revísalo en un jwt.io con un token real si quieres
       const rawRole: string =
         payload.rol ||
         payload.role ||
@@ -47,11 +44,37 @@ export class AuthService {
       if (upper.includes('VENDEDOR')) return 'VENDEDOR';
       if (upper.includes('COMPRADOR')) return 'ESTUDIANTE';
 
-      // fallback
       return 'ESTUDIANTE';
     } catch (e) {
       console.error('Error decodificando token JWT', e);
       return 'ESTUDIANTE';
+    }
+  }
+
+  // ✅ NUEVO: obtener el username del token
+  getUsernameFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    const payloadPart = token.split('.')[1];
+    if (!payloadPart) {
+      return null;
+    }
+
+    try {
+      const payloadJson = atob(payloadPart);
+      const payload = JSON.parse(payloadJson);
+
+      // 👇 Ajusta según cómo tu backend mete el username en el JWT
+      const username: string =
+        payload.username || payload.sub || payload.emailUsuario || payload.email;
+
+      return username || null;
+    } catch (e) {
+      console.error('Error decodificando username del JWT', e);
+      return null;
     }
   }
 }

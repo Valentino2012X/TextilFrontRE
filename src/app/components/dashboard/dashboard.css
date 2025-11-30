@@ -1,41 +1,40 @@
-/* TextilConnect Dashboard - Layout */
+/* src/app/components/dashboard/dashboard.css */
+
 .dashboard-root {
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #f5f5dc; /* beige claro */
-  color: #1c1c1c;
   font-family: "Poppins", Arial, Helvetica, sans-serif;
+  background: #f5f5dc; /* beige suave */
 }
 
-/* fila: sidebar + contenido */
 .dashboard-body {
   flex: 1;
   display: flex;
-  overflow: hidden;
+  min-height: 0;
 }
 
-/* SIDEBAR */
+/* ========== SIDEBAR ========== */
 .sidebar-root {
-  width: 290px;
-  background: #3d6b3b; /* verde oscuro */
-  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  width: 260px;
+  background: #ffffff;
+  border-right: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 14px 14px 18px;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  padding: 14px 12px;
+  gap: 14px;
 }
 
-/* panel usuario */
+/* Panel usuario */
 .user-panel {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  background: #f5f5dc;
+  border-radius: 18px;
+  padding: 10px 12px;
   gap: 10px;
-  padding: 14px 12px;
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.10);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  margin-bottom: 12px;
 }
 
 .user-panel-left {
@@ -44,17 +43,27 @@
   gap: 10px;
 }
 
+/* avatar por defecto (iniciales) */
 .user-avatar {
-  width: 38px;
-  height: 38px;
-  border-radius: 999px;
-  background: #8dae5f; /* verde principal */
-  color: #1c1c1c;
-  display: grid;
-  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-weight: 800;
-  font-size: 0.85rem;
-  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.18);
+  font-size: 18px;
+  background: #8dae5f;
+  color: #1c1c1c;
+}
+
+/* avatar con imagen */
+.user-avatar-img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(141, 174, 95, 0.8);
 }
 
 .user-meta {
@@ -64,130 +73,135 @@
 }
 
 .user-label {
-  font-size: 0.70rem;
-  text-transform: uppercase;
-  letter-spacing: 0.10em;
-  color: rgba(255, 255, 255, 0.78);
+  font-size: 11px;
+  color: rgba(28, 28, 28, 0.7);
+}
+
+.user-name span {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1c1c1c;
 }
 
 .user-role {
-  font-size: 0.88rem;
-  color: rgba(255, 255, 255, 0.92);
+  font-size: 12px;
+  color: rgba(28, 28, 28, 0.9);
 }
 
 .user-role span {
-  font-weight: 800;
-  color: #ffffff;
+  font-weight: 600;
 }
 
-/* logout */
+/* Botón Mi perfil */
+.user-profile-link {
+  margin-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(61, 107, 59, 0.3);
+  background: #ffffff;
+  color: #3d6b3b;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease, box-shadow 0.15s ease;
+}
+
+.user-profile-link .material-icons {
+  font-size: 16px;
+}
+
+.user-profile-link:hover {
+  background: #f1f1e4;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  transform: translateY(-1px);
+}
+
+.user-profile-link:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
 .logout-btn {
-  color: #ffffff;
-  border-radius: 12px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.logout-btn:hover {
-  background: rgba(0, 0, 0, 0.12);
-}
-
-/* menu scroll */
+/* ========== MENÚ ========== */
 .menu {
   flex: 1;
   overflow-y: auto;
   padding-right: 4px;
 }
 
-.menu::-webkit-scrollbar {
-  width: 8px;
-}
-.menu::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-}
-.menu::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-/* secciones */
 .menu-section {
-  padding: 14px 12px 6px;
-  font-size: 0.72rem;
+  margin: 12px 4px 6px;
+  font-size: 11px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.10em;
-  color: rgba(255, 255, 255, 0.70);
+  letter-spacing: 0.04em;
+  color: rgba(28, 28, 28, 0.55);
 }
 
-/* item */
 .menu-item {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 11px 12px;
-  font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.92);
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
   text-decoration: none;
-  border-radius: 14px;
-  margin: 4px 6px;
-  transition: transform 0.08s ease, background 0.2s ease, color 0.2s ease;
+  font-size: 13px;
+  color: rgba(28, 28, 28, 0.86);
+  cursor: pointer;
+  transition: background 0.12s ease, color 0.12s ease, transform 0.08s ease;
 }
 
 .menu-item .material-icons {
-  font-size: 20px;
-  opacity: 0.95;
+  font-size: 18px;
 }
 
 .menu-item:hover {
-  background: rgba(255, 255, 255, 0.12);
+  background: rgba(141, 174, 95, 0.12);
+  transform: translateX(1px);
 }
 
-.menu-item:active {
-  transform: translateY(1px);
+.menu-item.active-link {
+  background: rgba(141, 174, 95, 0.18);
+  color: #3d6b3b;
+  font-weight: 700;
 }
 
-/* activo (TextilConnect) */
-.active-link {
-  background: #8dae5f;
-  color: #1c1c1c;
-  font-weight: 800;
-  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
-}
-
-.active-link .material-icons {
-  opacity: 1;
-}
-
-/* CONTENIDO */
+/* ========== CONTENIDO ========== */
 .dashboard-content {
   flex: 1;
+  min-width: 0;
+  padding: 18px 22px;
+  box-sizing: border-box;
   overflow-y: auto;
-  padding: 22px 26px;
-  background: #f5f5dc; /* beige */
 }
 
-/* contenedor interno tipo "card" para tablas/formularios */
-.dashboard-content > * {
-  max-width: 1200px;
-}
-
-/* responsive */
-@media (max-width: 980px) {
+/* RESPONSIVE */
+@media (max-width: 900px) {
   .sidebar-root {
-    width: 250px;
+    width: 220px;
   }
 }
 
-@media (max-width: 760px) {
-  .sidebar-root {
-    display: none; /* luego si quieres hacemos sidebar colapsable */
+@media (max-width: 720px) {
+  .dashboard-body {
+    flex-direction: column;
   }
+
+  .sidebar-root {
+    width: 100%;
+    flex-direction: column;
+    max-height: 260px;
+  }
+
   .dashboard-content {
-    padding: 16px;
+    padding: 14px 12px;
   }
-}
-/* === Nombre del usuario: blanco + negrita === */
-.user-name span {
-  color: #ffffff !important;      /* blanco puro */
-  font-weight: 800 !important;    /* negrita fuerte */
-  font-size: 0.95rem;             /* un poquito más grande */
-  letter-spacing: 0.3px;          /* ligero espaciamiento */
 }

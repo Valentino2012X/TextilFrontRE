@@ -25,31 +25,23 @@ export const routes: Routes = [
   // ✅ Registro (público)
   {
     path: 'registro',
-    loadComponent: () =>
-      import('./components/registro/registro').then(
-        (m) => m.RegistroComponent
-      ),
+    loadComponent: () => import('./components/registro/registro').then((m) => m.RegistroComponent),
   },
 
   // ✅ LANDING PÚBLICO (SIN GUARD)
   {
     path: 'home',
-    loadComponent: () =>
-      import('./components/home/home/home').then((m) => m.HomeComponent),
+    loadComponent: () => import('./components/home/home/home').then((m) => m.HomeComponent),
     children: [
       {
         path: '',
         loadComponent: () =>
-          import('./components/home/home-index/home-index').then(
-            (m) => m.HomeIndexComponent
-          ),
+          import('./components/home/home-index/home-index').then((m) => m.HomeIndexComponent),
       },
       {
         path: 'about',
         loadComponent: () =>
-          import('./components/home/home-about/home-about').then(
-            (m) => m.HomeAboutComponent
-          ),
+          import('./components/home/home-about/home-about').then((m) => m.HomeAboutComponent),
       },
       {
         path: 'products',
@@ -68,16 +60,12 @@ export const routes: Routes = [
       {
         path: 'contact',
         loadComponent: () =>
-          import('./components/home/home-contact/home-contact').then(
-            (m) => m.HomeContactComponent
-          ),
+          import('./components/home/home-contact/home-contact').then((m) => m.HomeContactComponent),
       },
       {
         path: 'story',
         loadComponent: () =>
-          import('./components/home/home-story/home-story').then(
-            (m) => m.HomeStoryComponent
-          ),
+          import('./components/home/home-story/home-story').then((m) => m.HomeStoryComponent),
       },
     ],
   },
@@ -115,27 +103,21 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import('./components/rol/rol-listar/rol-listar').then(
-            (m) => m.RolListarComponent
-          ),
+          import('./components/rol/rol-listar/rol-listar').then((m) => m.RolListarComponent),
       },
       {
         path: 'roles/new',
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import('./components/rol/rol-insert/rol-insert').then(
-            (m) => m.RolInsertarComponent
-          ),
+          import('./components/rol/rol-insert/rol-insert').then((m) => m.RolInsertarComponent),
       },
       {
         path: 'roles/edit/:id',
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import('./components/rol/rol-insert/rol-insert').then(
-            (m) => m.RolInsertarComponent
-          ),
+          import('./components/rol/rol-insert/rol-insert').then((m) => m.RolInsertarComponent),
       },
 
       // ========= TIPO PRODUCTO =========
@@ -145,9 +127,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import(
-            './components/tipo-producto/tipo-producto-listar/tipo-producto-listar'
-          ).then((m) => m.TipoProductoListarComponent),
+          import('./components/tipo-producto/tipo-producto-listar/tipo-producto-listar').then(
+            (m) => m.TipoProductoListarComponent
+          ),
       },
       // new/edit: solo ADMIN
       {
@@ -155,18 +137,18 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/tipo-producto/tipo-producto-insert/tipo-producto-insert'
-          ).then((m) => m.TipoProductoInsertarComponent),
+          import('./components/tipo-producto/tipo-producto-insert/tipo-producto-insert').then(
+            (m) => m.TipoProductoInsertarComponent
+          ),
       },
       {
         path: 'tipoproducto/edit/:id',
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/tipo-producto/tipo-producto-insert/tipo-producto-insert'
-          ).then((m) => m.TipoProductoInsertarComponent),
+          import('./components/tipo-producto/tipo-producto-insert/tipo-producto-insert').then(
+            (m) => m.TipoProductoInsertarComponent
+          ),
       },
 
       // ========= PRODUCTO =========
@@ -205,9 +187,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/producto/producto-reporte/producto-reporte'
-          ).then((m) => m.ReportePrecio),
+          import('./components/producto/producto-reporte/producto-reporte').then(
+            (m) => m.ReportePrecio
+          ),
       },
 
       // ========= PRODUCTO FOTO =========
@@ -217,9 +199,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import(
-            './components/producto-foto/producto-foto-listar/producto-foto-listar'
-          ).then((m) => m.ProductoFotoListarComponent),
+          import('./components/producto-foto/producto-foto-listar/producto-foto-listar').then(
+            (m) => m.ProductoFotoListarComponent
+          ),
       },
       // insertar: solo VENDEDOR
       {
@@ -227,9 +209,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR'] },
         loadComponent: () =>
-          import(
-            './components/producto-foto/producto-foto-insert/producto-foto-insert'
-          ).then((m) => m.ProductoFotoInsertarComponent),
+          import('./components/producto-foto/producto-foto-insert/producto-foto-insert').then(
+            (m) => m.ProductoFotoInsertarComponent
+          ),
       },
       // editar: ADMIN + VENDEDOR
       {
@@ -237,9 +219,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR'] },
         loadComponent: () =>
-          import(
-            './components/producto-foto/producto-foto-insert/producto-foto-insert'
-          ).then((m) => m.ProductoFotoInsertarComponent),
+          import('./components/producto-foto/producto-foto-insert/producto-foto-insert').then(
+            (m) => m.ProductoFotoInsertarComponent
+          ),
       },
 
       // ========= FAVORITO =========
@@ -281,28 +263,28 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/calificacion/calificacion-listar/calificacion-listar'
-          ).then((m) => m.CalificacionListarComponent),
+          import('./components/calificacion/calificacion-listar/calificacion-listar').then(
+            (m) => m.CalificacionListarComponent
+          ),
       },
       // new/edit: VENDEDOR + ESTUDIANTE
       {
         path: 'calificacion/new',
         canActivate: [rolesGuard],
-        data: { roles: ['ADMIN','VENDEDOR', 'ESTUDIANTE'] },
+        data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import(
-            './components/calificacion/calificacion-insertar/calificacion-insertar'
-          ).then((m) => m.CalificacionInsertarComponent),
+          import('./components/calificacion/calificacion-insertar/calificacion-insertar').then(
+            (m) => m.CalificacionInsertarComponent
+          ),
       },
       {
         path: 'calificacion/edit/:id',
         canActivate: [rolesGuard],
-        data: { roles: ['ADMIN','VENDEDOR', 'ESTUDIANTE'] },
+        data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import(
-            './components/calificacion/calificacion-insertar/calificacion-insertar'
-          ).then((m) => m.CalificacionInsertarComponent),
+          import('./components/calificacion/calificacion-insertar/calificacion-insertar').then(
+            (m) => m.CalificacionInsertarComponent
+          ),
       },
 
       // ========= TIPO PROYECTO =========
@@ -312,9 +294,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import(
-            './components/tipo-proyecto/tipo-proyecto-listar/tipo-proyecto-listar'
-          ).then((m) => m.TipoProyectoListarComponent),
+          import('./components/tipo-proyecto/tipo-proyecto-listar/tipo-proyecto-listar').then(
+            (m) => m.TipoProyectoListarComponent
+          ),
       },
       // new/edit: solo ADMIN
       {
@@ -322,18 +304,18 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/tipo-proyecto/tipo-proyecto-insert/tipo-proyecto-insert'
-          ).then((m) => m.TipoProyectoInsertarComponent),
+          import('./components/tipo-proyecto/tipo-proyecto-insert/tipo-proyecto-insert').then(
+            (m) => m.TipoProyectoInsertarComponent
+          ),
       },
       {
         path: 'tipoproyecto/edit/:id',
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/tipo-proyecto/tipo-proyecto-insert/tipo-proyecto-insert'
-          ).then((m) => m.TipoProyectoInsertarComponent),
+          import('./components/tipo-proyecto/tipo-proyecto-insert/tipo-proyecto-insert').then(
+            (m) => m.TipoProyectoInsertarComponent
+          ),
       },
 
       // ========= PROYECTO =========
@@ -380,7 +362,7 @@ export const routes: Routes = [
       {
         path: 'comentarioproyecto/new',
         canActivate: [rolesGuard],
-        data: { roles: ['ADMIN','VENDEDOR', 'ESTUDIANTE'] },
+        data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
           import(
             './components/comentario-proyecto/comentario-proyecto-insert/comentario-proyecto-insert'
@@ -414,9 +396,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/comprobante/comprobante-listar/comprobante-listar'
-          ).then((m) => m.ComprobanteListarComponent),
+          import('./components/comprobante/comprobante-listar/comprobante-listar').then(
+            (m) => m.ComprobanteListarComponent
+          ),
       },
       // insertar: ADMIN + VENDEDOR
       {
@@ -424,9 +406,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR'] },
         loadComponent: () =>
-          import(
-            './components/comprobante/comprobante-insert/comprobante-insert'
-          ).then((m) => m.ComprobanteInsertarComponent),
+          import('./components/comprobante/comprobante-insert/comprobante-insert').then(
+            (m) => m.ComprobanteInsertarComponent
+          ),
       },
       // editar: solo ADMIN
       {
@@ -434,9 +416,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/comprobante/comprobante-insert/comprobante-insert'
-          ).then((m) => m.ComprobanteInsertarComponent),
+          import('./components/comprobante/comprobante-insert/comprobante-insert').then(
+            (m) => m.ComprobanteInsertarComponent
+          ),
       },
       // reportes: solo ADMIN
       {
@@ -444,18 +426,18 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/comprobante/comprobante-reporte/comprobante-reporte'
-          ).then((m) => m.ComprobanteReporteComponent),
+          import('./components/comprobante/comprobante-reporte/comprobante-reporte').then(
+            (m) => m.ComprobanteReporteComponent
+          ),
       },
       {
         path: 'comprobante/reporte2',
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/comprobante/comprobante-reporte2/comprobante-reporte2'
-          ).then((m) => m.ComprobanteIgvReporteComponent),
+          import('./components/comprobante/comprobante-reporte2/comprobante-reporte2').then(
+            (m) => m.ComprobanteIgvReporteComponent
+          ),
       },
 
       // ========= PEDIDO =========
@@ -493,9 +475,7 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import('./components/pedido/pedido-reporte/pedido-reporte').then(
-            (m) => m.PedidoReporte
-          ),
+          import('./components/pedido/pedido-reporte/pedido-reporte').then((m) => m.PedidoReporte),
       },
 
       // ========= PEDIDO ITEM =========
@@ -505,9 +485,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import(
-            './components/pedido-item/pedido-item-listar/pedido-item-listar'
-          ).then((m) => m.PedidoItemListarComponent),
+          import('./components/pedido-item/pedido-item-listar/pedido-item-listar').then(
+            (m) => m.PedidoItemListarComponent
+          ),
       },
       // new/edit: solo ADMIN
       {
@@ -515,18 +495,18 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/pedido-item/pedido-item-insert/pedido-item-insert'
-          ).then((m) => m.PedidoItemInsertComponent),
+          import('./components/pedido-item/pedido-item-insert/pedido-item-insert').then(
+            (m) => m.PedidoItemInsertComponent
+          ),
       },
       {
         path: 'pedido-item/edit/:id',
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/pedido-item/pedido-item-insert/pedido-item-insert'
-          ).then((m) => m.PedidoItemInsertComponent),
+          import('./components/pedido-item/pedido-item-insert/pedido-item-insert').then(
+            (m) => m.PedidoItemInsertComponent
+          ),
       },
 
       // ========= ENTREGA =========
@@ -576,9 +556,7 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import('./components/pago/pago-paypal/pago-paypal').then(
-            (m) => m.PagoPaypalComponent
-          ),
+          import('./components/pago/pago-paypal/pago-paypal').then((m) => m.PagoPaypalComponent),
       },
 
       // ========= MÉTODO PAGO =========
@@ -588,9 +566,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import(
-            './components/metodo-pago/metodo-pago-listar/metodo-pago-listar'
-          ).then((m) => m.MetodoPagoListarComponent),
+          import('./components/metodo-pago/metodo-pago-listar/metodo-pago-listar').then(
+            (m) => m.MetodoPagoListarComponent
+          ),
       },
       // new/edit: solo ADMIN
       {
@@ -598,18 +576,18 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/metodo-pago/metodo-pago-insertar/metodo-pago-insertar'
-          ).then((m) => m.MetodoPagoInsertarComponent),
+          import('./components/metodo-pago/metodo-pago-insertar/metodo-pago-insertar').then(
+            (m) => m.MetodoPagoInsertarComponent
+          ),
       },
       {
         path: 'metodopago/edit/:id',
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/metodo-pago/metodo-pago-insertar/metodo-pago-insertar'
-          ).then((m) => m.MetodoPagoInsertarComponent),
+          import('./components/metodo-pago/metodo-pago-insertar/metodo-pago-insertar').then(
+            (m) => m.MetodoPagoInsertarComponent
+          ),
       },
 
       // ========= TARJETA =========
@@ -660,9 +638,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import(
-            './components/tipo-documento/tipo-documento-listar/tipo-documento-listar'
-          ).then((m) => m.TipoDocumentoListarComponent),
+          import('./components/tipo-documento/tipo-documento-listar/tipo-documento-listar').then(
+            (m) => m.TipoDocumentoListarComponent
+          ),
       },
       // new/edit: solo ADMIN
       {
@@ -723,9 +701,9 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] },
         loadComponent: () =>
-          import(
-            './components/notificacion/notificacion-listar/notificacion-listar'
-          ).then((m) => m.NotificacionListarComponent),
+          import('./components/notificacion/notificacion-listar/notificacion-listar').then(
+            (m) => m.NotificacionListarComponent
+          ),
       },
       // new/edit: solo ADMIN
       {
@@ -733,18 +711,24 @@ export const routes: Routes = [
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/notificacion/notificacion-insert/notificacion-insert'
-          ).then((m) => m.NotificacionInsertarComponent),
+          import('./components/notificacion/notificacion-insert/notificacion-insert').then(
+            (m) => m.NotificacionInsertarComponent
+          ),
       },
       {
         path: 'notificacion/edit/:id',
         canActivate: [rolesGuard],
         data: { roles: ['ADMIN'] },
         loadComponent: () =>
-          import(
-            './components/notificacion/notificacion-insert/notificacion-insert'
-          ).then((m) => m.NotificacionInsertarComponent),
+          import('./components/notificacion/notificacion-insert/notificacion-insert').then(
+            (m) => m.NotificacionInsertarComponent
+          ),
+      },
+      {
+        path: 'perfil',
+        canActivate: [rolesGuard],
+        data: { roles: ['ADMIN', 'VENDEDOR', 'ESTUDIANTE'] }, // cualquier logueado
+        loadComponent: () => import('./components/perfil/perfil').then((m) => m.PerfilComponent),
       },
     ],
   },
