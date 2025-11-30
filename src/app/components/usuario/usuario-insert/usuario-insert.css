@@ -184,3 +184,4 @@
   padding-right: 12px !important;
   min-width: 0;
 }
+:host ::ng-deep mat-error { color: #e53935 !important; }

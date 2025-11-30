@@ -242,3 +242,4 @@
 
   .landing .auth-buttons{ display: none; }
 }
+:host ::ng-deep mat-error { color: #e53935 !important; }
