@@ -14,7 +14,6 @@ import { CommonModule } from '@angular/common';
   styleUrl: './tipo-producto-insert.css',
 })
 export class TipoProductoInsertarComponent implements OnInit {
-  
   form!: FormGroup;
   id: number = 0;
   edicion: boolean = false;
@@ -27,7 +26,6 @@ export class TipoProductoInsertarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     this.form = this.fb.group({
       idTipoProducto: [''],
       nombreTipoProducto: ['', Validators.required],
@@ -41,7 +39,7 @@ export class TipoProductoInsertarComponent implements OnInit {
         this.tS.listId(this.id).subscribe((data) => {
           this.form.patchValue({
             idTipoProducto: data.idTipoProducto,
-            nombreTipoProducto: data.nombreTipoProducto
+            nombreTipoProducto: data.nombreTipoProducto,
           });
         });
       }
@@ -51,7 +49,7 @@ export class TipoProductoInsertarComponent implements OnInit {
   aceptar() {
     let body = {
       idTipoProducto: Number(this.form.value.idTipoProducto),
-      nombreTipoProducto: this.form.value.nombreTipoProducto
+      nombreTipoProducto: this.form.value.nombreTipoProducto,
     };
 
     if (this.edicion) {
@@ -64,6 +62,9 @@ export class TipoProductoInsertarComponent implements OnInit {
       });
     }
 
+    this.router.navigate(['tipoproducto']);
+  }
+  cancelar(): void {
     this.router.navigate(['tipoproducto']);
   }
 }

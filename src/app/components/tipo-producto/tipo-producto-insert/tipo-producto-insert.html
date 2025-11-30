@@ -2,15 +2,19 @@
   <h1>{{ edicion ? 'Editar tipo de producto' : 'Nuevo tipo de producto' }}</h1>
 
   <form [formGroup]="form" (ngSubmit)="aceptar()">
-
     <mat-form-field class="full" appearance="outline">
       <mat-label>Nombre del tipo de producto</mat-label>
-      <input matInput formControlName="nombreTipoProducto">
+      <input matInput formControlName="nombreTipoProducto" />
       <mat-error *ngIf="form.get('nombreTipoProducto')?.hasError('required')">
         El nombre del tipo de producto es obligatorio
       </mat-error>
     </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">Guardar</button>
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
   </form>
 </div>

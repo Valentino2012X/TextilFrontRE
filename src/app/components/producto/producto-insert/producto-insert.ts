@@ -50,7 +50,10 @@ export class ProductoInsertarComponent implements OnInit {
     this.form = this.fb.group({
       idProducto: [''],
       nombreProducto: ['', Validators.required],
-      descripcionProducto: ['', [Validators.required, Validators.maxLength(200),Validators.minLength(10)]],
+      descripcionProducto: [
+        '',
+        [Validators.required, Validators.maxLength(200), Validators.minLength(10)],
+      ],
       precioProducto: [0, [Validators.required, Validators.min(0)]],
       stockProducto: [0, [Validators.required, Validators.min(0)]],
       colorProducto: [],
@@ -59,7 +62,7 @@ export class ProductoInsertarComponent implements OnInit {
       disponibleProducto: [true, Validators.required],
       urlTipoProducto: ['', Validators.required],
       tipoProducto: ['', Validators.required], // guarda el ID
-      usuario: ['', Validators.required],      // guarda el ID
+      usuario: ['', Validators.required], // guarda el ID
     });
 
     // Cargar combos
@@ -92,7 +95,7 @@ export class ProductoInsertarComponent implements OnInit {
             disponibleProducto: data.disponibleProducto,
             urlTipoProducto: data.urlTipoProducto,
             tipoProducto: data.idTipoProducto, // 👈 id numérico
-            usuario: data.idUsuario,           // 👈 id numérico
+            usuario: data.idUsuario, // 👈 id numérico
           });
         });
       }
@@ -127,6 +130,9 @@ export class ProductoInsertarComponent implements OnInit {
       });
     }
 
+    this.router.navigate(['producto']);
+  }
+  cancelar(): void {
     this.router.navigate(['producto']);
   }
 }

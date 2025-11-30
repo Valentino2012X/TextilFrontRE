@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -56,7 +51,10 @@ export class ProyectoInsertarComponent implements OnInit {
     this.form = this.fb.group({
       idProyecto: [''],
       tituloProyecto: ['', Validators.required],
-      descripcionProyecto: ['', [Validators.required, Validators.maxLength(200),Validators.minLength(10)]],
+      descripcionProyecto: [
+        '',
+        [Validators.required, Validators.maxLength(200), Validators.minLength(10)],
+      ],
       urlProyecto: ['', Validators.required],
       visibleProyecto: ['', Validators.required],
       fechaCreacion: [{ value: new Date(), disabled: true }],
@@ -77,19 +75,19 @@ export class ProyectoInsertarComponent implements OnInit {
         this.pS.listId(this.id).subscribe((data: any) => {
           let fechaLocal: Date | null = null;
           if (data.fechaCreacion) {
-          const iso = data.fechaCreacion.toString();
-        const yyyyMmDd = iso.substring(0, 10);
-        const parts = yyyyMmDd.split('-');
-        if (parts.length === 3) {
-          const y = Number(parts[0]);
-          const m = Number(parts[1]);
-          const d = Number(parts[2]);
-          fechaLocal = new Date(y, m - 1, d);
-        } else {
-          const dt = new Date(iso);
-          fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
-        }
-      }
+            const iso = data.fechaCreacion.toString();
+            const yyyyMmDd = iso.substring(0, 10);
+            const parts = yyyyMmDd.split('-');
+            if (parts.length === 3) {
+              const y = Number(parts[0]);
+              const m = Number(parts[1]);
+              const d = Number(parts[2]);
+              fechaLocal = new Date(y, m - 1, d);
+            } else {
+              const dt = new Date(iso);
+              fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+            }
+          }
           this.form.patchValue({
             idProyecto: data.idProyecto,
             tituloProyecto: data.tituloProyecto,
@@ -103,7 +101,6 @@ export class ProyectoInsertarComponent implements OnInit {
         });
       }
     });
-    
   }
 
   aceptar() {
@@ -137,5 +134,8 @@ export class ProyectoInsertarComponent implements OnInit {
         alert('Ocurrió un error al guardar el proyecto.');
       },
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['proyecto']);
   }
 }

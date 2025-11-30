@@ -1,151 +1,180 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   FormBuilder,
   FormGroup,
+  ValidationErrors,
   Validators,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
-import { MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { ActivatedRoute, Router } from '@angular/router';
+import { MatButtonModule } from '@angular/material/button';
+import { MatOptionModule, provideNativeDateAdapter } from '@angular/material/core';
 
 import { PedidoService } from '../../../services/pedido-service';
 import { UsuarioService } from '../../../services/usuario-service';
 import { MetodoPagoService } from '../../../services/metodo-pago';
 
+import { Pedido } from '../../../models/Pedido';
 import { Usuario } from '../../../models/Usuario';
 import { MetodoPago } from '../../../models/Metodo-pago';
-import { Pedido } from '../../../models/Pedido';
 
 @Component({
+  selector: 'app-pedido-insert',
   standalone: true,
-  selector: 'app-pedido-insertar',
   templateUrl: './pedido-insert.html',
   styleUrl: './pedido-insert.css',
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
     MatInputModule,
-    MatButtonModule,
     MatSelectModule,
-    MatOptionModule,
     MatDatepickerModule,
+    MatButtonModule,
+    MatOptionModule,
   ],
   providers: [provideNativeDateAdapter()],
 })
 export class PedidoInsertarComponent implements OnInit {
-  form!: FormGroup;
-  id: number = 0;
+  form: FormGroup = new FormGroup({});
   edicion: boolean = false;
-
-  // >>> NUEVO: bandera para saber si ya intentaste guardar
-  submitted: boolean = false;
+  id: number = 0;
 
   listaUsuarios: Usuario[] = [];
-  listaMetodos: MetodoPago[] = [];
+  listaMetodosPago: MetodoPago[] = [];
 
   constructor(
     private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
     private pS: PedidoService,
     private uS: UsuarioService,
-    private mS: MetodoPagoService,
-    private router: Router,
-    private route: ActivatedRoute
+    private mS: MetodoPagoService
   ) {}
 
   ngOnInit(): void {
-    const hoy = new Date(); // fecha actual
-
-    this.form = this.fb.group({
-      idPedido: [''],
-      estadoPedido: ['', Validators.required],
-      fechaCreacionPedido: [hoy, Validators.required],
-      fechaPagoPedido: [null, Validators.required],
-      totalPedido: [0, [Validators.required, Validators.min(0)]],
-      vendedor: ['', Validators.required],
-      comprador: ['', Validators.required],
-      metodoPago: ['', Validators.required],
-    });
-
     // combos
     this.uS.list().subscribe((data) => (this.listaUsuarios = data));
-    this.mS.list().subscribe((data) => (this.listaMetodos = data));
+    this.mS.list().subscribe((data) => (this.listaMetodosPago = data));
+
+    // form
+    this.form = this.fb.group(
+      {
+        idPedido: [''],
+        estadoPedido: ['', Validators.required],
+        totalPedido: [0, [Validators.required, Validators.min(0)]],
+        fechaCreacionPedido: [new Date(), Validators.required],
+        fechaPagoPedido: [null],
+
+        idVendedor: [null, Validators.required],
+        idComprador: [null, Validators.required],
+        idMetodoPago: [null, Validators.required],
+      },
+      { validators: [this.vendedorCompradorDistintosValidator()] }
+    );
+
     // edición
-    this.route.params.subscribe((params) => {
-      this.id = Number(params['id']);
-      this.edicion = !!this.id;
-
+    this.route.params.subscribe((params: Params) => {
+      this.id = params['id'];
+      this.edicion = this.id != null;
       if (this.edicion) {
-        this.pS.listId(this.id).subscribe((data: Pedido) => {
-          const fc = new Date(data.fechaCreacionPedido);
-          const fp = new Date(data.fechaPagoPedido);
-
-          this.form.patchValue({
-            idPedido: data.idPedido,
-            estadoPedido: data.estadoPedido,
-            fechaCreacionPedido: fc,
-            fechaPagoPedido: fp,
-            totalPedido: data.totalPedido,
-            vendedor: data.vendedor.idUsuario,
-            comprador: data.comprador.idUsuario,
-            metodoPago: data.metodoPago.idMetodoPago,
-          });
-        });
+        this.initForm();
       }
     });
   }
 
-  // >>> NUEVO: usado por los <mat-error> en el HTML
-  campoInvalido(nombre: string): boolean {
-    const control = this.form.get(nombre);
-    return (
-      control !== null &&
-      control.invalid &&
-      (control.touched || this.submitted)
-    );
-  }
-  minFechaPago: Date = new Date();
-  
-  private formatDate(d: any): string {
-    const date = d instanceof Date ? d : new Date(d);
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
+  // ------------ Helpers de fecha ------------
+  private toIsoDate(date: Date): string {
+    if (!date) return '';
+    const d = new Date(date);
+    const y = d.getFullYear();
+    const m = (d.getMonth() + 1).toString().padStart(2, '0');
+    const day = d.getDate().toString().padStart(2, '0');
+    return `${y}-${m}-${day}`;
   }
 
-  aceptar() {
-    // >>> NUEVO: marcamos que ya intentaste guardar
-    this.submitted = true;
+  private parseIsoToDate(iso: string | null | undefined): Date | null {
+    if (!iso) return null;
+    const d = new Date(iso);
+    return isNaN(d.getTime()) ? null : d;
+  }
 
-    // si hay errores, solo mostramos mat-error, no hacemos alert ni post
+  // ------------ Validator: vendedor ≠ comprador ------------
+  vendedorCompradorDistintosValidator() {
+    return (group: AbstractControl): ValidationErrors | null => {
+      const vendedor = group.get('idVendedor')?.value;
+      const comprador = group.get('idComprador')?.value;
+
+      if (!vendedor || !comprador) return null;
+      return vendedor === comprador ? { mismoUsuarioPedido: true } : null;
+    };
+  }
+
+  // ------------ Cargar datos en edición ------------
+  initForm(): void {
+    this.pS.listId(this.id).subscribe((data: Pedido) => {
+      this.form.patchValue({
+        idPedido: data.idPedido,
+        estadoPedido: data.estadoPedido,
+        totalPedido: data.totalPedido,
+        fechaCreacionPedido: this.parseIsoToDate(data.fechaCreacionPedido),
+        fechaPagoPedido: this.parseIsoToDate(data.fechaPagoPedido),
+        idVendedor: data.vendedor?.idUsuario,
+        idComprador: data.comprador?.idUsuario,
+        idMetodoPago: data.metodoPago?.idMetodoPago,
+      });
+    });
+  }
+
+  // ------------ Guardar ------------
+  aceptar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
 
-    const raw = this.form.value;
+    const raw = this.form.getRawValue();
 
-    const body = {
-      idPedido: this.edicion ? Number(raw.idPedido) : 0,
-      estadoPedido: raw.estadoPedido,
-      fechaCreacionPedido: this.formatDate(raw.fechaCreacionPedido),
-      fechaPagoPedido: this.formatDate(raw.fechaPagoPedido),
-      totalPedido: raw.totalPedido,
-      vendedor: { idUsuario: raw.vendedor },
-      comprador: { idUsuario: raw.comprador },
-      metodoPago: { idMetodoPago: raw.metodoPago },
-    };
+    const pedido = new Pedido();
+    pedido.idPedido = raw.idPedido || 0;
+    pedido.estadoPedido = raw.estadoPedido;
+    pedido.totalPedido = Number(raw.totalPedido);
+    pedido.fechaCreacionPedido = this.toIsoDate(raw.fechaCreacionPedido);
+    pedido.fechaPagoPedido = raw.fechaPagoPedido
+      ? this.toIsoDate(raw.fechaPagoPedido)
+      : '';
 
-    const obs = this.edicion ? this.pS.update(body) : this.pS.insert(body);
+    pedido.vendedor = { idUsuario: raw.idVendedor } as Usuario;
+    pedido.comprador = { idUsuario: raw.idComprador } as Usuario;
+    pedido.metodoPago = {
+      idMetodoPago: raw.idMetodoPago,
+    } as MetodoPago;
 
-    obs.subscribe(() => {
-      this.pS.list().subscribe((data) => this.pS.setList(data));
-      this.router.navigate(['pedido']);
-    });
+    if (this.edicion) {
+      this.pS.update(pedido).subscribe(() => {
+        this.pS.list().subscribe((data) => this.pS.setList(data));
+        this.router.navigate(['/pedido']);
+      });
+    } else {
+      this.pS.insert(pedido).subscribe(() => {
+        this.pS.list().subscribe((data) => this.pS.setList(data));
+        this.router.navigate(['/pedido']);
+      });
+    }
+  }
+
+  cancelar(): void {
+    this.router.navigate(['/pedido']);
+  }
+
+  get f() {
+    return this.form.controls;
   }
 }

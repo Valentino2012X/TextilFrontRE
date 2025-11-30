@@ -2,35 +2,34 @@
   <h1>{{ edicion ? 'Editar producto' : 'Nuevo producto' }}</h1>
 
   <form [formGroup]="form" (ngSubmit)="aceptar()">
-
     <div class="row">
       <mat-form-field appearance="outline" class="field">
         <mat-label>Nombre</mat-label>
         <input matInput formControlName="nombreProducto" />
         <mat-error *ngIf="form.get('nombreProducto')?.hasError('required')">
-        El nombre es obligatorio
+          El nombre es obligatorio
         </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="field">
         <mat-label>Descripción</mat-label>
-        <textarea matInput formControlName="descripcionProducto" rows="4"></textarea>  
+        <textarea matInput formControlName="descripcionProducto" rows="4"></textarea>
         <mat-error *ngIf="form.get('descripcionProducto')?.hasError('required')">
-       La descripción es obligatoria
+          La descripción es obligatoria
         </mat-error>
         <mat-error *ngIf="form.get('descripcionProducto')?.hasError('maxlength')">
-        La descripción no puede tener más de 200 caracteres
-      </mat-error>
-      <mat-error *ngIf="form.get('descripcionProducto')?.hasError('minlength')">
-        La descripción no puede tener menos de 10 caracteres
-      </mat-error>
+          La descripción no puede tener más de 200 caracteres
+        </mat-error>
+        <mat-error *ngIf="form.get('descripcionProducto')?.hasError('minlength')">
+          La descripción no puede tener menos de 10 caracteres
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="field">
         <mat-label>Precio</mat-label>
         <input matInput type="number" formControlName="precioProducto" />
         <mat-error *ngIf="form.get('precioProducto')?.hasError('min')">
-           El precio no puede ser negativo
+          El precio no puede ser negativo
         </mat-error>
         <mat-error *ngIf="form.get('precioProducto')?.hasError('required')">
           El precio es obligatorio
@@ -41,7 +40,7 @@
         <mat-label>Stock</mat-label>
         <input matInput type="number" formControlName="stockProducto" />
         <mat-error *ngIf="form.get('stockProducto')?.hasError('min')">
-           El stock no puede ser negativo
+          El stock no puede ser negativo
         </mat-error>
         <mat-error *ngIf="form.get('stockProducto')?.hasError('required')">
           El stock es obligatorio
@@ -50,21 +49,21 @@
     </div>
 
     <div class="row">
-  <mat-form-field appearance="outline" class="field">
-    <mat-label>Color</mat-label>
+      <mat-form-field appearance="outline" class="field">
+        <mat-label>Color</mat-label>
 
-    <input 
-      type="color"
-      matInput
-      formControlName="colorProducto"
-      style="height: 40px; padding: 0;"
-    />
-  </mat-form-field>
+        <input
+          type="color"
+          matInput
+          formControlName="colorProducto"
+          style="height: 40px; padding: 0"
+        />
+      </mat-form-field>
 
       <mat-form-field appearance="outline" class="field">
         <mat-label>Medida</mat-label>
         <input matInput formControlName="medidaProducto" />
-         <mat-error *ngIf="form.get('medidaProducto')?.hasError('required')">
+        <mat-error *ngIf="form.get('medidaProducto')?.hasError('required')">
           La medida es obligatoria
         </mat-error>
       </mat-form-field>
@@ -77,10 +76,7 @@
         </mat-error>
       </mat-form-field>
 
-      <mat-checkbox formControlName="disponibleProducto">
-        Disponible
-      </mat-checkbox>
-      
+      <mat-checkbox formControlName="disponibleProducto"> Disponible </mat-checkbox>
     </div>
 
     <div class="row">
@@ -115,15 +111,17 @@
             {{ u.nombreUsuario }}
           </mat-option>
         </mat-select>
-          <mat-error *ngIf="form.get('usuario')?.hasError('required')">
+        <mat-error *ngIf="form.get('usuario')?.hasError('required')">
           El usuario es obligatorio
         </mat-error>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">
-        Guardar
-      </button>
+      <div class="buttons">
+        <button mat-raised-button color="primary" type="submit">
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+        <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+      </div>
     </div>
-
   </form>
 </div>

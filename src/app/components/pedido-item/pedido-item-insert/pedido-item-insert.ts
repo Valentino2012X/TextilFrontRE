@@ -108,4 +108,7 @@ export class PedidoItemInsertComponent implements OnInit {
       this.router.navigate(['pedido-item']);
     });
   }
+  cancelar(): void {
+    this.router.navigate(['pedido-item']);
+  }
 }

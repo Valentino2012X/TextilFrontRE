@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -54,7 +49,6 @@ export class ProductoFotoInsertarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
     const hoy = new Date();
     this.form = this.fb.group({
       idProductoFoto: [0],
@@ -88,30 +82,28 @@ export class ProductoFotoInsertarComponent implements OnInit {
   }
 
   private parseFechaLocal(fechaIso: any): Date | null {
-  if (!fechaIso) return null;
+    if (!fechaIso) return null;
 
-  const iso = fechaIso.toString();
-  const yyyyMmDd = iso.substring(0, 10); 
+    const iso = fechaIso.toString();
+    const yyyyMmDd = iso.substring(0, 10);
 
-  const parts = yyyyMmDd.split('-');
-  if (parts.length === 3) {
-    const y = Number(parts[0]);
-    const m = Number(parts[1]);
-    const d = Number(parts[2]);
-    return new Date(y, m - 1, d); 
+    const parts = yyyyMmDd.split('-');
+    if (parts.length === 3) {
+      const y = Number(parts[0]);
+      const m = Number(parts[1]);
+      const d = Number(parts[2]);
+      return new Date(y, m - 1, d);
+    }
+
+    const dt = new Date(iso);
+    return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
   }
 
-
-  const dt = new Date(iso);
-  return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
-}
-
-private formatDate(date: any): string {
-  const d = new Date(date);
-  const corrected = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
-  return corrected.toISOString().split('T')[0];
-}
-
+  private formatDate(date: any): string {
+    const d = new Date(date);
+    const corrected = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    return corrected.toISOString().split('T')[0];
+  }
 
   campoInvalido(campo: string): boolean {
     const control = this.form.get(campo);
@@ -131,9 +123,7 @@ private formatDate(date: any): string {
       idProductoFoto: this.edicion ? idForm : 0,
       urlProductoFoto: raw.urlProductoFoto,
       principalProductoFoto: raw.principalProductoFoto,
-      fechaSubidaProductoFoto: this.formatDate(
-        raw.fechaSubidaProductoFoto as Date
-      ),
+      fechaSubidaProductoFoto: this.formatDate(raw.fechaSubidaProductoFoto as Date),
       producto: {
         idProducto: raw.idProducto,
       },
@@ -141,9 +131,7 @@ private formatDate(date: any): string {
 
     const esUpdate = this.edicion && idForm > 0;
 
-    const peticion = esUpdate
-      ? this.pfS.update(body)
-      : this.pfS.insert(body);
+    const peticion = esUpdate ? this.pfS.update(body) : this.pfS.insert(body);
 
     peticion.subscribe({
       next: () => {
@@ -155,5 +143,8 @@ private formatDate(date: any): string {
         alert(err.error || 'Ocurrió un error al guardar la foto de producto');
       },
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['productofoto']);
   }
 }

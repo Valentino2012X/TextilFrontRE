@@ -64,4 +64,7 @@ export class TipoProyectoInsertarComponent implements OnInit {
 
     this.router.navigate(['tipoproyecto']);
   }
+  cancelar(): void {
+    this.router.navigate(['tipoproyecto']);
+  }
 }

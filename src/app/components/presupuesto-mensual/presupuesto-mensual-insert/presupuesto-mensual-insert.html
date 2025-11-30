@@ -29,9 +29,7 @@
             {{ m.label }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="isInvalid('mesPresupuestoMensual')">
-          El mes es obligatorio.
-        </mat-error>
+        <mat-error *ngIf="isInvalid('mesPresupuestoMensual')"> El mes es obligatorio. </mat-error>
       </mat-form-field>
     </div>
 
@@ -40,12 +38,7 @@
       <!-- Monto límite -->
       <mat-form-field class="half" appearance="outline">
         <mat-label>Monto límite (S/.)**</mat-label>
-        <input
-          matInput
-          type="number"
-          step="0.01"
-          formControlName="montoLimitePresupuestoMensual"
-        />
+        <input matInput type="number" step="0.01" formControlName="montoLimitePresupuestoMensual" />
         <mat-error *ngIf="isInvalid('montoLimitePresupuestoMensual')">
           El monto es obligatorio y debe ser mayor a 0.
         </mat-error>
@@ -54,15 +47,8 @@
       <!-- Fecha presupuesto -->
       <mat-form-field class="half" appearance="outline">
         <mat-label>Fecha presupuesto</mat-label>
-        <input
-          matInput
-          [matDatepicker]="pickerFecha"
-          formControlName="fechaPresupuestoMensual"
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="pickerFecha"
-        ></mat-datepicker-toggle>
+        <input matInput [matDatepicker]="pickerFecha" formControlName="fechaPresupuestoMensual" />
+        <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
         <mat-datepicker #pickerFecha></mat-datepicker>
         <mat-error *ngIf="isInvalid('fechaPresupuestoMensual')">
           La fecha es obligatoria.
@@ -79,14 +65,15 @@
             {{ u.nombreUsuario }}
           </mat-option>
         </mat-select>
-        <mat-error *ngIf="isInvalid('idUsuario')">
-          El usuario es obligatorio.
-        </mat-error>
+        <mat-error *ngIf="isInvalid('idUsuario')"> El usuario es obligatorio. </mat-error>
       </mat-form-field>
     </div>
 
-    <button mat-raised-button color="primary" type="submit" class="btn-guardar">
-      Guardar
-    </button>
+    <div class="buttons">
+      <button mat-raised-button color="primary" type="submit">
+        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+      </button>
+      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
+    </div>
   </form>
 </div>
