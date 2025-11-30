@@ -13,7 +13,7 @@ import { Favorito } from '../../../models/favorito';
   selector: 'app-favorito-listar',
   templateUrl: './favorito-listar.html',
   styleUrl: './favorito-listar.css',
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink],
+  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink, NgIf],
 })
 export class FavoritoListarComponent implements OnInit {
   dataSource: MatTableDataSource<Favorito> = new MatTableDataSource<Favorito>();
