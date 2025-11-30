@@ -10,9 +10,7 @@
 
       <div class="tc-hero-text">
         <h1 class="tc-hero-title">{{ edicion ? 'Editar producto' : 'Nuevo producto' }}</h1>
-        <p class="tc-hero-subtitle">
-          Registra y administra tus productos.
-        </p>
+        <p class="tc-hero-subtitle">Registra y administra tus productos.</p>
       </div>
     </div>
 
@@ -104,7 +102,7 @@
 
         <mat-form-field appearance="outline" class="full">
           <mat-label>Tipo producto</mat-label>
-          <mat-select formControlName="tipoProducto">
+          <mat-select formControlName="tipoProducto" panelClass="tc-select-panel">
             <mat-option *ngFor="let tp of listaTipoProducto" [value]="tp.idTipoProducto">
               {{ tp.nombreTipoProducto }}
             </mat-option>
@@ -116,7 +114,7 @@
 
         <mat-form-field appearance="outline" class="full">
           <mat-label>Usuario</mat-label>
-          <mat-select formControlName="usuario">
+          <mat-select formControlName="usuario" panelClass="tc-select-panel">
             <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
               {{ u.nombreUsuario }}
             </mat-option>
@@ -125,7 +123,6 @@
             El usuario es obligatorio
           </mat-error>
         </mat-form-field>
-
         <div class="tc-span-2 tc-check">
           <mat-checkbox formControlName="disponibleProducto">Disponible</mat-checkbox>
         </div>

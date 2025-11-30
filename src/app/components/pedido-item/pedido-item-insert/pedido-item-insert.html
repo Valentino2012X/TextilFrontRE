@@ -68,6 +68,38 @@
           </mat-select>
           <mat-error *ngIf="campoInvalido('producto')">Debes seleccionar un producto.</mat-error>
         </mat-form-field>
+
+        <!-- URL de imagen -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>URL de imagen</mat-label>
+          <input matInput formControlName="imagenUrl" placeholder="https://..." />
+        </mat-form-field>
+      </div>
+
+      <!-- PREVIEW CARD (simple) -->
+      <div class="preview-wrapper">
+        <mat-card *ngIf="form.get('imagenUrl')?.value; else sinImagen" class="preview-card">
+          <img
+            mat-card-image
+            [src]="form.get('imagenUrl')?.value"
+            alt="Imagen del ítem"
+          />
+          <mat-card-content>
+            <h3>Vista previa del ítem</h3>
+            <p>
+              Cantidad:
+              {{ form.get('cantidadPedidoItem')?.value || 0 }} •
+              Precio unitario:
+              S/ {{ form.get('precioPedidoItem')?.value || 0 }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+
+        <ng-template #sinImagen>
+          <div class="preview-placeholder">
+            Ingresa una URL de imagen para ver la vista previa aquí.
+          </div>
+        </ng-template>
       </div>
 
       <!-- BOTONES -->
@@ -83,5 +115,3 @@
         </button>
       </div>
     </form>
-  </section>
-</div>
