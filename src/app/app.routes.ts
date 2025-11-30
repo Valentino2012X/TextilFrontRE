@@ -16,9 +16,60 @@ export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
 
   // Login (público)
+  { path: 'login', component: Autenticador },
+
+  // ✅ LANDING (después de login)
+  // Nota: Si quieres que sea pública, quita canActivate.
+  // Si quieres que solo se vea logueado, déjalo con seguridadGuard.
   {
-    path: 'login',
-    component: Autenticador,
+    path: 'home',
+    loadComponent: () =>
+      import('./components/home/home/home').then((m) => m.HomeComponent),
+    canActivate: [seguridadGuard],
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./components/home/home-index/home-index').then(
+            (m) => m.HomeIndexComponent
+          ),
+      },
+      {
+        path: 'about',
+        loadComponent: () =>
+          import('./components/home/home-about/home-about').then(
+            (m) => m.HomeAboutComponent
+          ),
+      },
+      {
+        path: 'products',
+        loadComponent: () =>
+          import('./components/home/home-products/home-products').then(
+            (m) => m.HomeProductsComponent
+          ),
+      },
+      {
+        path: 'community',
+        loadComponent: () =>
+          import('./components/home/home-community/home-community').then(
+            (m) => m.HomeCommunityComponent
+          ),
+      },
+      {
+        path: 'contact',
+        loadComponent: () =>
+          import('./components/home/home-contact/home-contact').then(
+            (m) => m.HomeContactComponent
+          ),
+      },
+      {
+        path: 'story',
+        loadComponent: () =>
+          import('./components/home/home-story/home-story').then(
+            (m) => m.HomeStoryComponent
+          ),
+      },
+    ],
   },
 
   // ===== LAYOUT PROTEGIDO (DASHBOARD SIEMPRE VISIBLE) =====
@@ -31,9 +82,9 @@ export const routes: Routes = [
       {
         path: 'dashboard',
         loadComponent: () =>
-          import(
-            './components/dashboard/dashboard-home/dashboard-home'
-          ).then((m) => m.DashboardHomeComponent),
+          import('./components/dashboard/dashboard-home/dashboard-home').then(
+            (m) => m.DashboardHomeComponent
+          ),
       },
 
       // ========= USUARIOS =========
@@ -248,37 +299,37 @@ export const routes: Routes = [
       {
         path: 'comprobante',
         loadComponent: () =>
-          import('./components/comprobante/comprobante-listar/comprobante-listar').then(
-            (m) => m.ComprobanteListarComponent
-          ),
+          import(
+            './components/comprobante/comprobante-listar/comprobante-listar'
+          ).then((m) => m.ComprobanteListarComponent),
       },
       {
         path: 'comprobante/new',
         loadComponent: () =>
-          import('./components/comprobante/comprobante-insert/comprobante-insert').then(
-            (m) => m.ComprobanteInsertarComponent
-          ),
+          import(
+            './components/comprobante/comprobante-insert/comprobante-insert'
+          ).then((m) => m.ComprobanteInsertarComponent),
       },
       {
         path: 'comprobante/edit/:id',
         loadComponent: () =>
-          import('./components/comprobante/comprobante-insert/comprobante-insert').then(
-            (m) => m.ComprobanteInsertarComponent
-          ),
+          import(
+            './components/comprobante/comprobante-insert/comprobante-insert'
+          ).then((m) => m.ComprobanteInsertarComponent),
       },
       {
         path: 'comprobante/reporte',
         loadComponent: () =>
-          import('./components/comprobante/comprobante-reporte/comprobante-reporte').then(
-            (m) => m.ComprobanteReporteComponent
-          ),
+          import(
+            './components/comprobante/comprobante-reporte/comprobante-reporte'
+          ).then((m) => m.ComprobanteReporteComponent),
       },
       {
         path: 'comprobante/reporte2',
         loadComponent: () =>
-          import('./components/comprobante/comprobante-reporte2/comprobante-reporte2').then(
-            (m) => m.ComprobanteIgvReporteComponent
-          ),
+          import(
+            './components/comprobante/comprobante-reporte2/comprobante-reporte2'
+          ).then((m) => m.ComprobanteIgvReporteComponent),
       },
 
       // ========= PEDIDO =========
@@ -510,4 +561,7 @@ export const routes: Routes = [
       },
     ],
   },
+
+  // fallback
+  { path: '**', redirectTo: 'login' },
 ];

@@ -1,0 +1,244 @@
+/* ===================== TextilConnect | HOME - COMMON (GLOBAL SAFE) ===================== */
+:root{
+  --tc-green: #8DAE5F;
+  --tc-green-dark: #3D6B3B;
+  --tc-white: #FFFFFF;
+  --tc-text: #1C1C1C;
+  --tc-beige: #F5F5DC;
+
+  --tc-radius: 18px;
+  --tc-shadow: 0 12px 30px rgba(0,0,0,.12);
+}
+
+/* Scope: SOLO afecta a cualquier página que tenga .landing */
+.landing, .landing * { box-sizing: border-box; }
+.landing{
+  font-family: 'Poppins', sans-serif;
+  color: var(--tc-text);
+  background: #f8f9fa;
+  overflow-x: hidden;
+}
+
+.landing .container{
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ===================== NAVBAR ===================== */
+.landing #navbar{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  padding: 14px 5%;
+  background: rgba(255,255,255,.95);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 2px 20px rgba(0,0,0,.10);
+}
+
+.landing .logo{
+  font-size: 1.7rem;
+  font-weight: 800;
+  color: #06402B;
+  text-decoration: none;
+  letter-spacing: .2px;
+}
+
+.landing .nav-links{
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: 10px;
+
+  margin: 0;
+  padding: 0;
+}
+
+.landing .nav-links a{
+  text-decoration: none;
+  color: #2b2b2b;
+  font-weight: 700;
+
+  padding: 10px 12px;
+  border-radius: 999px;
+  transition: .2s ease;
+}
+
+.landing .nav-links a:hover{
+  background: rgba(141,174,95,.18);
+  color: #06402B;
+}
+
+.landing .nav-links a.active,
+.landing .nav-links a.router-link-active{
+  background: var(--tc-green);
+  color: #0e1b12;
+}
+
+.landing .mobile-menu{
+  display: none;
+  font-size: 1.4rem;
+  color: #1f1f1f;
+  cursor: pointer;
+}
+
+/* ===================== AUTH ===================== */
+.landing .auth-section{ display: flex; align-items: center; gap: 12px; }
+.landing .auth-buttons{ display: flex; gap: 10px; }
+
+.landing .auth-btn{
+  padding: 10px 14px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: .2s ease;
+}
+
+.landing .login-btn{
+  background: transparent;
+  border: 2px solid #06402B;
+  color: #06402B;
+}
+
+.landing .register-btn{
+  background: #06402B;
+  border: 2px solid #06402B;
+  color: #fff;
+}
+
+.landing .auth-btn:hover{
+  transform: translateY(-2px);
+  box-shadow: 0 10px 18px rgba(0,0,0,.15);
+}
+
+/* Logged in menu */
+.landing .user-menu{ position: relative; display: flex; align-items: center; gap: 12px; }
+.landing .notification-icon{ position: relative; cursor: pointer; color: #06402B; }
+.landing .notification-badge{
+  position: absolute;
+  top: -8px; right: -8px;
+  background: #ff4757;
+  color: white;
+  border-radius: 999px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  display: grid;
+  place-items: center;
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.landing .user-info{
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  color: #06402B;
+  font-weight: 800;
+}
+
+.landing .user-avatar{
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: #06402B;
+  color: white;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+}
+
+.landing .dropdown-menu{
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 30px rgba(0,0,0,.12);
+  padding: 10px;
+  min-width: 220px;
+}
+
+.landing .dropdown-item{
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px;
+  border-radius: 10px;
+  color: #222;
+  text-decoration: none;
+}
+
+.landing .dropdown-item:hover{ background: #f3f5f7; }
+.landing .dropdown-item button{ all: unset; } /* por si tu botón hereda raro */
+
+/* ===================== FOOTER ===================== */
+.landing .footer{
+  background: #333;
+  color: white;
+  padding: 3rem 2rem;
+  text-align: center;
+  width: 100%;
+}
+
+.landing .footer h4{ margin-bottom: 1.4rem; font-size: 1.5rem; }
+
+.landing .social-icons{
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.landing .social-icons a{
+  width: 50px;
+  height: 50px;
+  background: linear-gradient(135deg, #06402B, var(--tc-green));
+  color: white;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.2rem;
+  text-decoration: none;
+  transition: .25s ease;
+}
+
+.landing .social-icons a:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(0,0,0,.2);
+}
+
+/* ===================== RESPONSIVE NAV ===================== */
+@media (max-width: 768px){
+  .landing .mobile-menu{ display: inline-flex; }
+
+  .landing .nav-links{
+    position: fixed;
+    top: 70px; left: 0; right: 0;
+    height: calc(100vh - 70px);
+    background: rgba(255,255,255,.98);
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 14px;
+
+    transform: translateX(100%);
+    transition: .25s ease;
+  }
+
+  .landing .nav-links.is-open{ transform: translateX(0); }
+
+  .landing .auth-buttons{ display: none; }
+}
