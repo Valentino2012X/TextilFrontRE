@@ -85,7 +85,7 @@
       <div class="tc-grid">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Calificador</mat-label>
-          <mat-select formControlName="idCalificador">
+          <mat-select formControlName="idCalificador" panelClass="tc-select-panel">
             <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
               {{ u.nombreUsuario }}
             </mat-option>
@@ -97,7 +97,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Calificado</mat-label>
-          <mat-select formControlName="idCalificado">
+          <mat-select formControlName="idCalificado" panelClass="tc-select-panel">
             <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
               {{ u.nombreUsuario }}
             </mat-option>

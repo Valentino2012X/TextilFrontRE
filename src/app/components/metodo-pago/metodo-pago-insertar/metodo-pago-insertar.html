@@ -30,7 +30,7 @@
     <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
       <div class="tc-grid tc-grid-1">
         <mat-form-field appearance="outline" class="full-width">
-          <mat-label>Nombre del método de pago*</mat-label>
+          <mat-label>Nombre del método de pago</mat-label>
           <input matInput formControlName="nombreMetodoPago" />
 
           <mat-error *ngIf="form.get('nombreMetodoPago')?.hasError('required')">
