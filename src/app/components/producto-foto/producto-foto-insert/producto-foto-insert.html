@@ -28,6 +28,7 @@
     </div>
 
     <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <!-- URL -->
       <div class="tc-grid tc-grid-1">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>URL de la foto</mat-label>
@@ -36,6 +37,39 @@
         </mat-form-field>
       </div>
 
+      <!-- PREVIEW CARD -->
+      <div class="preview-wrapper">
+        <mat-card
+          *ngIf="form.get('urlProductoFoto')?.value; else sinImagen"
+          class="preview-card"
+          appearance="outlined"
+        >
+          <img
+            mat-card-image
+            [src]="form.get('urlProductoFoto')?.value"
+            alt="Foto de producto"
+          />
+          <mat-card-content>
+            <h3>Vista previa de la foto</h3>
+            <p>
+              Producto:
+              {{ nombreProductoSeleccionado }}
+            </p>
+            <p>
+              Principal:
+              {{ form.get('principalProductoFoto')?.value ? 'Sí' : 'No' }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+
+        <ng-template #sinImagen>
+          <div class="preview-placeholder">
+            Ingresa una URL de imagen válida para ver la vista previa aquí.
+          </div>
+        </ng-template>
+      </div>
+
+      <!-- Principal + Fecha -->
       <div class="tc-grid tc-grid-2">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>¿Es principal?</mat-label>
@@ -59,6 +93,7 @@
         </mat-form-field>
       </div>
 
+      <!-- Producto -->
       <div class="tc-grid tc-grid-1">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Producto</mat-label>
@@ -73,6 +108,7 @@
         </mat-form-field>
       </div>
 
+      <!-- Botones -->
       <div class="tc-actions-row">
         <button mat-raised-button class="tc-btn-primary" type="submit">
           {{ edicion ? 'Guardar cambios' : 'Registrar' }}

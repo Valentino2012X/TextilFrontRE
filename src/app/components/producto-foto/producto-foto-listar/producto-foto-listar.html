@@ -1,3 +1,5 @@
+<!-- src/app/components/producto-foto/producto-foto-listar/producto-foto-listar.html -->
+
 <div class="tc-page">
   <section class="tc-hero">
     <div class="tc-hero-left">
@@ -9,7 +11,7 @@
     </div>
 
     <div class="tc-hero-right">
-      <span class="tc-total">Total: {{ dataSource.data.length }}</span>
+      <span class="tc-total">Total: {{ total }}</span>
       <button mat-raised-button class="tc-btn-primary" routerLink="/productofoto/new">
         <mat-icon>add</mat-icon>
         Nueva foto
@@ -22,54 +24,78 @@
       <span class="tc-pill">Listado</span>
     </div>
 
-    <div class="tc-table-wrap">
-      <table mat-table [dataSource]="dataSource" class="tc-table tc-table-center">
-        <ng-container matColumnDef="idProductoFoto">
-          <th mat-header-cell *matHeaderCellDef>ID</th>
-          <td mat-cell *matCellDef="let row">{{ row.idProductoFoto }}</td>
+    <div class="foto-grid" *ngIf="fotos.length > 0; else sinRegistros">
+      <mat-card
+        appearance="outlined"
+        class="foto-card"
+        *ngFor="let f of fotos"
+      >
+        <!-- Imagen -->
+        <ng-container *ngIf="f.urlProductoFoto; else sinImagen">
+          <div class="foto-card-image">
+            <img mat-card-image [src]="f.urlProductoFoto" alt="Foto de producto" />
+          </div>
         </ng-container>
 
-        <ng-container matColumnDef="urlProductoFoto">
-          <th mat-header-cell *matHeaderCellDef>URL</th>
-          <td mat-cell *matCellDef="let row">{{ row.urlProductoFoto }}</td>
-        </ng-container>
+        <ng-template #sinImagen>
+          <div class="foto-card-image foto-card-image--placeholder">
+            <mat-icon>image_not_supported</mat-icon>
+          </div>
+        </ng-template>
 
-        <ng-container matColumnDef="principalProductoFoto">
-          <th mat-header-cell *matHeaderCellDef>Principal</th>
-          <td mat-cell *matCellDef="let row">
-            <span class="tc-chip">{{ row.principalProductoFoto ? 'Sí' : 'No' }}</span>
-          </td>
-        </ng-container>
+        <!-- Cuerpo -->
+        <mat-card-content class="foto-card-body">
+          <h2 class="foto-card-title">
+            {{ getNombreProducto(f) }}
+          </h2>
 
-        <ng-container matColumnDef="fechaSubidaProductoFoto">
-          <th mat-header-cell *matHeaderCellDef>Fecha subida</th>
-          <td mat-cell *matCellDef="let row">{{ row.fechaSubidaProductoFoto | date:'yyyy-MM-dd' }}</td>
-        </ng-container>
+          <p class="foto-card-subtitle">
+            ID foto: {{ f.idProductoFoto }} • Producto ID:
+            {{ f.producto?.idProducto || '—' }}
+          </p>
 
-        <ng-container matColumnDef="producto">
-          <th mat-header-cell *matHeaderCellDef>Producto</th>
-          <td mat-cell *matCellDef="let row">
-            {{ row.producto?.nombreProducto }} (ID: {{ row.producto?.idProducto }})
-          </td>
-        </ng-container>
+          <p class="foto-card-date">
+            Fecha subida:
+            {{ f.fechaSubidaProductoFoto | date: 'yyyy-MM-dd' }}
+          </p>
 
-        <ng-container matColumnDef="acciones">
-          <th mat-header-cell *matHeaderCellDef>Acciones</th>
-          <td mat-cell *matCellDef="let row">
-            <div class="tc-actions">
-              <button mat-icon-button class="tc-icon-btn tc-edit" [routerLink]="['/productofoto/edit', row.idProductoFoto]">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button class="tc-icon-btn tc-del" (click)="eliminar(row.idProductoFoto)">
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </td>
-        </ng-container>
+          <div class="foto-card-tags">
+            <span
+              class="tag"
+              [ngClass]="{ 'tag-principal': f.principalProductoFoto, 'tag-no-principal': !f.principalProductoFoto }"
+            >
+              {{ f.principalProductoFoto ? 'Principal' : 'Secundaria' }}
+            </span>
+          </div>
+        </mat-card-content>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
+        <!-- Acciones -->
+        <mat-card-actions class="foto-card-actions">
+          <button
+            mat-raised-button
+            color="primary"
+            [routerLink]="['/productofoto/edit', f.idProductoFoto]"
+          >
+            <mat-icon>edit</mat-icon>
+            Editar
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="eliminar(f.idProductoFoto)"
+          >
+            <mat-icon>delete</mat-icon>
+            Eliminar
+          </button>
+        </mat-card-actions>
+      </mat-card>
     </div>
+
+    <ng-template #sinRegistros>
+      <div class="empty-state">
+        <mat-icon>info</mat-icon>
+        <p>No hay fotos registradas todavía.</p>
+      </div>
+    </ng-template>
   </section>
 </div>

@@ -1,3 +1,4 @@
+// src/app/components/producto-foto/producto-foto-insert/producto-foto-insert.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
@@ -9,13 +10,14 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule, provideNativeDateAdapter } from '@angular/material/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 
 import { ProductoFotoService } from '../../../services/producto-foto';
 import { ProductoService } from '../../../services/producto-service';
 
 import { Producto } from '../../../models/Producto';
 import { ProductoFoto } from '../../../models/producto-foto';
-import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -32,6 +34,7 @@ import { MatIconModule } from '@angular/material/icon';
     MatDatepickerModule,
     MatNativeDateModule,
     MatIconModule,
+    MatCardModule,
   ],
   providers: [provideNativeDateAdapter()],
 })
@@ -52,6 +55,7 @@ export class ProductoFotoInsertarComponent implements OnInit {
 
   ngOnInit(): void {
     const hoy = new Date();
+
     this.form = this.fb.group({
       idProductoFoto: [0],
       urlProductoFoto: ['', [Validators.required, Validators.maxLength(255)]],
@@ -60,10 +64,10 @@ export class ProductoFotoInsertarComponent implements OnInit {
       idProducto: [null, Validators.required],
     });
 
-    // combos
+    // Combos
     this.pS.list().subscribe((data) => (this.listaProductos = data));
 
-    // edición
+    // Edición
     this.route.params.subscribe((params: Params) => {
       this.id = Number(params['id']);
       this.edicion = this.id > 0;
@@ -132,7 +136,6 @@ export class ProductoFotoInsertarComponent implements OnInit {
     };
 
     const esUpdate = this.edicion && idForm > 0;
-
     const peticion = esUpdate ? this.pfS.update(body) : this.pfS.insert(body);
 
     peticion.subscribe({
@@ -146,7 +149,19 @@ export class ProductoFotoInsertarComponent implements OnInit {
       },
     });
   }
+
   cancelar(): void {
     this.router.navigate(['productofoto']);
+  }
+
+  // 👉 Getter para usar en el HTML (sin arrow functions en el template)
+  get nombreProductoSeleccionado(): string {
+    if (!this.listaProductos || !this.form) return 'Sin seleccionar';
+
+    const idSeleccionado = this.form.get('idProducto')?.value;
+    if (!idSeleccionado) return 'Sin seleccionar';
+
+    const prod = this.listaProductos.find((p) => p.idProducto === idSeleccionado);
+    return prod?.nombreProducto || 'Sin seleccionar';
   }
 }

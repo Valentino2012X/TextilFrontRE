@@ -11,6 +11,10 @@ export class PedidoItem {
   idPedido?: number;
   idProducto?: number;
 
+  // Datos extra que manda el DTO
+  nombreProducto?: string;   // nombre del producto
+  imagenUrl?: string;        // URL de la imagen
+
   // opcionalmente, los objetos completos si algún endpoint los manda
   pedido?: Pedido;
   producto?: Producto;
