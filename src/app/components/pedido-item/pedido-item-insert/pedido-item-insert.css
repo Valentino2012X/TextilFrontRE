@@ -1,1 +1,20 @@
+/* src/app/components/pedido-item/pedido-item-insert/pedido-item-insert.css */
 @import url("../../../../assets/Styles/insert.css");
+
+.preview-wrapper {
+  margin-top: 16px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.preview-card {
+  max-width: 320px;
+}
+
+.preview-placeholder {
+  border-radius: 12px;
+  border: 1px dashed #ccc;
+  padding: 12px;
+  font-size: 14px;
+  color: #777;
+}

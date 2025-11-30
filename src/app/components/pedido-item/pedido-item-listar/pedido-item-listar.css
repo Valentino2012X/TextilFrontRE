@@ -1,1 +1,127 @@
+/* src/app/components/pedido-item/pedido-item-listar/pedido-item-listar.css */
 @import url("../../../../assets/Styles/listar.css");
+
+/* Grid de cards */
+.pedido-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+/* CARD principal (tipo "departamento moderno") */
+.pedido-card {
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+/* Imagen superior */
+.pedido-card-image {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+}
+
+.pedido-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Placeholder cuando no hay imagenUrl */
+.pedido-card-image--placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f3f4f6;
+  color: #9ca3af;
+}
+
+.pedido-card-image--placeholder mat-icon {
+  font-size: 40px;
+}
+
+/* Cuerpo blanco inferior */
+.pedido-card-body {
+  padding: 16px 18px 12px;
+}
+
+.pedido-card-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f2933;
+}
+
+.pedido-card-subtitle {
+  margin: 4px 0 8px;
+  font-size: 13px;
+  color: #4b5563;
+}
+
+.pedido-card-price {
+  margin: 4px 0 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #d7263d;
+}
+
+/* Info de detalle */
+.pedido-card-info {
+  font-size: 12px;
+  color: #4b5563;
+  margin-bottom: 10px;
+}
+
+.pedido-card-info p {
+  margin: 2px 0;
+}
+
+/* Tag de estado */
+.pedido-card-tags {
+  margin-bottom: 8px;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.tag-disponible {
+  background-color: #e0f2f1;
+  color: #00695c;
+}
+
+/* Acciones */
+.pedido-card-actions {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 18px 14px;
+}
+
+.pedido-card-actions button {
+  flex: 1 1 0;
+}
+
+/* Estado vacío */
+.empty-state {
+  padding: 32px 16px;
+  text-align: center;
+  color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.empty-state mat-icon {
+  font-size: 32px;
+}
