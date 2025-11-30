@@ -31,7 +31,7 @@
       <div class="tc-grid">
         <!-- Cantidad -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Cantidad*</mat-label>
+          <mat-label>Cantidad</mat-label>
           <input type="number" matInput formControlName="cantidadPedidoItem" />
           <mat-error *ngIf="campoInvalido('cantidadPedidoItem')">
             La cantidad es obligatoria y debe ser mayor o igual a 1.
@@ -40,7 +40,7 @@
 
         <!-- Precio unitario -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Precio unitario*</mat-label>
+          <mat-label>Precio unitario</mat-label>
           <input type="number" matInput formControlName="precioPedidoItem" />
           <mat-error *ngIf="campoInvalido('precioPedidoItem')">
             El precio es obligatorio y no puede ser negativo.
@@ -49,8 +49,8 @@
 
         <!-- Pedido -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Pedido*</mat-label>
-          <mat-select formControlName="pedido">
+          <mat-label>Pedido</mat-label>
+          <mat-select formControlName="pedido" panelClass="tc-select-panel">
             <mat-option *ngFor="let ped of listaPedidos" [value]="ped.idPedido">
               Pedido #{{ ped.idPedido }}
             </mat-option>
@@ -60,8 +60,8 @@
 
         <!-- Producto -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Producto*</mat-label>
-          <mat-select formControlName="producto">
+          <mat-label>Producto</mat-label>
+          <mat-select formControlName="producto" panelClass="tc-select-panel">
             <mat-option *ngFor="let prod of listaProductos" [value]="prod.idProducto">
               {{ prod.nombreProducto }}
             </mat-option>

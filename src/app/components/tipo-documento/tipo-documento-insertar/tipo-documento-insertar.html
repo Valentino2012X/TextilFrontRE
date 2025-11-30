@@ -31,7 +31,7 @@
       <div class="tc-grid">
         <!-- NOMBRE -->
         <mat-form-field appearance="outline" class="full tc-span-2">
-          <mat-label>Nombre del tipo de documento*</mat-label>
+          <mat-label>Nombre del tipo de documento</mat-label>
           <input matInput formControlName="nombre" />
           <mat-error *ngIf="form.get('nombre')?.hasError('required')">
             El nombre del tipo de documento es obligatorio
@@ -40,7 +40,7 @@
 
         <!-- DESCRIPCIÓN -->
         <mat-form-field appearance="outline" class="full tc-span-2">
-          <mat-label>Descripción*</mat-label>
+          <mat-label>Descripción</mat-label>
           <textarea matInput formControlName="descripcionTipoDocumento" rows="4"></textarea>
           <mat-error *ngIf="form.get('descripcionTipoDocumento')?.hasError('required')">
             La descripción es obligatoria
@@ -55,7 +55,7 @@
 
         <!-- RUC -->
         <mat-form-field appearance="outline" class="full tc-span-2">
-          <mat-label>RUC*</mat-label>
+          <mat-label>RUC</mat-label>
           <input matInput type="text" formControlName="rucTipoDocumento" maxlength="9" />
           <mat-error *ngIf="form.get('rucTipoDocumento')?.hasError('required')">
             El número de RUC es obligatorio

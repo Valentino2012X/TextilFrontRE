@@ -45,7 +45,7 @@
       <div class="tc-grid tc-grid-3">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Usuario</mat-label>
-          <mat-select formControlName="idUsuario">
+          <mat-select formControlName="idUsuario" panelClass="tc-select-panel">
             <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
               {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
             </mat-option>
@@ -57,7 +57,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Producto (opcional)</mat-label>
-          <mat-select formControlName="idProducto">
+          <mat-select formControlName="idProducto" panelClass="tc-select-panel">
             <mat-option [value]="null">— Ninguno —</mat-option>
             <mat-option *ngFor="let p of listaProductos" [value]="p.idProducto">
               {{ p.nombreProducto }}
@@ -67,7 +67,7 @@
 
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>Proyecto (opcional)</mat-label>
-          <mat-select formControlName="idProyecto">
+          <mat-select formControlName="idProyecto" panelClass="tc-select-panel">
             <mat-option [value]="null">— Ninguno —</mat-option>
             <mat-option *ngFor="let pr of listaProyectos" [value]="pr.idProyecto">
               {{ pr.tituloProyecto }}

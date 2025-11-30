@@ -33,7 +33,7 @@
       <div class="tc-grid">
         <!-- Tipo -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Tipo de notificación*</mat-label>
+          <mat-label>Tipo de notificación</mat-label>
           <input matInput formControlName="tipoNotificacion" />
 
           <mat-error *ngIf="tipoNotificacionField.hasError('required') && tipoNotificacionField.touched">
@@ -46,7 +46,7 @@
 
         <!-- Fecha -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Fecha*</mat-label>
+          <mat-label>Fecha</mat-label>
           <input matInput [matDatepicker]="picker" formControlName="fechaNotificacion" />
           <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
@@ -58,7 +58,7 @@
 
         <!-- Mensaje -->
         <mat-form-field appearance="outline" class="full tc-span-2">
-          <mat-label>Mensaje*</mat-label>
+          <mat-label>Mensaje</mat-label>
           <textarea matInput formControlName="mensajeNotificacion" rows="5"></textarea>
 
           <mat-error *ngIf="mensajeNotificacionField.hasError('required') && mensajeNotificacionField.touched">
@@ -71,8 +71,8 @@
 
         <!-- Usuario -->
         <mat-form-field appearance="outline" class="full tc-span-2">
-          <mat-label>Usuario*</mat-label>
-          <mat-select formControlName="usuario">
+          <mat-label>Usuario</mat-label>
+          <mat-select formControlName="usuario" panelClass="tc-select-panel">
             <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
               {{ u.nombreUsuario }}
             </mat-option>

@@ -29,14 +29,14 @@
       <div class="tc-grid">
         <!-- ALIAS -->
         <mat-form-field appearance="outline" class="full tc-span-2">
-          <mat-label>Alias*</mat-label>
+          <mat-label>Alias</mat-label>
           <input matInput formControlName="aliasTarjeta" />
           <mat-error *ngIf="campoInvalido('aliasTarjeta')">El alias es obligatorio.</mat-error>
         </mat-form-field>
 
         <!-- TIPO -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Tipo*</mat-label>
+          <mat-label>Tipo</mat-label>
           <mat-select formControlName="tipoTarjeta">
             <mat-option *ngFor="let t of tiposTarjeta" [value]="t">{{ t }}</mat-option>
           </mat-select>
@@ -45,7 +45,7 @@
 
         <!-- MARCA -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Marca*</mat-label>
+          <mat-label>Marca</mat-label>
           <mat-select formControlName="marcaTarjeta">
             <mat-option *ngFor="let m of marcas" [value]="m">{{ m }}</mat-option>
           </mat-select>
@@ -54,7 +54,7 @@
 
         <!-- ÚLTIMOS 4 -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Últimos 4 dígitos*</mat-label>
+          <mat-label>Últimos 4 dígitos</mat-label>
           <input matInput formControlName="ultimos4Tarjeta" maxlength="4" />
 
           <mat-error
@@ -83,14 +83,14 @@
 
         <!-- TOKEN -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Token referencia*</mat-label>
+          <mat-label>Token referencia</mat-label>
           <input matInput formControlName="tokenReferenciaTarjeta" />
           <mat-error *ngIf="campoInvalido('tokenReferenciaTarjeta')">El token es obligatorio.</mat-error>
         </mat-form-field>
 
         <!-- VENCIMIENTO -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Vencimiento*</mat-label>
+          <mat-label>Vencimiento</mat-label>
           <input
             matInput
             [matDatepicker]="pickerVenc"
@@ -104,8 +104,8 @@
 
         <!-- ACTIVA -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Activa*</mat-label>
-          <mat-select formControlName="activaTarjeta">
+          <mat-label>Activa</mat-label>
+          <mat-select formControlName="activaTarjeta" panelClass="tc-select-panel">
             <mat-option [value]="true">Sí</mat-option>
             <mat-option [value]="false">No</mat-option>
           </mat-select>
@@ -114,7 +114,7 @@
 
         <!-- FECHA REGISTRO -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Fecha registro*</mat-label>
+          <mat-label>Fecha registro</mat-label>
           <input matInput [matDatepicker]="pickerReg" formControlName="fechaRegistroTarjeta" />
           <mat-datepicker-toggle matIconSuffix [for]="pickerReg"></mat-datepicker-toggle>
           <mat-datepicker #pickerReg></mat-datepicker>
@@ -125,8 +125,8 @@
 
         <!-- USUARIO -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Usuario*</mat-label>
-          <mat-select formControlName="usuario">
+          <mat-label>Usuario</mat-label>
+          <mat-select formControlName="usuario" panelClass="tc-select-panel">
             <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
               {{ u.nombreUsuario }} (ID: {{ u.idUsuario }})
             </mat-option>

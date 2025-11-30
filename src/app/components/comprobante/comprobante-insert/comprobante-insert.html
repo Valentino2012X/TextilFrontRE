@@ -49,7 +49,7 @@
 
         <!-- Razón social -->
         <mat-form-field appearance="outline" class="full tc-span-2">
-          <mat-label>Razón social*</mat-label>
+          <mat-label>Razón social</mat-label>
           <input matInput formControlName="razonSocialComprobante" />
           <mat-error *ngIf="form.get('razonSocialComprobante')?.hasError('required')">
             La razón social es obligatoria
@@ -58,7 +58,7 @@
 
         <!-- IGV -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>IGV*</mat-label>
+          <mat-label>IGV</mat-label>
           <input matInput type="number" step="0.01" formControlName="igvComprobante" />
           <mat-error *ngIf="form.get('igvComprobante')?.hasError('required')">
             El IGV es obligatorio
@@ -70,7 +70,7 @@
 
         <!-- Total -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Total*</mat-label>
+          <mat-label>Total</mat-label>
           <input matInput type="number" step="0.01" formControlName="totalComprobante" />
           <mat-error *ngIf="form.get('totalComprobante')?.hasError('required')">
             El total es obligatorio
@@ -82,8 +82,8 @@
 
         <!-- Pedido -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Pedido*</mat-label>
-          <mat-select formControlName="pedido">
+          <mat-label>Pedido</mat-label>
+          <mat-select formControlName="pedido" panelClass="tc-select-panel">
             <mat-option *ngFor="let p of listaPedidos" [value]="p.idPedido">
               Pedido #{{ p.idPedido }}
             </mat-option>
@@ -95,8 +95,8 @@
 
         <!-- Tipo documento -->
         <mat-form-field appearance="outline" class="full">
-          <mat-label>Tipo documento*</mat-label>
-          <mat-select formControlName="tipoDocumento">
+          <mat-label>Tipo documento</mat-label>
+          <mat-select formControlName="tipoDocumento" panelClass="tc-select-panel">
             <mat-option *ngFor="let t of listaTiposDocumento" [value]="t.idTipoDocumento">
               {{ t.nombre }}
             </mat-option>

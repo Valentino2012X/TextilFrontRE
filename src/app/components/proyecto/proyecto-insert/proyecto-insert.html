@@ -63,7 +63,7 @@
         <!-- Visible -->
         <mat-form-field appearance="outline" class="full">
           <mat-label>Visible*</mat-label>
-          <mat-select formControlName="visibleProyecto">
+          <mat-select formControlName="visibleProyecto" panelClass="tc-select-panel">
             <mat-option *ngFor="let m of visible" [value]="m">{{ m }}</mat-option>
           </mat-select>
           <mat-error *ngIf="form.get('visibleProyecto')?.hasError('required')">
@@ -82,7 +82,7 @@
         <!-- Tipo proyecto -->
         <mat-form-field appearance="outline" class="full">
           <mat-label>Tipo proyecto*</mat-label>
-          <mat-select formControlName="tipoProyecto">
+          <mat-select formControlName="tipoProyecto" panelClass="tc-select-panel">
             <mat-option *ngFor="let tp of listaTipoProyecto" [value]="tp.idTipoProyecto">
               {{ tp.nombreTipoProyecto }}
             </mat-option>
@@ -95,7 +95,7 @@
         <!-- Usuario -->
         <mat-form-field appearance="outline" class="full">
           <mat-label>Usuario*</mat-label>
-          <mat-select formControlName="usuario">
+          <mat-select formControlName="usuario" panelClass="tc-select-panel">
             <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
               {{ u.nombreUsuario }}
             </mat-option>

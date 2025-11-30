@@ -103,7 +103,7 @@
 
         <mat-form-field appearance="outline" class="full-width tc-span-2">
           <mat-label>Rol</mat-label>
-          <mat-select formControlName="idRol">
+          <mat-select formControlName="idRol" panelClass="tc-select-panel">
             <mat-option *ngFor="let r of listaRoles" [value]="r.idRol">
               {{ r.nombreRol }}
             </mat-option>
