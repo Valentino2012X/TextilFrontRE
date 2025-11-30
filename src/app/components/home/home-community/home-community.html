@@ -1,4 +1,4 @@
-<!-- COMMUNITY (Angular template) -->
+<!-- src/app/components/home/home-community/home-community.html -->
 <div class="landing">
   <section class="course-header">
     <nav id="navbar">
@@ -17,43 +17,49 @@
       </button>
 
       <div class="auth-section">
-        <div class="auth-buttons" *ngIf="!isLoggedIn">
-          <a routerLink="/autenticador" class="auth-btn login-btn">Iniciar Sesión</a>
-          <a routerLink="/registro" class="auth-btn register-btn">Registrarse</a>
-        </div>
-
-        <div class="user-menu" *ngIf="isLoggedIn">
-          <div class="notification-icon" (click)="toggleNotifications()">
-            <i class="fas fa-bell"></i>
-            <span class="notification-badge" *ngIf="notificationCount > 0">
-              {{ notificationCount }}
-            </span>
+        @if (!isLoggedIn) {
+          <div class="auth-buttons">
+            <a routerLink="/autenticador" class="auth-btn login-btn">Iniciar Sesión</a>
+            <a routerLink="/registro" class="auth-btn register-btn">Registrarse</a>
           </div>
+        }
 
-          <div class="user-info" (click)="toggleUserMenu()">
-            <div class="user-avatar">{{ userInitials }}</div>
-            <span>{{ userName }}</span>
-            <i class="fas fa-chevron-down"></i>
-          </div>
+        @if (isLoggedIn) {
+          <div class="user-menu">
+            <div class="notification-icon" (click)="toggleNotifications()">
+              <i class="fas fa-bell"></i>
+              @if (notificationCount > 0) {
+                <span class="notification-badge">{{ notificationCount }}</span>
+              }
+            </div>
 
-          <div class="dropdown-menu" *ngIf="userMenuOpen">
-            <a routerLink="/home/perfil" class="dropdown-item"
-              ><i class="fas fa-user"></i> Mi Perfil</a
-            >
-            <a routerLink="/home/config" class="dropdown-item"
-              ><i class="fas fa-cog"></i> Configuración</a
-            >
-            <a routerLink="/favorito" class="dropdown-item"
-              ><i class="fas fa-heart"></i> Mis Favoritos</a
-            >
-            <a routerLink="/proyecto" class="dropdown-item"
-              ><i class="fas fa-camera"></i> Mis Proyectos</a
-            >
-            <button type="button" class="dropdown-item" (click)="logout()">
-              <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
-            </button>
+            <div class="user-info" (click)="toggleUserMenu()">
+              <div class="user-avatar">{{ userInitials }}</div>
+              <span>{{ userName }}</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
+
+            @if (userMenuOpen) {
+              <div class="dropdown-menu">
+                <a routerLink="/home/perfil" class="dropdown-item">
+                  <i class="fas fa-user"></i> Mi Perfil
+                </a>
+                <a routerLink="/home/config" class="dropdown-item">
+                  <i class="fas fa-cog"></i> Configuración
+                </a>
+                <a routerLink="/favorito" class="dropdown-item">
+                  <i class="fas fa-heart"></i> Mis Favoritos
+                </a>
+                <a routerLink="/proyecto" class="dropdown-item">
+                  <i class="fas fa-camera"></i> Mis Proyectos
+                </a>
+                <button type="button" class="dropdown-item" (click)="logout()">
+                  <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+              </div>
+            }
           </div>
-        </div>
+        }
       </div>
     </nav>
 
@@ -137,56 +143,41 @@
         </p>
 
         <div class="demo-grid">
-          <div
-            class="demo-card"
-            [class.active]="activeDemo === 'follow'"
-            (click)="activateDemo('follow')"
-          >
+          <div class="demo-card" [class.active]="activeDemo === 'follow'" (click)="activateDemo('follow')">
             <div class="demo-icon">👤</div>
             <div class="demo-text">Seguir Usuarios</div>
           </div>
 
-          <div
-            class="demo-card"
-            [class.active]="activeDemo === 'projects'"
-            (click)="activateDemo('projects')"
-          >
+          <div class="demo-card" [class.active]="activeDemo === 'projects'" (click)="activateDemo('projects')">
             <div class="demo-icon">📸</div>
             <div class="demo-text">Ver Proyectos</div>
           </div>
 
-          <div
-            class="demo-card"
-            [class.active]="activeDemo === 'share'"
-            (click)="activateDemo('share')"
-          >
+          <div class="demo-card" [class.active]="activeDemo === 'share'" (click)="activateDemo('share')">
             <div class="demo-icon">🚀</div>
             <div class="demo-text">Subir Creaciones</div>
           </div>
 
-          <div
-            class="demo-card"
-            [class.active]="activeDemo === 'challenges'"
-            (click)="activateDemo('challenges')"
-          >
+          <div class="demo-card" [class.active]="activeDemo === 'challenges'" (click)="activateDemo('challenges')">
             <div class="demo-icon">🎯</div>
             <div class="demo-text">Retos Creativos</div>
           </div>
         </div>
 
-        <div
-          *ngIf="demoText"
-          style="
-            margin-top: 30px;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-          "
-        >
-          <p style="color: black; font-size: 1.1rem; line-height: 1.6">
-            {{ demoText }}
-          </p>
-        </div>
+        @if (demoText) {
+          <div
+            style="
+              margin-top: 30px;
+              padding: 20px;
+              background: rgba(255, 255, 255, 0.1);
+              border-radius: 15px;
+            "
+          >
+            <p style="color: black; font-size: 1.1rem; line-height: 1.6">
+              {{ demoText }}
+            </p>
+          </div>
+        }
       </div>
 
       <div class="cta-section">

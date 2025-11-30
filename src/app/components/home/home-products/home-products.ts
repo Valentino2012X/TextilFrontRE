@@ -1,7 +1,6 @@
-// src/app/components/home/home-products/home-products.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 
 type Category = 'all' | 'tejidos' | 'hilos' | 'adornos' | 'organicos';
 
@@ -27,13 +26,14 @@ interface TestimonialItem {
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './home-products.html',
-  styleUrl: './home-products.css',
+  styleUrls: ['./home-products.css'], // ✅ CORRECTO
 })
 export class HomeProductsComponent {
   mobileMenuOpen = false;
 
-  // (puedes adaptar a tu LoginService)
   isLoggedIn = !!localStorage.getItem('token');
+  userMenuOpen = false;
+
   userName = localStorage.getItem('username') ?? 'Usuario';
   notificationCount = 3;
 
@@ -135,6 +135,8 @@ export class HomeProductsComponent {
     },
   ];
 
+  constructor(private router: Router) {}
+
   get filteredProducts(): ProductItem[] {
     if (this.selectedCategory === 'all') return this.products;
     return this.products.filter((p) => p.category === this.selectedCategory);
@@ -144,18 +146,25 @@ export class HomeProductsComponent {
     this.mobileMenuOpen = !this.mobileMenuOpen;
   }
 
+  toggleUserMenu(): void {
+    this.userMenuOpen = !this.userMenuOpen;
+  }
+
   setCategory(c: Category): void {
     this.selectedCategory = c;
   }
 
   comprar(p: ProductItem): void {
-    // por ahora demo
     alert(`Comprar: ${p.title} - ${p.price}`);
   }
 
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('nombreUsuario');
     this.isLoggedIn = false;
+    this.userMenuOpen = false;
+    this.router.navigate(['/autenticador']);
   }
 
   trackByTitle(_: number, item: ProductItem): string {

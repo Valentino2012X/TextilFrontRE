@@ -16,7 +16,7 @@ export class HomeContactComponent {
   isLoggedIn = !!localStorage.getItem('token');
   userMenuOpen = false;
 
-  userName = localStorage.getItem('username') ?? 'Usuario';
+  userName = localStorage.getItem('username') ?? localStorage.getItem('nombreUsuario') ?? 'Usuario';
   notificationCount = 3;
 
   showSuccess = false;
@@ -69,13 +69,13 @@ export class HomeContactComponent {
 
     this.showSuccess = true;
     this.form.reset({ supportType: '' });
-
     setTimeout(() => (this.showSuccess = false), 3500);
   }
 
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
+    localStorage.removeItem('nombreUsuario');
     this.isLoggedIn = false;
     this.userMenuOpen = false;
     this.router.navigate(['/autenticador']);

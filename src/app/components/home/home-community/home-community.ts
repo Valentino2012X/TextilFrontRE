@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 type DemoKey = 'follow' | 'projects' | 'share' | 'challenges';
 
@@ -48,10 +48,14 @@ export class HomeCommunityComponent {
     this.activeDemo = key;
 
     const map: Record<DemoKey, string> = {
-      follow: 'Sigue a otros diseñadores y crea una red. Recibe actualizaciones de sus publicaciones y proyectos.',
-      projects: 'Explora proyectos compartidos por la comunidad, comenta y aprende del proceso creativo de otros.',
-      share: 'Publica tus creaciones, añade fotos y cuenta tu historia. Obtén feedback y aumenta tu visibilidad.',
-      challenges: 'Participa en retos mensuales de moda sostenible, gana exposición y mejora tu portafolio.',
+      follow:
+        'Sigue a otros diseñadores y crea una red. Recibe actualizaciones de sus publicaciones y proyectos.',
+      projects:
+        'Explora proyectos compartidos por la comunidad, comenta y aprende del proceso creativo de otros.',
+      share:
+        'Publica tus creaciones, añade fotos y cuenta tu historia. Obtén feedback y aumenta tu visibilidad.',
+      challenges:
+        'Participa en retos mensuales de moda sostenible, gana exposición y mejora tu portafolio.',
     };
 
     this.demoText = map[key];

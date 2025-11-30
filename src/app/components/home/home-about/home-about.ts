@@ -1,6 +1,7 @@
+// src/app/components/home/home-about/home-about.ts
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-home-about',
@@ -12,7 +13,6 @@ import { RouterModule, Router } from '@angular/router';
 export class HomeAboutComponent {
   mobileMenuOpen = false;
 
-  // Mínimo funcional: luego lo conectas a tu LoginService/JWT
   isLoggedIn = !!localStorage.getItem('token');
   userMenuOpen = false;
 
@@ -37,7 +37,6 @@ export class HomeAboutComponent {
   }
 
   toggleNotifications(): void {
-    // si luego haces dropdown, aquí lo controlas
     this.notificationCount = 0;
   }
 
