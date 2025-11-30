@@ -1,92 +1,115 @@
-<div class="form-container">
-  <h1>
-    {{ edicion ? 'Editar presupuesto mensual' : 'Nuevo presupuesto mensual' }}
-  </h1>
+<!-- src/app/components/presupuesto-mensual/presupuesto-mensual-insert/presupuesto-mensual-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <!-- FILA: AÑO / MES -->
-    <div class="row">
-      <!-- Año -->
-      <mat-form-field class="half" appearance="outline">
-        <mat-label>Año</mat-label>
-        <input
-          matInput
-          type="number"
-          formControlName="anioPresupuestoMensual"
-          min="2000"
-          max="2100"
-        />
-        <mat-error *ngIf="isInvalid('anioPresupuestoMensual')">
-          El año es obligatorio (entre 2000 y 2100).
-        </mat-error>
-      </mat-form-field>
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">savings</span>
+      </div>
 
-      <!-- Mes -->
-      <mat-form-field class="half" appearance="outline">
-        <mat-label>Mes</mat-label>
-        <mat-select formControlName="mesPresupuestoMensual">
-          <mat-option *ngFor="let m of meses" [value]="m.valor">
-            {{ m.label }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="isInvalid('mesPresupuestoMensual')">
-          El mes es obligatorio.
-        </mat-error>
-      </mat-form-field>
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">
+          {{ edicion ? 'Editar presupuesto mensual' : 'Nuevo presupuesto mensual' }}
+        </h1>
+        <p class="tc-hero-subtitle">
+          Define tu límite de gasto por mes y usuario.
+        </p>
+      </div>
     </div>
 
-    <!-- FILA: MONTO / FECHA -->
-    <div class="row">
-      <!-- Monto límite -->
-      <mat-form-field class="half" appearance="outline">
-        <mat-label>Monto límite (S/.)**</mat-label>
-        <input
-          matInput
-          type="number"
-          step="0.01"
-          formControlName="montoLimitePresupuestoMensual"
-        />
-        <mat-error *ngIf="isInvalid('montoLimitePresupuestoMensual')">
-          El monto es obligatorio y debe ser mayor a 0.
-        </mat-error>
-      </mat-form-field>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
 
-      <!-- Fecha presupuesto -->
-      <mat-form-field class="half" appearance="outline">
-        <mat-label>Fecha presupuesto</mat-label>
-        <input
-          matInput
-          [matDatepicker]="pickerFecha"
-          formControlName="fechaPresupuestoMensual"
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="pickerFecha"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #pickerFecha></mat-datepicker>
-        <mat-error *ngIf="isInvalid('fechaPresupuestoMensual')">
-          La fecha es obligatoria.
-        </mat-error>
-      </mat-form-field>
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <!-- FILA: USUARIO (COMPLETA) -->
-    <div class="row">
-      <mat-form-field class="full-width" appearance="outline">
-        <mat-label>Usuario</mat-label>
-        <mat-select formControlName="idUsuario">
-          <mat-option *ngFor="let u of usuarios" [value]="u.idUsuario">
-            {{ u.nombreUsuario }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="isInvalid('idUsuario')">
-          El usuario es obligatorio.
-        </mat-error>
-      </mat-form-field>
-    </div>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid">
+        <!-- Año -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Año*</mat-label>
+          <input
+            matInput
+            type="number"
+            formControlName="anioPresupuestoMensual"
+            min="2000"
+            max="2100"
+          />
+          <mat-error *ngIf="isInvalid('anioPresupuestoMensual')">
+            El año es obligatorio (entre 2000 y 2100).
+          </mat-error>
+        </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit" class="btn-guardar">
-      Guardar
-    </button>
-  </form>
+        <!-- Mes -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Mes*</mat-label>
+          <mat-select formControlName="mesPresupuestoMensual">
+            <mat-option *ngFor="let m of meses" [value]="m.valor">
+              {{ m.label }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="isInvalid('mesPresupuestoMensual')">
+            El mes es obligatorio.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Monto -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Monto límite (S/.)*</mat-label>
+          <input
+            matInput
+            type="number"
+            step="0.01"
+            formControlName="montoLimitePresupuestoMensual"
+          />
+          <mat-error *ngIf="isInvalid('montoLimitePresupuestoMensual')">
+            El monto es obligatorio y debe ser mayor a 0.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Fecha -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Fecha presupuesto*</mat-label>
+          <input matInput [matDatepicker]="pickerFecha" formControlName="fechaPresupuestoMensual" />
+          <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFecha></mat-datepicker>
+          <mat-error *ngIf="isInvalid('fechaPresupuestoMensual')">
+            La fecha es obligatoria.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Usuario -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Usuario*</mat-label>
+          <mat-select formControlName="idUsuario">
+            <mat-option *ngFor="let u of usuarios" [value]="u.idUsuario">
+              {{ u.nombreUsuario }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="isInvalid('idUsuario')">
+            El usuario es obligatorio.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- BOTONES (sin disabled frío) -->
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

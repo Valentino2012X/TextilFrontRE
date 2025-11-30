@@ -1,0 +1,36 @@
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>pie_chart</mat-icon>
+      </div>
+
+      <div>
+        <h1 class="tc-hero-title">Reporte de comentarios</h1>
+        <p class="tc-hero-subtitle">Cantidad de comentarios por proyecto.</p>
+      </div>
+    </div>
+
+    <div class="tc-hero-right">
+      <span class="tc-pill">Reporte</span>
+    </div>
+  </section>
+
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Gráfico</span>
+    </div>
+
+    <div class="tc-report-body">
+      <div *ngIf="hasData" class="tc-chart-wrap">
+        <canvas #pieCanvas></canvas>
+      </div>
+
+      <div *ngIf="!hasData" class="tc-empty">
+        <p>No hay datos disponibles para mostrar.</p>
+      </div>
+    </div>
+  </section>
+</div>

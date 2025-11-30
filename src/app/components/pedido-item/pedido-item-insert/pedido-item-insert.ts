@@ -14,6 +14,7 @@ import { ProductoService } from '../../../services/producto-service';
 import { Pedido } from '../../../models/Pedido';
 import { Producto } from '../../../models/Producto';
 import { PedidoItem } from '../../../models/Pedido-item';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -27,6 +28,7 @@ import { PedidoItem } from '../../../models/Pedido-item';
     MatButtonModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatIconModule,
   ],
 })
 export class PedidoItemInsertComponent implements OnInit {
@@ -107,5 +109,8 @@ export class PedidoItemInsertComponent implements OnInit {
       this.piS.list().subscribe((data) => this.piS.setList(data));
       this.router.navigate(['pedido-item']);
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['pedido-item']);
   }
 }

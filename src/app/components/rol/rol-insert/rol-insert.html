@@ -1,17 +1,44 @@
-<div class="container">
-  <h1>{{ edicion ? 'Editar rol' : 'Nuevo rol' }}</h1>
+<!-- src/app/components/rol/rol-insert/rol-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <mat-form-field class="full" appearance="outline">
-      <mat-label>Nombre del rol</mat-label>
-      <input matInput formControlName="nombreRol" />
-      <mat-error *ngIf="form.get('nombreRol')?.hasError('required')">
-        El nombre del rol es obligatorio
-      </mat-error>
-    </mat-form-field>
+<div class="tc-page">
+  <!-- Header -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">{{ edicion ? 'edit' : 'add' }}</span>
+      </div>
 
-    <button mat-raised-button color="primary" type="submit">
-      Guardar
-    </button>
-  </form>
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">{{ edicion ? 'Editar rol' : 'Nuevo rol' }}</h1>
+        <p class="tc-hero-subtitle">Crea un rol para asignar permisos.</p>
+      </div>
+    </div>
+
+    <div class="tc-hero-right">
+      <span class="tc-pill">{{ edicion ? 'Edición' : 'Registro' }}</span>
+    </div>
+  </section>
+
+  <!-- Form Card -->
+  <section class="tc-card">
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <mat-form-field class="full-width" appearance="outline">
+        <mat-label>Nombre del rol</mat-label>
+        <input matInput formControlName="nombreRol" />
+        <mat-error *ngIf="form.get('nombreRol')?.hasError('required')">
+          El nombre del rol es obligatorio
+        </mat-error>
+      </mat-form-field>
+
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          Guardar
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" routerLink="/roles">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

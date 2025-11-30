@@ -1,63 +1,95 @@
-<div class="form-container">
-  <h1>{{ edicion ? 'Editar foto de producto' : 'Nueva foto de producto' }}</h1>
+<!-- src/app/components/producto-foto/producto-foto-insert/producto-foto-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>URL de la foto</mat-label>
-        <input matInput formControlName="urlProductoFoto" />
-        <mat-error *ngIf="campoInvalido('urlProductoFoto')">
-          La URL es obligatoria.
-        </mat-error>
-      </mat-form-field>
+<div class="tc-page">
+  <!-- Header -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>image</mat-icon>
+      </div>
+
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">
+          {{ edicion ? 'Editar foto de producto' : 'Nueva foto de producto' }}
+        </h1>
+        <p class="tc-hero-subtitle">
+          Registra la URL, si es principal y la fecha de subida.
+        </p>
+      </div>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="half">
-        <mat-label>¿Es principal?</mat-label>
-        <mat-select formControlName="principalProductoFoto">
-          <mat-option [value]="true">Sí</mat-option>
-          <mat-option [value]="false">No</mat-option>
-        </mat-select>
-        <mat-error *ngIf="campoInvalido('principalProductoFoto')">
-          Debes indicar si es principal.
-        </mat-error>
-      </mat-form-field>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
 
-      <mat-form-field appearance="outline" class="half">
-        <mat-label>Fecha de subida</mat-label>
-        <input
-          matInput
-          [matDatepicker]="pickerFecha"
-          formControlName="fechaSubidaProductoFoto"
-        />
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="pickerFecha"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #pickerFecha></mat-datepicker>
-        <mat-error *ngIf="campoInvalido('fechaSubidaProductoFoto')">
-          La fecha es obligatoria.
-        </mat-error>
-      </mat-form-field>
+  <!-- Form -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Producto</mat-label>
-        <mat-select formControlName="idProducto">
-          <mat-option *ngFor="let p of listaProductos" [value]="p.idProducto">
-            {{ p.nombreProducto }} (ID: {{ p.idProducto }})
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="campoInvalido('idProducto')">
-          Debes seleccionar un producto.
-        </mat-error>
-      </mat-form-field>
-    </div>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid tc-grid-1">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>URL de la foto</mat-label>
+          <input matInput formControlName="urlProductoFoto" />
+          <mat-error *ngIf="campoInvalido('urlProductoFoto')">
+            La URL es obligatoria.
+          </mat-error>
+        </mat-form-field>
+      </div>
 
-    <button mat-raised-button color="primary" type="submit" class="btn-guardar">
-      Guardar
-    </button>
-  </form>
+      <div class="tc-grid tc-grid-2">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>¿Es principal?</mat-label>
+          <mat-select formControlName="principalProductoFoto">
+            <mat-option [value]="true">Sí</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoInvalido('principalProductoFoto')">
+            Debes indicar si es principal.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Fecha de subida</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerFecha"
+            formControlName="fechaSubidaProductoFoto"
+          />
+          <mat-datepicker-toggle matIconSuffix [for]="pickerFecha"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFecha></mat-datepicker>
+          <mat-error *ngIf="campoInvalido('fechaSubidaProductoFoto')">
+            La fecha es obligatoria.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="tc-grid tc-grid-1">
+        <mat-form-field appearance="outline" class="full-width">
+          <mat-label>Producto</mat-label>
+          <mat-select formControlName="idProducto">
+            <mat-option *ngFor="let p of listaProductos" [value]="p.idProducto">
+              {{ p.nombreProducto }} (ID: {{ p.idProducto }})
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoInvalido('idProducto')">
+            Debes seleccionar un producto.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

@@ -1,0 +1,62 @@
+/* src/app/components/dashboard/navbar/navbar.component.css */
+
+.nav-root {
+  height: 64px;
+  background: #ffffff; /* header blanco */
+  border-bottom: 1px solid #d9d9d9;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  color: #1c1c1c;
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+}
+
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ✅ Logo real (PNG/SVG) */
+.nav-brand-logo {
+  height: 40px; /* ajusta: 36-48 */
+  width: auto;
+  object-fit: contain;
+}
+
+/* contenedor de textito opcional (Panel) */
+.nav-brand-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.nav-subtitle {
+  font-size: 12px;
+  color: rgba(28, 28, 28, 0.70);
+  margin-top: 2px;
+}
+
+.nav-right {
+  font-size: 13px;
+  color: rgba(28, 28, 28, 0.80);
+}
+
+.nav-role {
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f5f5dc; /* beige */
+  border: 1px solid #d9d9d9;
+  font-weight: 700;
+}
+
+.nav-center{
+  font-weight: 800;
+  color: rgba(28,28,28,.75);
+  background: rgba(141,174,95,.18);
+  border: 1px solid rgba(61,107,59,.18);
+  padding: 10px 16px;
+  border-radius: 999px;
+}
+

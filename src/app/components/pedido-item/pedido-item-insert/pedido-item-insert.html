@@ -1,66 +1,87 @@
 <!-- src/app/components/pedido-item/pedido-item-insert/pedido-item-insert.html -->
-<div class="form-container">
-  <h1>{{ edicion ? 'Editar ítem de pedido' : 'Nuevo ítem de pedido' }}</h1>
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <!-- FILA CANTIDAD / PRECIO -->
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Cantidad</mat-label>
-        <input type="number" matInput formControlName="cantidadPedidoItem" />
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>receipt_long</mat-icon>
+      </div>
 
-        <mat-error *ngIf="campoInvalido('cantidadPedidoItem')">
-          La cantidad es obligatoria y debe ser mayor o igual a 1.
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Precio unitario</mat-label>
-        <input type="number" matInput formControlName="precioPedidoItem" />
-
-        <mat-error *ngIf="campoInvalido('precioPedidoItem')">
-          El precio es obligatorio y no puede ser negativo.
-        </mat-error>
-      </mat-form-field>
+      <div>
+        <h1 class="tc-hero-title">
+          {{ edicion ? 'Editar ítem de pedido' : 'Nuevo ítem de pedido' }}
+        </h1>
+        <p class="tc-hero-subtitle">Registra cantidad, precio, pedido y producto.</p>
+      </div>
     </div>
 
-    <!-- FILA PEDIDO / PRODUCTO -->
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Pedido</mat-label>
-        <mat-select formControlName="pedido">
-          <mat-option *ngFor="let ped of listaPedidos" [value]="ped.idPedido">
-            Pedido #{{ ped.idPedido }}
-          </mat-option>
-        </mat-select>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
 
-        <mat-error *ngIf="campoInvalido('pedido')">
-          Debes seleccionar un pedido.
-        </mat-error>
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Producto</mat-label>
-        <mat-select formControlName="producto">
-          <mat-option
-            *ngFor="let prod of listaProductos"
-            [value]="prod.idProducto"
-          >
-            {{ prod.nombreProducto }}
-          </mat-option>
-        </mat-select>
-
-        <mat-error *ngIf="campoInvalido('producto')">
-          Debes seleccionar un producto.
-        </mat-error>
-      </mat-form-field>
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <button
-      mat-raised-button
-      color="primary"
-      class="btn-guardar"
-      type="submit"
-    >
-      Guardar
-    </button>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid">
+        <!-- Cantidad -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Cantidad*</mat-label>
+          <input type="number" matInput formControlName="cantidadPedidoItem" />
+          <mat-error *ngIf="campoInvalido('cantidadPedidoItem')">
+            La cantidad es obligatoria y debe ser mayor o igual a 1.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Precio unitario -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Precio unitario*</mat-label>
+          <input type="number" matInput formControlName="precioPedidoItem" />
+          <mat-error *ngIf="campoInvalido('precioPedidoItem')">
+            El precio es obligatorio y no puede ser negativo.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Pedido -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Pedido*</mat-label>
+          <mat-select formControlName="pedido">
+            <mat-option *ngFor="let ped of listaPedidos" [value]="ped.idPedido">
+              Pedido #{{ ped.idPedido }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoInvalido('pedido')">Debes seleccionar un pedido.</mat-error>
+        </mat-form-field>
+
+        <!-- Producto -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Producto*</mat-label>
+          <mat-select formControlName="producto">
+            <mat-option *ngFor="let prod of listaProductos" [value]="prod.idProducto">
+              {{ prod.nombreProducto }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="campoInvalido('producto')">Debes seleccionar un producto.</mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- BOTONES -->
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

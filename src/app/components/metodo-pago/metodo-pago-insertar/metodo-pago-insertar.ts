@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { MetodoPago } from '../../../models/Metodo-pago';
 import { MetodoPagoService } from '../../../services/metodo-pago';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -26,6 +27,7 @@ import { MetodoPagoService } from '../../../services/metodo-pago';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatIconModule,
   ],
 })
 export class MetodoPagoInsertarComponent implements OnInit {

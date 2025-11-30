@@ -1,0 +1,213 @@
+<!-- src/app/components/dashboard/dashboard.component.html -->
+<div class="dashboard-root">
+  <!-- NAVBAR PROPIO DEL DASHBOARD (arriba) -->
+  <app-dashboard-navbar></app-dashboard-navbar>
+
+  <!-- CUERPO: SIDEBAR + CONTENIDO -->
+  <div class="dashboard-body">
+    <!-- SIDEBAR -->
+    <aside class="sidebar-root">
+      <!-- 🔹 Panel de usuario / rol / logout -->
+      <div class="user-panel">
+        <div class="user-panel-left">
+          <div class="user-avatar">TC</div>
+          <div class="user-meta">
+            <div class="user-label">Sesión activa</div>
+            <div class="user-role">
+              Rol:
+              <span>{{ rolActual || '---' }}</span>
+            </div>
+          </div>
+        </div>
+        <button
+          mat-icon-button
+          class="logout-btn"
+          aria-label="Cerrar sesión"
+          (click)="logout()"
+        >
+          <span class="material-icons">logout</span>
+        </button>
+      </div>
+
+      <div class="menu">
+        <!-- GESTIÓN DE USUARIOS -->
+        <p class="menu-section">Gestión de usuarios</p>
+        <a routerLink="/usuarios" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">group</span>
+          <span>Usuarios</span>
+        </a>
+        <a routerLink="/roles" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">shield</span>
+          <span>Roles</span>
+        </a>
+
+        <!-- CATÁLOGOS / PRODUCTOS -->
+        <p class="menu-section">Catálogos / productos</p>
+        <a routerLink="/tipoproducto" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">category</span>
+          <span>Tipo producto</span>
+        </a>
+        <a routerLink="/producto" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">inventory_2</span>
+          <span>Producto</span>
+        </a>
+        <a routerLink="/productofoto" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">photo</span>
+          <span>Producto foto</span>
+        </a>
+        <a routerLink="/favorito" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">favorite</span>
+          <span>Favorito</span>
+        </a>
+        <a routerLink="/calificacion" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">star</span>
+          <span>Calificación</span>
+        </a>
+
+        <!-- PROYECTOS -->
+        <p class="menu-section">Proyectos</p>
+        <a routerLink="/tipoproyecto" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">view_quilt</span>
+          <span>Tipo proyecto</span>
+        </a>
+        <a routerLink="/proyecto" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">work</span>
+          <span>Proyecto</span>
+        </a>
+        <a
+          routerLink="/comentarioproyecto"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">chat</span>
+          <span>Comentario proyecto</span>
+        </a>
+
+        <!-- VENTAS / PEDIDOS / ENTREGA -->
+        <p class="menu-section">Ventas / pedidos / entrega</p>
+        <a routerLink="/pedido" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">shopping_cart</span>
+          <span>Pedido</span>
+        </a>
+        <a routerLink="/pedido-item" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">list</span>
+          <span>Pedido item</span>
+        </a>
+        <a routerLink="/comprobante" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">receipt_long</span>
+          <span>Comprobante</span>
+        </a>
+        <a routerLink="/entrega" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">local_shipping</span>
+          <span>Entrega</span>
+        </a>
+        <a routerLink="/metodopago" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">payments</span>
+          <span>Método de pago</span>
+        </a>
+        <a routerLink="/tarjeta" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">credit_card</span>
+          <span>Tarjeta</span>
+        </a>
+
+        <!-- 🧾 REPORTES -->
+        <p class="menu-section">Reportes</p>
+        <a
+          routerLink="/producto/bprecio"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">insights</span>
+          <span>Reporte precios productos</span>
+        </a>
+
+        <a
+          routerLink="/comentarioproyecto/reporte"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">analytics</span>
+          <span>Reporte comentarios proyecto</span>
+        </a>
+
+        <a
+          routerLink="/comprobante/reporte"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">receipt</span>
+          <span>Reporte comprobantes</span>
+        </a>
+
+        <a
+          routerLink="/comprobante/reporte2"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">request_quote</span>
+          <span>Reporte IGV comprobantes</span>
+        </a>
+
+        <a
+          routerLink="/pedido/reporte"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">shopping_bag</span>
+          <span>Reporte pedidos</span>
+        </a>
+
+        <a
+          routerLink="/entrega/reporte"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">local_shipping</span>
+          <span>Reporte entregas</span>
+        </a>
+
+        <a
+          routerLink="/tarjeta/reporte"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">credit_score</span>
+          <span>Reporte tarjetas</span>
+        </a>
+
+        <a
+          routerLink="/tarjeta/reporte2"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">bar_chart</span>
+          <span>Reporte tarjetas (detalle)</span>
+        </a>
+
+        <!-- CONFIGURACIÓN / OTROS -->
+        <p class="menu-section">Configuración / otros</p>
+        <a routerLink="/tipodocumento" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">description</span>
+          <span>Tipo documento</span>
+        </a>
+        <a
+          routerLink="/presupuestomensual"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">account_balance_wallet</span>
+          <span>Presupuesto mensual</span>
+        </a>
+        <a routerLink="/notificacion" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">notifications</span>
+          <span>Notificación</span>
+        </a>
+      </div>
+    </aside>
+
+    <!-- CONTENIDO PRINCIPAL: aquí se pintan las rutas hijas -->
+    <main class="dashboard-content">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

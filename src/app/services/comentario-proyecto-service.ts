@@ -44,4 +44,7 @@ export class ComentarioProyectoService {
   listByProyecto(idProyecto: number) {
     return this.http.get<ComentarioProyecto[]>(`${this.url}/proyecto/${idProyecto}`);
   }
+  getCantidadPorProyecto() {
+  return this.http.get<any[]>(`${this.url}/comentarios/proyectos`);
+}
 }

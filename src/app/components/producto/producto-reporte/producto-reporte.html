@@ -1,0 +1,89 @@
+<div class="tc-page">
+  <!-- Header -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">analytics</span>
+      </div>
+
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">Reporte por precio</h1>
+        <p class="tc-hero-subtitle">Productos por rango de precios.</p>
+      </div>
+    </div>
+
+    <div class="tc-hero-right">
+      <span class="tc-total"><b>Reporte</b></span>
+    </div>
+  </section>
+
+  <!-- Filtros -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Filtros</span>
+    </div>
+
+    <!-- ✅ filtros centrados y compactos -->
+    <div class="tc-filters-panel">
+      <div class="tc-filter-row">
+        <div class="tc-field">
+          <label class="tc-label">Mínimo</label>
+          <input class="tc-input" type="number" [(ngModel)]="minPrice" placeholder="0" />
+        </div>
+
+        <div class="tc-field">
+          <label class="tc-label">Máximo</label>
+          <input class="tc-input" type="number" [(ngModel)]="maxPrice" placeholder="0" />
+        </div>
+
+        <button class="tc-btn-primary tc-btn-search" type="button" (click)="buscar()">
+          <span class="material-icons">search</span>
+          Buscar
+        </button>
+      </div>
+    </div>
+
+    @if (hasData) {
+      <div class="tc-chart">
+        <canvas baseChart [data]="barChartData" [options]="barChartOptions" [type]="barChartType"></canvas>
+      </div>
+
+      <div class="tc-table-wrap">
+        <table mat-table [dataSource]="dataSource" class="tc-table tc-table-center">
+          <ng-container matColumnDef="idProducto">
+            <th mat-header-cell *matHeaderCellDef>ID</th>
+            <td mat-cell *matCellDef="let e">{{ e.idProducto }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreProducto">
+            <th mat-header-cell *matHeaderCellDef>Nombre</th>
+            <td mat-cell *matCellDef="let e">{{ e.nombreProducto }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="precioProducto">
+            <th mat-header-cell *matHeaderCellDef>Precio</th>
+            <td mat-cell *matCellDef="let e"><b>S/. {{ e.precioProducto }}</b></td>
+          </ng-container>
+
+          <ng-container matColumnDef="stockProducto">
+            <th mat-header-cell *matHeaderCellDef>Stock</th>
+            <td mat-cell *matCellDef="let e">{{ e.stockProducto }}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreTipoProducto">
+            <th mat-header-cell *matHeaderCellDef>Tipo</th>
+            <td mat-cell *matCellDef="let e">{{ e.nombreTipoProducto }}</td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+      </div>
+    } @else {
+      <div class="tc-empty">
+        <mat-icon class="tc-empty-icon">info_outline</mat-icon>
+        <p>No hay datos disponibles para mostrar.</p>
+      </div>
+    }
+  </section>
+</div>

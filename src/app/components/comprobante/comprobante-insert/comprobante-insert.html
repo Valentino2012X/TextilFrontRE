@@ -1,78 +1,124 @@
 <!-- src/app/components/comprobante/comprobante-insert/comprobante-insert.html -->
-<div class="container">
-  <h1>{{ edicion ? 'Editar comprobante' : 'Nuevo comprobante' }}</h1>
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <div class="row">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Número de comprobante</mat-label>
-        <input matInput formControlName="numeroComprobante" />
-        <mat-error *ngIf="form.get('numeroComprobante')?.hasError('required')">
-          El número de comprobante es obligatorio
-        </mat-error>
-      </mat-form-field>
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>receipt</mat-icon>
+      </div>
 
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Fecha comprobante</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="fechaComprobante" />
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-        <mat-error *ngIf="form.get('fechaComprobante')?.hasError('required')">
-          La fecha es obligatoria
-        </mat-error>
-      </mat-form-field>
+      <div>
+        <h1 class="tc-hero-title">{{ edicion ? 'Editar comprobante' : 'Nuevo comprobante' }}</h1>
+        <p class="tc-hero-subtitle">Registra información del documento y relaciónalo al pedido.</p>
+      </div>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Razón social</mat-label>
-        <input matInput formControlName="razonSocialComprobante" />
-        <mat-error *ngIf="form.get('razonSocialComprobante')?.hasError('required')">
-          La razón social es obligatoria
-        </mat-error>
-      </mat-form-field>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
+
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>IGV</mat-label>
-        <input matInput type="number" formControlName="igvComprobante" step="0.01" />
-        <mat-error *ngIf="form.get('igvComprobante')?.hasError('required')">
-          El IGV es obligatorio
-        </mat-error>
-      </mat-form-field>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid">
+        <!-- Número de comprobante -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Número de comprobante*</mat-label>
+          <input matInput formControlName="numeroComprobante" />
+          <mat-error *ngIf="form.get('numeroComprobante')?.hasError('required')">
+            El número de comprobante es obligatorio
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Total</mat-label>
-        <input matInput type="number" formControlName="totalComprobante" step="0.01" />
-        <mat-error *ngIf="form.get('totalComprobante')?.hasError('required')">
-          El total es obligatorio
-        </mat-error>
-      </mat-form-field>
-    </div>
+        <!-- Fecha comprobante -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Fecha comprobante*</mat-label>
+          <input matInput [matDatepicker]="picker" formControlName="fechaComprobante" />
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+          <mat-error *ngIf="form.get('fechaComprobante')?.hasError('required')">
+            La fecha es obligatoria
+          </mat-error>
+        </mat-form-field>
 
-    <div class="row">
-      <!-- Pedido -->
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Pedido*</mat-label>
-        <mat-select formControlName="pedido">
-          <mat-option *ngFor="let p of listaPedidos" [value]="p.idPedido">
-            Pedido #{{ p.idPedido }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <!-- Razón social -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Razón social*</mat-label>
+          <input matInput formControlName="razonSocialComprobante" />
+          <mat-error *ngIf="form.get('razonSocialComprobante')?.hasError('required')">
+            La razón social es obligatoria
+          </mat-error>
+        </mat-form-field>
 
-      <!-- Tipo documento -->
-      <mat-form-field appearance="outline" class="full">
-        <mat-label>Tipo documento*</mat-label>
-        <mat-select formControlName="tipoDocumento">
-          <mat-option *ngFor="let t of listaTiposDocumento" [value]="t.idTipoDocumento">
-            {{ t.nombre }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+        <!-- IGV -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>IGV*</mat-label>
+          <input matInput type="number" step="0.01" formControlName="igvComprobante" />
+          <mat-error *ngIf="form.get('igvComprobante')?.hasError('required')">
+            El IGV es obligatorio
+          </mat-error>
+          <mat-error *ngIf="form.get('igvComprobante')?.hasError('min')">
+            El IGV no puede ser negativo o cero
+          </mat-error>
+        </mat-form-field>
 
-    <button mat-raised-button color="primary" type="submit">Guardar</button>
-  </form>
+        <!-- Total -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Total*</mat-label>
+          <input matInput type="number" step="0.01" formControlName="totalComprobante" />
+          <mat-error *ngIf="form.get('totalComprobante')?.hasError('required')">
+            El total es obligatorio
+          </mat-error>
+          <mat-error *ngIf="form.get('totalComprobante')?.hasError('min')">
+            El total no puede ser negativo o cero
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Pedido -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Pedido*</mat-label>
+          <mat-select formControlName="pedido">
+            <mat-option *ngFor="let p of listaPedidos" [value]="p.idPedido">
+              Pedido #{{ p.idPedido }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('pedido')?.hasError('required')">
+            El pedido es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Tipo documento -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Tipo documento*</mat-label>
+          <mat-select formControlName="tipoDocumento">
+            <mat-option *ngFor="let t of listaTiposDocumento" [value]="t.idTipoDocumento">
+              {{ t.nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('tipoDocumento')?.hasError('required')">
+            El tipo de documento es obligatorio
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- BOTONES -->
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

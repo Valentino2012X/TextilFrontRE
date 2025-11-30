@@ -44,4 +44,9 @@ export class PedidoService {
   setList(listaNueva: Pedido[]) {
     this.listaCambio.next(listaNueva);
   }
+  sumarTotalPorFecha(fecha: string) {
+    return this.http.get<{fecha: string, total: number}>(`${this.url}/total`, {
+      params: { fecha }
+    });
+  }
 }

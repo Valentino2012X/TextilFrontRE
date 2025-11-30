@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { TipoDocumento } from '../../../models/Tipo-documento';
 import { TipoDocumentoService } from '../../../services/tipo-documento-service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -26,6 +27,7 @@ import { TipoDocumentoService } from '../../../services/tipo-documento-service';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatIconModule
   ],
 })
 export class TipoDocumentoInsertarComponent implements OnInit {
@@ -44,8 +46,8 @@ export class TipoDocumentoInsertarComponent implements OnInit {
     this.form = this.formBuilder.group({
       idTipoDocumento: [0],
       nombre: ['', Validators.required],
-      descripcionTipoDocumento: [''],
-      rucTipoDocumento: [''],
+      descripcionTipoDocumento: ['',[Validators.required, Validators.maxLength(200),Validators.minLength(10)]],
+      rucTipoDocumento: ['',[Validators.required, Validators.minLength(9),Validators.pattern(/^[0-9]*$/)]]
     });
 
     this.route.params.subscribe((data: Params) => {

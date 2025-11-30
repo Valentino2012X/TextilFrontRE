@@ -1,83 +1,144 @@
-<div class="container">
-  <h1>{{ edicion ? 'Editar producto' : 'Nuevo producto' }}</h1>
+<!-- src/app/components/producto/producto-insert/producto-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
+<div class="tc-page">
+  <!-- Header -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">inventory_2</span>
+      </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Nombre*</mat-label>
-        <input matInput formControlName="nombreProducto" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Descripción*</mat-label>
-        <input matInput formControlName="descripcionProducto" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Precio*</mat-label>
-        <input matInput type="number" formControlName="precioProducto" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Stock*</mat-label>
-        <input matInput type="number" formControlName="stockProducto" />
-      </mat-form-field>
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">{{ edicion ? 'Editar producto' : 'Nuevo producto' }}</h1>
+        <p class="tc-hero-subtitle">
+          Registra y administra tus productos.
+        </p>
+      </div>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Color*</mat-label>
-        <input matInput formControlName="colorProducto" />
-      </mat-form-field>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
 
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Medida*</mat-label>
-        <input matInput formControlName="medidaProducto" />
-      </mat-form-field>
-
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Categoría*</mat-label>
-        <input matInput formControlName="categoriaProducto" />
-      </mat-form-field>
-
-      <mat-checkbox formControlName="disponibleProducto">
-        Disponible
-      </mat-checkbox>
+  <!-- Form Card -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>URL Imagen*</mat-label>
-        <input matInput formControlName="urlTipoProducto" />
-      </mat-form-field>
-    </div>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid">
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Nombre</mat-label>
+          <input matInput formControlName="nombreProducto" />
+          <mat-error *ngIf="form.get('nombreProducto')?.hasError('required')">
+            El nombre es obligatorio
+          </mat-error>
+        </mat-form-field>
 
-    <div class="row">
-      <!-- SELECT TIPO PRODUCTO -->
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Tipo producto*</mat-label>
-        <mat-select formControlName="tipoProducto">
-          <mat-option *ngFor="let tp of listaTipoProducto" [value]="tp.idTipoProducto">
-            {{ tp.nombreTipoProducto }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Precio</mat-label>
+          <input matInput type="number" formControlName="precioProducto" />
+          <mat-error *ngIf="form.get('precioProducto')?.hasError('required')">
+            El precio es obligatorio
+          </mat-error>
+          <mat-error *ngIf="form.get('precioProducto')?.hasError('min')">
+            El precio no puede ser negativo
+          </mat-error>
+        </mat-form-field>
 
-      <!-- SELECT USUARIO -->
-      <mat-form-field appearance="outline" class="field">
-        <mat-label>Usuario*</mat-label>
-        <mat-select formControlName="usuario">
-          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
-            {{ u.nombreUsuario }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput formControlName="descripcionProducto" rows="4"></textarea>
+          <mat-error *ngIf="form.get('descripcionProducto')?.hasError('required')">
+            La descripción es obligatoria
+          </mat-error>
+          <mat-error *ngIf="form.get('descripcionProducto')?.hasError('maxlength')">
+            La descripción no puede tener más de 200 caracteres
+          </mat-error>
+          <mat-error *ngIf="form.get('descripcionProducto')?.hasError('minlength')">
+            La descripción no puede tener menos de 10 caracteres
+          </mat-error>
+        </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit">
-        Guardar
-      </button>
-    </div>
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Stock</mat-label>
+          <input matInput type="number" formControlName="stockProducto" />
+          <mat-error *ngIf="form.get('stockProducto')?.hasError('required')">
+            El stock es obligatorio
+          </mat-error>
+          <mat-error *ngIf="form.get('stockProducto')?.hasError('min')">
+            El stock no puede ser negativo
+          </mat-error>
+        </mat-form-field>
 
-  </form>
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Medida</mat-label>
+          <input matInput formControlName="medidaProducto" />
+          <mat-error *ngIf="form.get('medidaProducto')?.hasError('required')">
+            La medida es obligatoria
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Categoría</mat-label>
+          <input matInput formControlName="categoriaProducto" />
+          <mat-error *ngIf="form.get('categoriaProducto')?.hasError('required')">
+            La categoría es obligatoria
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full tc-color">
+          <mat-label>Color</mat-label>
+          <input type="color" matInput formControlName="colorProducto" />
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>URL Imagen</mat-label>
+          <input matInput formControlName="urlTipoProducto" />
+          <mat-error *ngIf="form.get('urlTipoProducto')?.hasError('required')">
+            El URL es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Tipo producto</mat-label>
+          <mat-select formControlName="tipoProducto">
+            <mat-option *ngFor="let tp of listaTipoProducto" [value]="tp.idTipoProducto">
+              {{ tp.nombreTipoProducto }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('tipoProducto')?.hasError('required')">
+            El tipo de producto es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Usuario</mat-label>
+          <mat-select formControlName="usuario">
+            <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+              {{ u.nombreUsuario }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('usuario')?.hasError('required')">
+            El usuario es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <div class="tc-span-2 tc-check">
+          <mat-checkbox formControlName="disponibleProducto">Disponible</mat-checkbox>
+        </div>
+      </div>
+
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

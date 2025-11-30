@@ -43,4 +43,15 @@ export class TarjetaService {
   setList(listaNueva: Tarjeta[]) {
     this.listaCambio.next(listaNueva);
   }
+
+  getCantidadPorMarca() {
+   return this.http.get<any[]>(`${this.url}/cantidad/marcas`);
+  }
+  
+  buscarPorVencimiento(inicio: string, fin: string) {
+  return this.http.get<any[]>(`${this.url}/vencimiento`, {
+    params: { inicio, fin }
+  });
+}
+
 }

@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -18,6 +13,7 @@ import { TipoProyectoService } from '../../../services/tipo-proyecto-service';
 import { UsuarioService } from '../../../services/usuario-service';
 import { TipoProyecto } from '../../../models/Tipo-proyecto';
 import { Usuario } from '../../../models/Usuario';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -32,6 +28,7 @@ import { Usuario } from '../../../models/Usuario';
     MatSelectModule,
     MatOptionModule,
     MatDatepickerModule,
+    MatIconModule,
   ],
   providers: [provideNativeDateAdapter()],
 })
@@ -42,7 +39,7 @@ export class ProyectoInsertarComponent implements OnInit {
 
   listaTipoProyecto: TipoProyecto[] = [];
   listaUsuarios: Usuario[] = [];
-
+  visible = ['Público', 'Privado', 'No listado'];
   constructor(
     private fb: FormBuilder,
     private pS: ProyectoService,
@@ -56,10 +53,13 @@ export class ProyectoInsertarComponent implements OnInit {
     this.form = this.fb.group({
       idProyecto: [''],
       tituloProyecto: ['', Validators.required],
-      descripcionProyecto: ['', Validators.required],
+      descripcionProyecto: [
+        '',
+        [Validators.required, Validators.maxLength(200), Validators.minLength(10)],
+      ],
       urlProyecto: ['', Validators.required],
       visibleProyecto: ['', Validators.required],
-      fechaCreacion: [null, Validators.required],
+      fechaCreacion: [{ value: new Date(), disabled: true }],
       tipoProyecto: ['', Validators.required], // idTipoProyecto
       usuario: ['', Validators.required], // idUsuario
     });
@@ -75,19 +75,31 @@ export class ProyectoInsertarComponent implements OnInit {
 
       if (this.edicion) {
         this.pS.listId(this.id).subscribe((data: any) => {
-          const fecha = data.fechaCreacion ? new Date(data.fechaCreacion) : null;
-
+          let fechaLocal: Date | null = null;
+          if (data.fechaCreacion) {
+            const iso = data.fechaCreacion.toString();
+            const yyyyMmDd = iso.substring(0, 10);
+            const parts = yyyyMmDd.split('-');
+            if (parts.length === 3) {
+              const y = Number(parts[0]);
+              const m = Number(parts[1]);
+              const d = Number(parts[2]);
+              fechaLocal = new Date(y, m - 1, d);
+            } else {
+              const dt = new Date(iso);
+              fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+            }
+          }
           this.form.patchValue({
             idProyecto: data.idProyecto,
             tituloProyecto: data.tituloProyecto,
             descripcionProyecto: data.descripcionProyecto,
             urlProyecto: data.urlProyecto,
             visibleProyecto: data.visibleProyecto,
-            fechaCreacion: fecha,
-            // 👇 ahora usamos los IDs planos que manda el backend
             tipoProyecto: data.idTipoProyecto,
             usuario: data.idUsuario,
           });
+          this.form.get('fechaCreacion')?.setValue(fechaLocal);
         });
       }
     });
@@ -100,16 +112,14 @@ export class ProyectoInsertarComponent implements OnInit {
     }
 
     const raw = this.form.value;
-
+    const ra = this.form.getRawValue();
     const body: any = {
       idProyecto: raw.idProyecto,
       tituloProyecto: raw.tituloProyecto,
       descripcionProyecto: raw.descripcionProyecto,
       urlProyecto: raw.urlProyecto,
       visibleProyecto: raw.visibleProyecto,
-      fechaCreacion: raw.fechaCreacion
-        ? new Date(raw.fechaCreacion).toISOString().substring(0, 10)
-        : null,
+      fechaCreacion: ra.fechaCreacion ?? new Date(),
       tipoProyecto: { idTipoProyecto: raw.tipoProyecto },
       usuario: { idUsuario: raw.usuario },
     };
@@ -126,5 +136,8 @@ export class ProyectoInsertarComponent implements OnInit {
         alert('Ocurrió un error al guardar el proyecto.');
       },
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['proyecto']);
   }
 }

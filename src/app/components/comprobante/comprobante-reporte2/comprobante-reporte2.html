@@ -1,0 +1,48 @@
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>insights</mat-icon>
+      </div>
+
+      <div>
+        <h1 class="tc-hero-title">Reporte IGV</h1>
+        <p class="tc-hero-subtitle">IGV total por fecha</p>
+      </div>
+    </div>
+
+    <div class="tc-hero-right">
+      <span class="tc-pill">Reporte</span>
+    </div>
+  </section>
+
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Filtro</span>
+    </div>
+
+    <div class="tc-report-body">
+      <div class="tc-filter">
+        <div class="tc-field">
+          <label class="tc-label">Fecha</label>
+          <input class="tc-input" type="date" [(ngModel)]="fecha" />
+        </div>
+
+        <button class="tc-btn-primary-soft" type="button" (click)="buscar()">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
+      </div>
+
+      <div *ngIf="hasData" class="tc-chart-wrap">
+        <canvas #barCanvas></canvas>
+      </div>
+
+      <div *ngIf="!hasData" class="tc-empty">
+        <p>No hay datos para mostrar.</p>
+      </div>
+    </div>
+  </section>
+</div>

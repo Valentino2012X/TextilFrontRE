@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -20,6 +15,7 @@ import { ProductoService } from '../../../services/producto-service';
 
 import { Producto } from '../../../models/Producto';
 import { ProductoFoto } from '../../../models/producto-foto';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -35,6 +31,7 @@ import { ProductoFoto } from '../../../models/producto-foto';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatIconModule,
   ],
   providers: [provideNativeDateAdapter()],
 })
@@ -55,12 +52,11 @@ export class ProductoFotoInsertarComponent implements OnInit {
 
   ngOnInit(): void {
     const hoy = new Date();
-
     this.form = this.fb.group({
       idProductoFoto: [0],
       urlProductoFoto: ['', [Validators.required, Validators.maxLength(255)]],
       principalProductoFoto: [false, Validators.required],
-      fechaSubidaProductoFoto: [hoy, Validators.required],
+      fechaSubidaProductoFoto: [{ value: hoy, disabled: true }, Validators.required],
       idProducto: [null, Validators.required],
     });
 
@@ -74,10 +70,7 @@ export class ProductoFotoInsertarComponent implements OnInit {
 
       if (this.edicion) {
         this.pfS.listId(this.id).subscribe((data: ProductoFoto) => {
-          const fecha = data.fechaSubidaProductoFoto
-            ? new Date(data.fechaSubidaProductoFoto as any)
-            : hoy;
-
+          const fecha = this.parseFechaLocal(data.fechaSubidaProductoFoto) ?? hoy;
           this.form.patchValue({
             idProductoFoto: data.idProductoFoto,
             urlProductoFoto: data.urlProductoFoto,
@@ -90,9 +83,28 @@ export class ProductoFotoInsertarComponent implements OnInit {
     });
   }
 
-  private formatDate(date: Date): string {
-    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    return d.toISOString().split('T')[0];
+  private parseFechaLocal(fechaIso: any): Date | null {
+    if (!fechaIso) return null;
+
+    const iso = fechaIso.toString();
+    const yyyyMmDd = iso.substring(0, 10);
+
+    const parts = yyyyMmDd.split('-');
+    if (parts.length === 3) {
+      const y = Number(parts[0]);
+      const m = Number(parts[1]);
+      const d = Number(parts[2]);
+      return new Date(y, m - 1, d);
+    }
+
+    const dt = new Date(iso);
+    return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+  }
+
+  private formatDate(date: any): string {
+    const d = new Date(date);
+    const corrected = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    return corrected.toISOString().split('T')[0];
   }
 
   campoInvalido(campo: string): boolean {
@@ -106,16 +118,14 @@ export class ProductoFotoInsertarComponent implements OnInit {
       return;
     }
 
-    const raw = this.form.value;
+    const raw = this.form.getRawValue();
     const idForm = Number(raw.idProductoFoto) || 0;
 
     const body: any = {
       idProductoFoto: this.edicion ? idForm : 0,
       urlProductoFoto: raw.urlProductoFoto,
       principalProductoFoto: raw.principalProductoFoto,
-      fechaSubidaProductoFoto: this.formatDate(
-        raw.fechaSubidaProductoFoto as Date
-      ),
+      fechaSubidaProductoFoto: this.formatDate(raw.fechaSubidaProductoFoto as Date),
       producto: {
         idProducto: raw.idProducto,
       },
@@ -123,9 +133,7 @@ export class ProductoFotoInsertarComponent implements OnInit {
 
     const esUpdate = this.edicion && idForm > 0;
 
-    const peticion = esUpdate
-      ? this.pfS.update(body)
-      : this.pfS.insert(body);
+    const peticion = esUpdate ? this.pfS.update(body) : this.pfS.insert(body);
 
     peticion.subscribe({
       next: () => {
@@ -137,5 +145,8 @@ export class ProductoFotoInsertarComponent implements OnInit {
         alert(err.error || 'Ocurrió un error al guardar la foto de producto');
       },
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['productofoto']);
   }
 }

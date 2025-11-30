@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container" *ngIf="shouldShowMenu()">
   <mat-toolbar class="custom-toolbar">
     <!-- Flecha izquierda -->
     <button
@@ -106,7 +106,7 @@
         Comentarios
       </button>
 
-      <!-- BOTÓN COMPROBANTE (en la toolbar o grupo que prefieras) -->
+      <!-- BOTÓN COMPROBANTE -->
       <button
         mat-button
         class="btn-rojo"
@@ -122,6 +122,7 @@
         <mat-icon>receipt_long</mat-icon>
         Pedido
       </button>
+
       <!-- MENÚ PEDIDO ITEM -->
       <button
         mat-button
@@ -132,6 +133,7 @@
         <mat-icon>list_alt</mat-icon>
         Pedido item
       </button>
+
       <!-- MENÚ PRESUPUESTO MENSUAL -->
       <button
         mat-button
@@ -142,6 +144,7 @@
         <mat-icon>account_balance_wallet</mat-icon>
         Presupuesto
       </button>
+
       <!-- MENÚ NOTIFICACION -->
       <button
         mat-button
@@ -152,6 +155,7 @@
         <mat-icon>notifications</mat-icon>
         Notificación
       </button>
+
       <!-- MENÚ ENTREGA -->
       <button
         mat-button
@@ -162,6 +166,7 @@
         <mat-icon>local_shipping</mat-icon>
         Entrega
       </button>
+
       <!-- BOTÓN CALIFICACIÓN -->
       <button
         mat-button
@@ -172,6 +177,7 @@
         <mat-icon>star</mat-icon>
         Calificación
       </button>
+
       <!-- MENÚ FAVORITO -->
       <button
         mat-button
@@ -182,6 +188,7 @@
         <mat-icon>favorite</mat-icon>
         Favorito
       </button>
+
       <!-- MENÚ PRODUCTO FOTO -->
       <button
         mat-button
@@ -192,6 +199,7 @@
         <mat-icon>image</mat-icon>
         Producto foto
       </button>
+
       <!-- BOTÓN TARJETA -->
       <button
         mat-button
@@ -202,9 +210,21 @@
         <mat-icon>credit_card</mat-icon>
         Tarjeta
       </button>
-
-      <!-- Aquí luego puedes seguir agregando más módulos (hasta tus 19 tablas) -->
     </div>
+
+    <!-- SEPARADOR FLEX PARA PEGAR EL USUARIO A LA DERECHA -->
+    <span class="spacer"></span>
+
+    <!-- MENÚ DE USUARIO / SESIÓN -->
+    <button
+      mat-button
+      class="btn-rojo"
+      aria-label="Menú de sesión"
+      [matMenuTriggerFor]="menuSesion"
+    >
+      <mat-icon>person</mat-icon>
+      <span>{{ role || 'Usuario' }}</span>
+    </button>
 
     <!-- Flecha derecha -->
     <button
@@ -238,6 +258,10 @@
     <button mat-menu-item routerLink="/producto/new">
       <mat-icon>add</mat-icon>
       Registrar
+    </button>
+    <button mat-menu-item routerLink="/producto/bprecio">
+      <mat-icon>bar_chart</mat-icon>
+      Reporte
     </button>
   </mat-menu>
 
@@ -299,6 +323,10 @@
       <mat-icon>add</mat-icon>
       Registrar
     </button>
+    <button mat-menu-item routerLink="/proyecto/reporte">
+      <mat-icon>bar_chart</mat-icon>
+      Reporte
+    </button>
   </mat-menu>
 
   <!-- SUBMENÚ TIPO DOCUMENTO -->
@@ -323,6 +351,10 @@
       <mat-icon>add</mat-icon>
       Registrar
     </button>
+    <button mat-menu-item routerLink="/comentarioproyecto/reporte">
+      <mat-icon>bar_chart</mat-icon>
+      Reporte
+    </button>
   </mat-menu>
 
   <!-- SUBMENÚ COMPROBANTE -->
@@ -334,6 +366,14 @@
     <button mat-menu-item routerLink="/comprobante/new">
       <mat-icon>add</mat-icon>
       Registrar
+    </button>
+    <button mat-menu-item routerLink="/comprobante/reporte">
+      <mat-icon>bar_chart</mat-icon>
+      Reporte
+    </button>
+    <button mat-menu-item routerLink="/comprobante/reporte2">
+      <mat-icon>bar_chart</mat-icon>
+      Reporte 2
     </button>
   </mat-menu>
 
@@ -347,7 +387,12 @@
       <mat-icon>add</mat-icon>
       Registrar
     </button>
+    <button mat-menu-item routerLink="/pedido/reporte">
+      <mat-icon>bar_chart</mat-icon>
+      Reporte
+    </button>
   </mat-menu>
+
   <!-- SUBMENÚ PEDIDO ITEM -->
   <mat-menu #menuPedidoItem="matMenu">
     <button mat-menu-item routerLink="/pedido-item">
@@ -359,6 +404,7 @@
       Registrar
     </button>
   </mat-menu>
+
   <!-- SUBMENÚ PRESUPUESTO MENSUAL -->
   <mat-menu #menuPresupuestoMensual="matMenu">
     <button mat-menu-item routerLink="/presupuestomensual">
@@ -370,6 +416,7 @@
       Registrar
     </button>
   </mat-menu>
+
   <!-- SUBMENÚ NOTIFICACIÓN -->
   <mat-menu #menuNotificacion="matMenu">
     <button mat-menu-item routerLink="/notificacion">
@@ -381,6 +428,7 @@
       Registrar
     </button>
   </mat-menu>
+
   <!-- SUBMENÚ ENTREGA -->
   <mat-menu #menuEntrega="matMenu">
     <button mat-menu-item routerLink="/entrega">
@@ -391,7 +439,13 @@
       <mat-icon>add</mat-icon>
       Registrar
     </button>
+    <button mat-menu-item routerLink="/entrega/reporte">
+      <mat-icon>bar_chart</mat-icon>
+      Reporte
+    </button>
   </mat-menu>
+
+  <!-- SUBMENÚ CALIFICACIÓN -->
   <mat-menu #menuCalificacion="matMenu">
     <button mat-menu-item routerLink="/calificacion">
       <mat-icon>list</mat-icon>
@@ -402,6 +456,8 @@
       Registrar
     </button>
   </mat-menu>
+
+  <!-- SUBMENÚ FAVORITO -->
   <mat-menu #menuFavorito="matMenu">
     <button mat-menu-item routerLink="/favorito">
       <mat-icon>list</mat-icon>
@@ -412,6 +468,8 @@
       Registrar
     </button>
   </mat-menu>
+
+  <!-- SUBMENÚ PRODUCTO FOTO -->
   <mat-menu #menuProductoFoto="matMenu">
     <button mat-menu-item routerLink="/productofoto">
       <mat-icon>list</mat-icon>
@@ -422,6 +480,8 @@
       Registrar
     </button>
   </mat-menu>
+
+  <!-- SUBMENÚ TARJETA -->
   <mat-menu #menuTarjeta="matMenu">
     <button mat-menu-item routerLink="/tarjeta">
       <mat-icon>list</mat-icon>
@@ -430,6 +490,26 @@
     <button mat-menu-item routerLink="/tarjeta/new">
       <mat-icon>add</mat-icon>
       Registrar
+    </button>
+    <button mat-menu-item routerLink="/tarjeta/reporte">
+      <mat-icon>bar_chart</mat-icon>
+      Reporte
+    </button>
+    <button mat-menu-item routerLink="/tarjeta/reporte2">
+      <mat-icon>bar_chart</mat-icon>
+      Reporte 2
+    </button>
+  </mat-menu>
+
+  <!-- MENÚ SESIÓN (CERRAR SESIÓN + ROL) -->
+  <mat-menu #menuSesion="matMenu">
+    <button mat-menu-item (click)="cerrar()">
+      <mat-icon>logout</mat-icon>
+      <span>Cerrar sesión</span>
+    </button>
+    <button mat-menu-item disabled>
+      Rol:
+      <span>{{ role || 'SIN ROL' }}</span>
     </button>
   </mat-menu>
 </div>

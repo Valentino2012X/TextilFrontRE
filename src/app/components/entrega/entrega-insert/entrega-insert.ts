@@ -118,7 +118,7 @@ export class EntregaInsertComponent implements OnInit {
       }
     });
   }
-
+  minEntrega: Date = new Date();
   aceptar(): void {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
@@ -146,5 +146,8 @@ export class EntregaInsertComponent implements OnInit {
         this.router.navigate(['entrega']);
       });
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['entrega']);
   }
 }

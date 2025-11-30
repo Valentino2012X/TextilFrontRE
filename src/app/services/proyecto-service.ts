@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
 import { environment } from '../../environments/enviroment';
 import { Proyecto } from '../models/Proyecto';
+import { Observable } from 'rxjs';
 
 const base_url = environment.base;
 
@@ -55,4 +56,7 @@ export class ProyectoService {
   setList(listaNueva: Proyecto[]) {
     this.listaCambio.next(listaNueva);
   }
+  getUsuariosConMasProyectos() {
+  return this.http.get<any[]>(`${this.url}/rankingusuarios`);
+}
 }

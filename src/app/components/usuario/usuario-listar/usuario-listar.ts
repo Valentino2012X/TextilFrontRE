@@ -18,6 +18,7 @@ import { Usuario } from '../../../models/Usuario';
 export class UsuarioListarComponent implements OnInit {
   dataSource: MatTableDataSource<Usuario> = new MatTableDataSource<Usuario>();
 
+  // 👇 CAMBIO: usamos ids de columna "promedio" y "total"
   displayedColumns: string[] = [
     'idUsuario',
     'nombreUsuario',
@@ -25,6 +26,8 @@ export class UsuarioListarComponent implements OnInit {
     'username',
     'telefonoUsuario',
     'rol',
+    'promedio',
+    'total',
     'acciones',
   ];
 
@@ -41,10 +44,24 @@ export class UsuarioListarComponent implements OnInit {
   }
 
   eliminar(id: number) {
-    this.uS.delete(id).subscribe(() => {
-      this.uS.list().subscribe((data: Usuario[]) => {
-        this.uS.setList(data);
-      });
+    if (!confirm('¿Seguro que deseas eliminar este usuario?')) return;
+
+    console.log('Intentando eliminar usuario con id', id);
+
+    this.uS.delete(id).subscribe({
+      next: (resp) => {
+        console.log('Respuesta del backend al eliminar:', resp);
+
+        // Recargar lista desde el backend
+        this.uS.list().subscribe((data: Usuario[]) => {
+          console.log('Lista actualizada después de eliminar', data);
+          this.uS.setList(data);
+        });
+      },
+      error: (err) => {
+        console.error('Error al eliminar usuario', err);
+        alert(err.error || 'Error al eliminar usuario');
+      },
     });
   }
 }

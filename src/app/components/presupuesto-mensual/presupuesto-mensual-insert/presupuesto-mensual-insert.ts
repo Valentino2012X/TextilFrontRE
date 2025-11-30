@@ -1,12 +1,7 @@
 // src/app/components/presupuesto-mensual/presupuesto-mensual-insert/presupuesto-mensual-insert.ts
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -20,6 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { PresupuestoMensualService } from '../../../services/presupuesto-mensual-service';
 import { UsuarioService } from '../../../services/usuario-service';
 import { Usuario } from '../../../models/Usuario';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -36,6 +32,7 @@ import { Usuario } from '../../../models/Usuario';
     MatButtonModule,
     MatDatepickerModule,
     MatOptionModule,
+    MatIconModule
   ],
 })
 export class PresupuestoMensualInsertarComponent implements OnInit {
@@ -80,11 +77,8 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
         [Validators.required, Validators.min(2000), Validators.max(2100)],
       ],
       mesPresupuestoMensual: [month, [Validators.required]],
-      montoLimitePresupuestoMensual: [
-        0,
-        [Validators.required, Validators.min(0.01)],
-      ],
-      fechaPresupuestoMensual: [hoy, [Validators.required]],
+      montoLimitePresupuestoMensual: [0, [Validators.required, Validators.min(0.01)]],
+      fechaPresupuestoMensual: [{ value: new Date(), disabled: true }],
       idUsuario: [null, [Validators.required]],
     });
 
@@ -101,11 +95,6 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
         this.edicion = true;
         const hoyLocal = new Date();
         this.pmS.listId(this.id).subscribe((data) => {
-          let fecha = hoyLocal;
-          if (data.fechaPresupuestoMensual) {
-            fecha = new Date(data.fechaPresupuestoMensual);
-          }
-
           let idUsuario: number | null = null;
           if (data.usuario && (data.usuario as any).idUsuario) {
             idUsuario = (data.usuario as any).idUsuario;
@@ -113,15 +102,29 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
             // por si tu DTO usa idUsuario plano
             idUsuario = (data as any).idUsuario;
           }
-
-          this.form.patchValue({
-            idPresupuestoMensual: data.idPresupuestoMensual,
-            anioPresupuestoMensual: data.anioPresupuestoMensual,
-            mesPresupuestoMensual: data.mesPresupuestoMensual,
-            montoLimitePresupuestoMensual: data.montoLimitePresupuestoMensual,
-            fechaPresupuestoMensual: fecha,
-            idUsuario: idUsuario,
-          });
+          let fechaLocal: Date | null = null;
+          if (data.fechaPresupuestoMensual) {
+            const iso = data.fechaPresupuestoMensual.toString();
+            const yyyyMmDd = iso.substring(0, 10);
+            const parts = yyyyMmDd.split('-');
+            if (parts.length === 3) {
+              const y = Number(parts[0]);
+              const m = Number(parts[1]);
+              const d = Number(parts[2]);
+              fechaLocal = new Date(y, m - 1, d);
+            } else {
+              const dt = new Date(iso);
+              fechaLocal = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+            }
+            this.form.patchValue({
+              idPresupuestoMensual: data.idPresupuestoMensual,
+              anioPresupuestoMensual: data.anioPresupuestoMensual,
+              mesPresupuestoMensual: data.mesPresupuestoMensual,
+              montoLimitePresupuestoMensual: data.montoLimitePresupuestoMensual,
+              idUsuario: idUsuario,
+            });
+            this.form.get('fechaPresupuestoMensual')?.setValue(fechaLocal);
+          }
         });
       }
     });
@@ -148,16 +151,13 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
     }
 
     const raw = this.form.value;
-
+    const ra = this.form.getRawValue();
     const body: any = {
       idPresupuestoMensual: this.edicion ? raw.idPresupuestoMensual : 0,
       anioPresupuestoMensual: raw.anioPresupuestoMensual,
       mesPresupuestoMensual: raw.mesPresupuestoMensual,
       montoLimitePresupuestoMensual: raw.montoLimitePresupuestoMensual,
-      fechaPresupuestoMensual: this.formatDate(
-        raw.fechaPresupuestoMensual as Date
-      ),
-
+      fechaPresupuestoMensual: this.formatDate(ra.fechaPresupuestoMensual || new Date()),
       // 👇 Mandamos ambas variantes por si tu backend usa usuario o idUsuario.
       idUsuario: raw.idUsuario,
       usuario: {
@@ -165,9 +165,7 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
       },
     };
 
-    const peticion = this.edicion
-      ? this.pmS.update(body)
-      : this.pmS.insert(body);
+    const peticion = this.edicion ? this.pmS.update(body) : this.pmS.insert(body);
 
     peticion.subscribe({
       next: () => {
@@ -186,5 +184,8 @@ export class PresupuestoMensualInsertarComponent implements OnInit {
         }
       },
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['presupuestomensual']);
   }
 }

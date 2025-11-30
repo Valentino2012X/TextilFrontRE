@@ -14,6 +14,7 @@ import { TarjetaService } from '../../../services/tarjeta';
 import { UsuarioService } from '../../../services/usuario-service';
 import { Tarjeta } from '../../../models/tarjeta';
 import { Usuario } from '../../../models/Usuario';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -29,6 +30,7 @@ import { Usuario } from '../../../models/Usuario';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatIconModule
   ],
   providers: [provideNativeDateAdapter()],
 })
@@ -41,6 +43,7 @@ export class TarjetaInsertarComponent implements OnInit {
 
   tiposTarjeta = ['CRÉDITO', 'DÉBITO'];
   marcas = ['VISA', 'MASTERCARD', 'AMEX', 'OTRA'];
+  minVencimiento!: Date;
 
   constructor(
     private fb: FormBuilder,
@@ -52,17 +55,20 @@ export class TarjetaInsertarComponent implements OnInit {
 
   ngOnInit(): void {
     const hoy = new Date();
-
+    this.minVencimiento = new Date(hoy.getFullYear(), hoy.getMonth(), hoy.getDate() + 1);
     this.form = this.fb.group({
       idTarjeta: [0],
       aliasTarjeta: ['', [Validators.required, Validators.maxLength(50)]],
       tipoTarjeta: ['', Validators.required],
-      ultimos4Tarjeta: ['', [Validators.required, Validators.pattern('^[0-9]{4}$')]],
+      ultimos4Tarjeta: [
+        '',
+        [Validators.required, Validators.minLength(4), Validators.pattern(/^\d+$/)],
+      ],
       marcaTarjeta: ['', Validators.required],
       tokenReferenciaTarjeta: ['', [Validators.required, Validators.maxLength(100)]],
       vencimientoTarjeta: [hoy, Validators.required],
       activaTarjeta: [true, Validators.required],
-      fechaRegistroTarjeta: [hoy, Validators.required],
+      fechaRegistroTarjeta: [{ value: new Date(), disabled: true }],
       usuario: [null, Validators.required], // idUsuario
     });
 
@@ -76,10 +82,8 @@ export class TarjetaInsertarComponent implements OnInit {
 
       if (this.edicion) {
         this.tS.listId(this.id).subscribe((data: Tarjeta) => {
-          const venc = data.vencimientoTarjeta ? new Date(data.vencimientoTarjeta as any) : hoy;
-          const fechaReg = data.fechaRegistroTarjeta
-            ? new Date(data.fechaRegistroTarjeta as any)
-            : hoy;
+          const venc = this.parseFechaLocal(data.vencimientoTarjeta) ?? hoy;
+          const fechaReg = this.parseFechaLocal(data.fechaRegistroTarjeta) ?? hoy;
 
           this.form.patchValue({
             idTarjeta: data.idTarjeta,
@@ -97,10 +101,28 @@ export class TarjetaInsertarComponent implements OnInit {
       }
     });
   }
+  private parseFechaLocal(fechaIso: any): Date | null {
+    if (!fechaIso) return null;
 
-  private formatDate(date: Date): string {
-    const d = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    return d.toISOString().split('T')[0]; // yyyy-MM-dd
+    const iso = fechaIso.toString();
+    const yyyyMmDd = iso.substring(0, 10);
+
+    const parts = yyyyMmDd.split('-');
+    if (parts.length === 3) {
+      const y = Number(parts[0]);
+      const m = Number(parts[1]);
+      const d = Number(parts[2]);
+      return new Date(y, m - 1, d);
+    }
+
+    const dt = new Date(iso);
+    return new Date(dt.getFullYear(), dt.getMonth(), dt.getDate());
+  }
+
+  private formatDate(date: any): string {
+    const d = new Date(date);
+    const corrected = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    return corrected.toISOString().split('T')[0];
   }
 
   campoInvalido(campo: string): boolean {
@@ -114,7 +136,7 @@ export class TarjetaInsertarComponent implements OnInit {
       return;
     }
 
-    const raw = this.form.getRawValue(); // obtiene TODO, incluso disabled
+    const raw = this.form.getRawValue();
 
     const body = {
       idTarjeta: raw.idTarjeta,
@@ -157,5 +179,8 @@ export class TarjetaInsertarComponent implements OnInit {
         alert(err.error || 'Ocurrió un error al registrar la tarjeta');
       },
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['tarjeta']);
   }
 }

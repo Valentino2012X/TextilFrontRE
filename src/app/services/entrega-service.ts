@@ -43,4 +43,9 @@
     setList(listaNueva: Entrega[]) {
       this.listaCambio.next(listaNueva);
     }
+  resumenPorRango(inicio: string, fin: string) {
+    return this.http.get<{ totales: number; canceladas: number }>(`${this.url}/canceladas`, {
+      params: { inicio, fin },
+    });
+  }
   }

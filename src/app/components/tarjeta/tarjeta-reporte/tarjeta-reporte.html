@@ -1,0 +1,38 @@
+<div class="tc-page reporte-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">credit_card</span>
+      </div>
+
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">Reporte de tarjetas</h1>
+        <p class="tc-hero-subtitle">Cantidad de tarjetas por marca.</p>
+      </div>
+    </div>
+
+    <div class="tc-hero-right">
+      <span class="tc-pill">Reporte</span>
+    </div>
+  </section>
+
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Distribución</span>
+    </div>
+
+    <div class="tc-form">
+      <div class="tc-chart" *ngIf="hasData; else emptyState">
+        <canvas #pieCanvas></canvas>
+      </div>
+
+      <ng-template #emptyState>
+        <div class="tc-empty">
+          No hay datos disponibles para mostrar.
+        </div>
+      </ng-template>
+    </div>
+  </section>
+</div>

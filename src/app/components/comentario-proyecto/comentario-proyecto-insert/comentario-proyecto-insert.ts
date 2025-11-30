@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
@@ -19,6 +14,7 @@ import { UsuarioService } from '../../../services/usuario-service';
 import { Proyecto } from '../../../models/Proyecto';
 import { Usuario } from '../../../models/Usuario';
 import { ComentarioProyecto } from '../../../models/Comentario-proyecto';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -32,6 +28,7 @@ import { ComentarioProyecto } from '../../../models/Comentario-proyecto';
     MatButtonModule,
     MatSelectModule,
     MatOptionModule,
+    MatIconModule,
   ],
 })
 export class ComentarioProyectoInsertarComponent implements OnInit {
@@ -57,7 +54,10 @@ export class ComentarioProyectoInsertarComponent implements OnInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       idComentarioProyecto: [''],
-      comentarioProyecto: ['', Validators.required],
+      comentarioProyecto: [
+        '',
+        [Validators.required, Validators.maxLength(200), Validators.minLength(10)],
+      ],
       proyecto: ['', Validators.required], // idProyecto
       usuario: ['', Validators.required], // idUsuario
     });
@@ -74,9 +74,7 @@ export class ComentarioProyectoInsertarComponent implements OnInit {
       if (this.edicion) {
         // NO hay GET /comentariosproyectos/{id}, así que buscamos en la lista
         this.cS.list().subscribe((lista: ComentarioProyecto[]) => {
-          const encontrado = lista.find(
-            (c) => c.idComentarioProyecto === this.id
-          );
+          const encontrado = lista.find((c) => c.idComentarioProyecto === this.id);
           if (encontrado) {
             // convertir la fecha a texto legible (o simplemente a string)
             this.fechaComentarioTexto = encontrado.fechaComentario
@@ -108,13 +106,14 @@ export class ComentarioProyectoInsertarComponent implements OnInit {
       usuario: { idUsuario: raw.usuario },
     };
 
-    const obs = this.edicion
-      ? this.cS.update(this.id, body)
-      : this.cS.insert(body);
+    const obs = this.edicion ? this.cS.update(this.id, body) : this.cS.insert(body);
 
     obs.subscribe(() => {
       this.cS.list().subscribe((data) => this.cS.setList(data));
       this.router.navigate(['comentarioproyecto']);
     });
+  }
+  cancelar(): void {
+    this.router.navigate(['comentarioproyecto']); // ej: '/producto', '/tipoproducto', etc.
   }
 }
