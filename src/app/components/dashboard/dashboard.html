@@ -1,13 +1,10 @@
-<!-- src/app/components/dashboard/dashboard.component.html -->
 <div class="dashboard-root">
-  <!-- NAVBAR PROPIO DEL DASHBOARD (arriba) -->
+  <!-- NAVBAR -->
   <app-dashboard-navbar [rol]="rolActual || ''"></app-dashboard-navbar>
 
-  <!-- CUERPO: SIDEBAR + CONTENIDO -->
   <div class="dashboard-body">
-    <!-- SIDEBAR -->
     <aside class="sidebar-root">
-      <!-- 🔹 Panel de usuario / nombre / rol / logout -->
+      <!-- Panel usuario -->
       <div class="user-panel">
         <div class="user-panel-left">
           <div class="user-avatar">{{ userInitials }}</div>
@@ -37,231 +34,281 @@
       </div>
 
       <div class="menu">
-        <!-- GESTIÓN DE USUARIOS (solo admin) -->
-        @if (canAny(['USUARIOS', 'ROLES'])) {
+        <!-- ===== ADMIN ONLY ===== -->
+        <ng-container *ngIf="isAdmin">
           <p class="menu-section">Gestión de usuarios</p>
 
-          @if (can('USUARIOS')) {
-            <a routerLink="/usuarios" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">group</span>
-              <span>Usuarios</span>
-            </a>
-          }
+          <a routerLink="/usuarios" routerLinkActive="active-link" class="menu-item">
+            <span class="material-icons">group</span>
+            <span>Usuarios</span>
+          </a>
 
-          @if (can('ROLES')) {
-            <a routerLink="/roles" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">shield</span>
-              <span>Roles</span>
-            </a>
-          }
-        }
+          <a routerLink="/roles" routerLinkActive="active-link" class="menu-item">
+            <span class="material-icons">shield</span>
+            <span>Roles</span>
+          </a>
+        </ng-container>
 
-        <!-- CATÁLOGOS / PRODUCTOS -->
-        @if (canAny(['TIPOPRODUCTO','PRODUCTO','PRODUCTOFOTO','FAVORITO','CALIFICACION'])) {
-          <p class="menu-section">Catálogos / productos</p>
+        <!-- ===== Catálogo / Productos ===== -->
+        <p class="menu-section">Catálogos / productos</p>
 
-          @if (can('TIPOPRODUCTO')) {
-            <a routerLink="/tipoproducto" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">category</span>
-              <span>Tipo producto</span>
-            </a>
-          }
+        <!-- TipoProducto solo ADMIN (según tu resumen) -->
+        <a
+          *ngIf="isAdmin"
+          routerLink="/tipoproducto"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">category</span>
+          <span>Tipo producto</span>
+        </a>
 
-          @if (can('PRODUCTO')) {
-            <a routerLink="/producto" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">inventory_2</span>
-              <span>Producto</span>
-            </a>
-          }
+        <!-- Producto: todos logueados -->
+        <a routerLink="/producto" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">inventory_2</span>
+          <span>Producto</span>
+        </a>
 
-          @if (can('PRODUCTOFOTO')) {
-            <a routerLink="/productofoto" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">photo</span>
-              <span>Producto foto</span>
-            </a>
-          }
+        <!-- Producto foto: ADMIN + VENDEDOR -->
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/productofoto"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">photo</span>
+          <span>Producto foto</span>
+        </a>
 
-          @if (can('FAVORITO')) {
-            <a routerLink="/favorito" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">favorite</span>
-              <span>Favorito</span>
-            </a>
-          }
+        <!-- Favorito: VENDEDOR + COMPRADOR -->
+        <a
+          *ngIf="isVendedor || isComprador"
+          routerLink="/favorito"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">favorite</span>
+          <span>Favorito</span>
+        </a>
 
-          @if (can('CALIFICACION')) {
-            <a routerLink="/calificacion" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">star</span>
-              <span>Calificación</span>
-            </a>
-          }
-        }
+        <!-- Calificación: todos (admin lista+elimina; v/c insert/mod) -->
+        <a routerLink="/calificacion" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">star</span>
+          <span>Calificación</span>
+        </a>
 
-        <!-- PROYECTOS -->
-        @if (canAny(['TIPOPROYECTO','PROYECTO','COMENTARIOPROYECTO','REPORTE_COMENTARIO'])) {
-          <p class="menu-section">Proyectos</p>
+        <!-- ===== Proyectos ===== -->
+        <p class="menu-section">Proyectos</p>
 
-          @if (can('TIPOPROYECTO')) {
-            <a routerLink="/tipoproyecto" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">view_quilt</span>
-              <span>Tipo proyecto</span>
-            </a>
-          }
+        <!-- Tipoproyecto: ADMIN + VENDEDOR -->
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/tipoproyecto"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">view_quilt</span>
+          <span>Tipo proyecto</span>
+        </a>
 
-          @if (can('PROYECTO')) {
-            <a routerLink="/proyecto" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">work</span>
-              <span>Proyecto</span>
-            </a>
-          }
+        <!-- Proyecto: ADMIN + VENDEDOR -->
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/proyecto"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">work</span>
+          <span>Proyecto</span>
+        </a>
 
-          @if (can('COMENTARIOPROYECTO')) {
-            <a routerLink="/comentarioproyecto" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">chat</span>
-              <span>Comentario proyecto</span>
-            </a>
-          }
-        }
+        <!-- Comentarios: todos -->
+        <a
+          routerLink="/comentarioproyecto"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">chat</span>
+          <span>Comentario proyecto</span>
+        </a>
 
-        <!-- VENTAS / PEDIDOS / ENTREGA -->
-        @if (canAny(['PEDIDO','PEDIDO_ITEM','COMPROBANTE','ENTREGA','METODOPAGO','TARJETA'])) {
-          <p class="menu-section">Ventas / pedidos / entrega</p>
+        <!-- ===== Ventas / pedidos / entrega ===== -->
+        <p class="menu-section">Ventas / pedidos / entrega</p>
 
-          @if (can('PEDIDO')) {
-            <a routerLink="/pedido" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">shopping_cart</span>
-              <span>Pedido</span>
-            </a>
-          }
+        <!-- Pedido: todos -->
+        <a routerLink="/pedido" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">shopping_cart</span>
+          <span>Pedido</span>
+        </a>
 
-          @if (can('PEDIDO_ITEM')) {
-            <a routerLink="/pedido-item" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">list</span>
-              <span>Pedido item</span>
-            </a>
-          }
+        <!-- Pedido Item: ADMIN + COMPRADOR -->
+        <a
+          *ngIf="isAdmin || isComprador"
+          routerLink="/pedido-item"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">list</span>
+          <span>Pedido item</span>
+        </a>
 
-          @if (can('COMPROBANTE')) {
-            <a routerLink="/comprobante" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">receipt_long</span>
-              <span>Comprobante</span>
-            </a>
-          }
+        <!-- Comprobante: ADMIN + VENDEDOR -->
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/comprobante"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">receipt_long</span>
+          <span>Comprobante</span>
+        </a>
 
-          @if (can('ENTREGA')) {
-            <a routerLink="/entrega" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">local_shipping</span>
-              <span>Entrega</span>
-            </a>
-          }
+        <!-- Entrega: ADMIN + VENDEDOR -->
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/entrega"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">local_shipping</span>
+          <span>Entrega</span>
+        </a>
 
-          @if (can('METODOPAGO')) {
-            <a routerLink="/metodopago" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">payments</span>
-              <span>Método de pago</span>
-            </a>
-          }
+        <!-- Método pago: ADMIN -->
+        <a
+          *ngIf="isAdmin"
+          routerLink="/metodopago"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">payments</span>
+          <span>Método de pago</span>
+        </a>
 
-          @if (can('TARJETA')) {
-            <a routerLink="/tarjeta" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">credit_card</span>
-              <span>Tarjeta</span>
-            </a>
-          }
-        }
+        <!-- Tarjeta: todos (pero /tarjeta/new solo vendedor/comprador) -->
+        <a routerLink="/tarjeta" routerLinkActive="active-link" class="menu-item">
+          <span class="material-icons">credit_card</span>
+          <span>Tarjeta</span>
+        </a>
 
-        <!-- 🧾 REPORTES -->
-        @if (canAny([
-          'REPORTE_PRECIO','REPORTE_COMPROBANTE','REPORTE_COMPROBANTE_IGV',
-          'REPORTE_PEDIDO','REPORTE_ENTREGA','REPORTE_TARJETA','REPORTE_TARJETA_DETALLE'
-        ])) {
-          <p class="menu-section">Reportes</p>
+        <!-- ===== Reportes ===== -->
+        <p class="menu-section">Reportes</p>
 
-          @if (can('REPORTE_PRECIO')) {
-            <a routerLink="/producto/bprecio" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">insights</span>
-              <span>Reporte precios productos</span>
-            </a>
-          }
+        <a
+          *ngIf="isAdmin"
+          routerLink="/producto/bprecio"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">insights</span>
+          <span>Reporte precios productos</span>
+        </a>
 
-          @if (can('REPORTE_COMENTARIO')) {
-            <a routerLink="/comentarioproyecto/reporte" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">analytics</span>
-              <span>Reporte comentarios proyecto</span>
-            </a>
-          }
+        <a
+          *ngIf="isAdmin"
+          routerLink="/comentarioproyecto/reporte"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">analytics</span>
+          <span>Reporte comentarios proyecto</span>
+        </a>
 
-          @if (can('REPORTE_COMPROBANTE')) {
-            <a routerLink="/comprobante/reporte" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">receipt</span>
-              <span>Reporte comprobantes</span>
-            </a>
-          }
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/comprobante/reporte"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">receipt</span>
+          <span>Reporte comprobantes</span>
+        </a>
 
-          @if (can('REPORTE_COMPROBANTE_IGV')) {
-            <a routerLink="/comprobante/reporte2" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">request_quote</span>
-              <span>Reporte IGV comprobantes</span>
-            </a>
-          }
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/comprobante/reporte2"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">request_quote</span>
+          <span>Reporte IGV comprobantes</span>
+        </a>
 
-          @if (can('REPORTE_PEDIDO')) {
-            <a routerLink="/pedido/reporte" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">shopping_bag</span>
-              <span>Reporte pedidos</span>
-            </a>
-          }
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/pedido/reporte"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">shopping_bag</span>
+          <span>Reporte pedidos</span>
+        </a>
 
-          @if (can('REPORTE_ENTREGA')) {
-            <a routerLink="/entrega/reporte" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">local_shipping</span>
-              <span>Reporte entregas</span>
-            </a>
-          }
+        <a
+          *ngIf="isAdmin || isVendedor"
+          routerLink="/entrega/reporte"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">local_shipping</span>
+          <span>Reporte entregas</span>
+        </a>
 
-          @if (can('REPORTE_TARJETA')) {
-            <a routerLink="/tarjeta/reporte" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">credit_score</span>
-              <span>Reporte tarjetas</span>
-            </a>
-          }
+        <a
+          *ngIf="isAdmin"
+          routerLink="/tarjeta/reporte"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">credit_score</span>
+          <span>Reporte tarjetas</span>
+        </a>
 
-          @if (can('REPORTE_TARJETA_DETALLE')) {
-            <a routerLink="/tarjeta/reporte2" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">bar_chart</span>
-              <span>Reporte tarjetas (detalle)</span>
-            </a>
-          }
-        }
+        <a
+          *ngIf="isAdmin"
+          routerLink="/tarjeta/reporte2"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">bar_chart</span>
+          <span>Reporte tarjetas (detalle)</span>
+        </a>
 
-        <!-- CONFIGURACIÓN / OTROS (ej: solo admin) -->
-        @if (canAny(['TIPODOCUMENTO','PRESUPUESTO','NOTIFICACION'])) {
-          <p class="menu-section">Configuración / otros</p>
+        <!-- ===== Configuración / otros ===== -->
+        <p class="menu-section">Configuración / otros</p>
 
-          @if (can('TIPODOCUMENTO')) {
-            <a routerLink="/tipodocumento" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">description</span>
-              <span>Tipo documento</span>
-            </a>
-          }
+        <a
+          *ngIf="isAdmin"
+          routerLink="/tipodocumento"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">description</span>
+          <span>Tipo documento</span>
+        </a>
 
-          @if (can('PRESUPUESTO')) {
-            <a routerLink="/presupuestomensual" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">account_balance_wallet</span>
-              <span>Presupuesto mensual</span>
-            </a>
-          }
+        <a
+          *ngIf="isAdmin || isComprador"
+          routerLink="/presupuestomensual"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">account_balance_wallet</span>
+          <span>Presupuesto mensual</span>
+        </a>
 
-          @if (can('NOTIFICACION')) {
-            <a routerLink="/notificacion" routerLinkActive="active-link" class="menu-item">
-              <span class="material-icons">notifications</span>
-              <span>Notificación</span>
-            </a>
-          }
-        }
+        <a
+          *ngIf="isAdmin"
+          routerLink="/notificacion"
+          routerLinkActive="active-link"
+          class="menu-item"
+        >
+          <span class="material-icons">notifications</span>
+          <span>Notificación</span>
+        </a>
       </div>
     </aside>
 
-    <!-- CONTENIDO PRINCIPAL -->
     <main class="dashboard-content">
       <router-outlet></router-outlet>
     </main>

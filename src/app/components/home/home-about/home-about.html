@@ -5,7 +5,12 @@
       <a routerLink="/home" class="logo">TextilConnect</a>
 
       <ul class="nav-links" [class.open]="mobileMenuOpen">
+        
         <li><a routerLink="/home">Home</a></li>
+        <!-- ✅ SOLO LOGUEADO -->
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
         <li><a routerLink="/home/about">Nosotros</a></li>
         <li><a routerLink="/home/products">Productos</a></li>
         <li><a routerLink="/home/community">Comunidad</a></li>
@@ -143,20 +148,23 @@
       <h2 class="section-title">Nuestro Equipo</h2>
 
       <div class="team-grid">
+        <!-- VALENTINO -->
         <div class="team-card">
           <div class="team-avatar">
-            <img src="assets/Imagenes/Lucero.png" alt="Lucero" />
+            <img src="assets/Imagenes/Valentino.png" alt="Enrique Valentino" />
           </div>
-          <h3>Lucero</h3>
-          <p class="role">Co-fundadora & CEO</p>
+          <h3>Enrique Valentino Ibarra Parravicini</h3>
+          <p class="role">Integrante del equipo · Ing. Sistemas de Información</p>
           <p>
-            Ingeniera de sistemas con una visión estratégica y un enfoque en la sostenibilidad. Como
-            arquitecta principal de este proyecto, Lucero ha liderado el diseño y la implementación
-            de cada fase, asegurando que la tecnología se alinee perfectamente con nuestra misión de
-            impacto social.
+            Tengo 19 años y curso el 6to ciclo de Ingeniería de Sistemas de Información. Cuento con
+            conocimientos en reparación de hardware y software informático, y me considero una
+            persona abierta a aprender temas nuevos para aplicar ese conocimiento en favor del
+            desarrollo de la tecnología.
           </p>
+          <p class="role">Código: U202319839</p>
         </div>
 
+        <!-- FABRIZIO (SE DEJA IGUAL) -->
         <div class="team-card">
           <div class="team-avatar">
             <img src="assets/Imagenes/Fabrizio.png" alt="Fabrizio" />
@@ -171,56 +179,34 @@
           </p>
         </div>
 
+        <!-- JOAN -->
         <div class="team-card">
           <div class="team-avatar">
-            <img src="assets/Imagenes/Luck.jpg" alt="Luck" />
+            <img src="assets/Imagenes/Joan.png" alt="Joan Enric" />
           </div>
-          <h3>Luck</h3>
-          <p class="role">Apoyo emocional, Director de Operaciones & Estratega de Logística Felina</p>
+          <h3>Joan Enric Marquez Guillen</h3>
+          <p class="role">Integrante del equipo · Ing. Sistemas de Información</p>
           <p>
-            Experto en optimización de procesos y gestión de cadenas de suministro. Su supervisión
-            meticulosa asegura la fluidez y eficiencia de cada ronroneo operativo del proyecto,
-            mientras su presencia serena aporta calma en los momentos de mayor estrés.
+            Soy estudiante de Ingeniería de Sistemas de Información y estoy llevando el curso por
+            primera vez. Me gusta trabajar en equipo, aportar ideas, escuchar a los demás y ayudar a
+            que el grupo logre sus objetivos de la mejor manera.
           </p>
+          <p class="role">Código: U20231A132</p>
         </div>
 
+        <!-- MATIAS -->
         <div class="team-card">
           <div class="team-avatar">
-            <img src="assets/Imagenes/Azul.jpg" alt="Azul" />
+            <img src="assets/Imagenes/Matias.png" alt="Matias Josue" />
           </div>
-          <h3>Azul</h3>
-          <p class="role">Apoyo emocional, Director de Marketing & Especialista en Comunicaciones Purr-suasivas</p>
+          <h3>Matias Amaya Huaman</h3>
+          <p class="role">Integrante del equipo · Ing. Sistemas de Información</p>
           <p>
-            Estratega de marketing digital con enfoque en comunidades sostenibles. Su visión felina
-            capta las tendencias emergentes para conectar con nuestra audiencia de forma auténtica,
-            y sus suaves caricias son la clave para la motivación del equipo.
+            Tengo 19 años y estudio Ingeniería de Sistemas de Información en la UPC. Me considero
+            una persona con actitud positiva y un gran interés por la tecnología. Aportaré mis
+            conocimientos en programación y diseño para fortalecer el desarrollo del proyecto.
           </p>
-        </div>
-
-        <div class="team-card">
-          <div class="team-avatar">
-            <img src="assets/Imagenes/Isis.jpg" alt="Isis" />
-          </div>
-          <h3>Isis</h3>
-          <p class="role">Apoyo emocional, Líder de Desarrollo de Producto & Maestra de la Innovación Ágil</p>
-          <p>
-            Especialista en ronronear estratégicamente para impulsar la productividad y el
-            pensamiento creativo. Su presencia asegura un clima de paz y serenidad, facilitando la
-            ideación de nuevas soluciones y la mejora continua del proyecto.
-          </p>
-        </div>
-
-        <div class="team-card">
-          <div class="team-avatar">
-            <img src="assets/Imagenes/Nala.jpg" alt="Nala" />
-          </div>
-          <h3>Nala</h3>
-          <p class="role">Apoyo emocional, Jefa de Experiencia del Usuario (UX) & Gurú de la Satisfacción Cliente-Gato</p>
-          <p>
-            Su misión principal es asegurar un ambiente de trabajo positivo a través de ronroneos y
-            caricias. Es experta en pausas estratégicas para la relajación del equipo, garantizando
-            que cada interacción con el proyecto sea tan gratificante como una siesta al sol.
-          </p>
+          <p class="role">Código: U202318839</p>
         </div>
       </div>
     </div>

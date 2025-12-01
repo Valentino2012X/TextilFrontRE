@@ -9,6 +9,10 @@
             Home
           </a>
         </li>
+        <!-- ✅ SOLO LOGUEADO -->
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
         <li><a routerLink="/home/about" routerLinkActive="active">Nosotros</a></li>
         <li><a routerLink="/home/products" routerLinkActive="active">Productos</a></li>
         <li><a routerLink="/home/community" routerLinkActive="active">Comunidad</a></li>

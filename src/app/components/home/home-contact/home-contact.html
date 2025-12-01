@@ -5,7 +5,12 @@
       <a routerLink="/home" class="logo">TextilConnect</a>
 
       <ul class="nav-links" [class.open]="mobileMenuOpen">
+        
         <li><a routerLink="/home">Home</a></li>
+        <!-- ✅ SOLO LOGUEADO -->
+        <li *ngIf="isLoggedIn">
+          <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
+        </li>
         <li><a routerLink="/home/about">Nosotros</a></li>
         <li><a routerLink="/home/products">Productos</a></li>
         <li><a routerLink="/home/community">Comunidad</a></li>

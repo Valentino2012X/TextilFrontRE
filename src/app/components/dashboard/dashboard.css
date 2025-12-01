@@ -184,3 +184,10 @@
     padding: 16px;
   }
 }
+/* === Nombre del usuario: blanco + negrita === */
+.user-name span {
+  color: #ffffff !important;      /* blanco puro */
+  font-weight: 800 !important;    /* negrita fuerte */
+  font-size: 0.95rem;             /* un poquito más grande */
+  letter-spacing: 0.3px;          /* ligero espaciamiento */
+}

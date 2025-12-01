@@ -60,3 +60,23 @@
   border-radius: 999px;
 }
 
+/* LOGO clickable */
+.nav-brand-logo {
+  cursor: pointer;                     /* 👈 Cursor tipo presionar */
+  transition: transform 0.15s ease,
+              filter 0.2s ease,
+              opacity 0.25s ease;
+}
+
+/* efecto hover premium */
+.nav-brand-logo:hover {
+  transform: scale(1.06);
+  filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.35));
+  opacity: 0.92;
+}
+
+/* efecto click (active) */
+.nav-brand-logo:active {
+  transform: scale(0.96);
+  opacity: 0.75;
+}

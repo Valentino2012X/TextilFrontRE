@@ -1,16 +1,16 @@
-// src/app/services/login-service.ts
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtRequestDTO } from '../models/jwtRequestDTO';
 import { isPlatformBrowser } from '@angular/common';
 
-@Injectable({ providedIn: 'root' })
+export type AppRole = 'ADMIN' | 'VENDEDOR' | 'ESTUDIANTE';
+
+@Injectable({
+  providedIn: 'root',
+})
 export class LoginService {
-  private readonly tokenKey = 'token';
-  private readonly roleKey = 'rol';
-  private readonly usernameKey = 'username';
-  private readonly nombreUsuarioKey = 'nombreUsuario';
+  private tokenKey = 'token';
 
   constructor(
     private http: HttpClient,
@@ -21,10 +21,12 @@ export class LoginService {
     return isPlatformBrowser(this.platformId);
   }
 
+  // ========= AUTH API =========
   login(request: JwtRequestDTO) {
     return this.http.post('http://localhost:8080/login', request);
   }
 
+  // ========= TOKEN =========
   setToken(token: string): void {
     if (!this.isBrowser()) return;
     localStorage.setItem(this.tokenKey, token);
@@ -35,35 +37,12 @@ export class LoginService {
     return localStorage.getItem(this.tokenKey);
   }
 
-  setRole(role: string): void {
-    if (!this.isBrowser()) return;
-    localStorage.setItem(this.roleKey, role);
-  }
-
-  getRole(): string | null {
-    if (!this.isBrowser()) return null;
-    return localStorage.getItem(this.roleKey);
-  }
-
-  setUsername(username: string): void {
-    if (!this.isBrowser()) return;
-    localStorage.setItem(this.usernameKey, username);
-  }
-
-  getUsername(): string | null {
-    if (!this.isBrowser()) return null;
-    return (
-      localStorage.getItem(this.usernameKey) ||
-      localStorage.getItem(this.nombreUsuarioKey)
-    );
-  }
-
   clear(): void {
     if (!this.isBrowser()) return;
-    localStorage.removeItem(this.tokenKey);
-    localStorage.removeItem(this.roleKey);
-    localStorage.removeItem(this.usernameKey);
-    localStorage.removeItem(this.nombreUsuarioKey);
+    localStorage.removeItem('token');
+    localStorage.removeItem('rol');
+    localStorage.removeItem('username');
+    localStorage.removeItem('nombreUsuario');
   }
 
   verificar(): boolean {
@@ -80,18 +59,74 @@ export class LoginService {
     }
   }
 
-  showRole(): string | null {
+  // ========= ROLE / USER =========
+  /** Convierte cualquier formato a ADMIN|VENDEDOR|COMPRADOR */
+  private normalizeRole(raw: string | null | undefined): AppRole | null {
+    if (!raw) return null;
+
+    const r = String(raw)
+      .trim()
+      .toUpperCase()
+      .replace(/^ROLE_/, '');
+
+    // alias por tu caso: ESTUDIANTE == COMPRADOR
+    if (r === 'ESTUDIANTE') return 'ESTUDIANTE';
+
+    if (r === 'ADMIN' || r === 'VENDEDOR' || r === 'ESTUDIANTE') return r;
+    return null;
+  }
+
+  /** Obtiene rol desde localStorage(rol) o desde el token */
+  getRole(): AppRole | null {
     if (!this.isBrowser()) return null;
 
+    // 1) si el login ya guardó localStorage.rol, úsalo
+    const stored = this.normalizeRole(localStorage.getItem('rol'));
+    if (stored) return stored;
+
+    // 2) si no, decodifica token
     const token = this.getToken();
     if (!token) return null;
 
     try {
       const helper = new JwtHelperService();
       const decoded: any = helper.decodeToken(token);
-      return decoded?.role || decoded?.rol || decoded?.authority || decoded?.authorities?.[0] || null;
+
+      const fromClaims =
+        decoded?.role ||
+        decoded?.rol ||
+        decoded?.authority ||
+        decoded?.authorities?.[0] ||
+        decoded?.roles?.[0];
+
+      const role =
+        typeof fromClaims === 'string'
+          ? fromClaims
+          : fromClaims?.authority || fromClaims?.nombreRol || null;
+
+      const normalized = this.normalizeRole(role);
+
+      // si lo encontramos, lo guardamos para uso rápido en UI
+      if (normalized) localStorage.setItem('rol', normalized);
+
+      return normalized;
     } catch {
       return null;
     }
+  }
+
+  getNombreUsuario(): string {
+    if (!this.isBrowser()) return 'Usuario';
+    return (
+      localStorage.getItem('nombreUsuario') ||
+      localStorage.getItem('username') ||
+      'Usuario'
+    );
+  }
+
+  hasAnyRole(...roles: AppRole[]): boolean {
+    const current = this.getRole();
+    if (!current) return false;
+    return roles.includes(current);
   }
 }
