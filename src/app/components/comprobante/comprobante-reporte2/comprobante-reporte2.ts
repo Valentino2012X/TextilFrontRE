@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Chart, ChartConfiguration, BarController, BarElement, CategoryScale, LinearScale, Legend, Tooltip } from 'chart.js';
 import { ComprobanteService } from '../../../services/comprobante-service';
+import { MatIconModule } from '@angular/material/icon';
 
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Legend, Tooltip);
 
 @Component({
   selector: 'app-comprobante-igv-reporte',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,MatIconModule],
   templateUrl: './comprobante-reporte2.html',
   styleUrls: ['./comprobante-reporte2.css']
 })

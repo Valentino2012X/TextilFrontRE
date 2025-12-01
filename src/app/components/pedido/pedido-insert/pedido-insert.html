@@ -1,95 +1,128 @@
-<div class="container">
-  <h2>{{ edicion ? 'Editar pedido' : 'Nuevo pedido' }}</h2>
+<!-- src/app/components/pedido/pedido-insert/pedido-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <div class="grid-2">
-      <!-- Estado -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Estado*</mat-label>
-        <input matInput formControlName="estadoPedido" />
-        <mat-error *ngIf="f['estadoPedido'].hasError('required')">
-          El estado es obligatorio
-        </mat-error>
-      </mat-form-field>
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>shopping_cart</mat-icon>
+      </div>
 
-      <!-- Total -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Total*</mat-label>
-        <input matInput type="number" formControlName="totalPedido" />
-        <mat-error *ngIf="f['totalPedido'].hasError('required')">
-          El total es obligatorio
-        </mat-error>
-        <mat-error *ngIf="f['totalPedido'].hasError('min')">
-          El total no puede ser negativo
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Fecha creación -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Fecha creación*</mat-label>
-        <input matInput [matDatepicker]="pickerCreacion" formControlName="fechaCreacionPedido" />
-        <mat-datepicker-toggle matIconSuffix [for]="pickerCreacion"></mat-datepicker-toggle>
-        <mat-datepicker #pickerCreacion></mat-datepicker>
-      </mat-form-field>
-
-      <!-- Fecha pago -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Fecha pago</mat-label>
-        <input matInput [matDatepicker]="pickerPago" formControlName="fechaPagoPedido" />
-        <mat-datepicker-toggle matIconSuffix [for]="pickerPago"></mat-datepicker-toggle>
-        <mat-datepicker #pickerPago></mat-datepicker>
-      </mat-form-field>
-
-      <!-- Vendedor -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Vendedor*</mat-label>
-        <mat-select formControlName="idVendedor">
-          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
-            {{ u.nombreUsuario }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="f['idVendedor'].hasError('required')">
-          Debes seleccionar un vendedor
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Comprador -->
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Comprador*</mat-label>
-        <mat-select formControlName="idComprador">
-          <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
-            {{ u.nombreUsuario }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="f['idComprador'].hasError('required')">
-          Debes seleccionar un comprador
-        </mat-error>
-      </mat-form-field>
-
-      <!-- Método de pago -->
-      <mat-form-field appearance="outline" class="full-width grid-span-2">
-        <mat-label>Método de pago*</mat-label>
-        <mat-select formControlName="idMetodoPago">
-          <mat-option *ngFor="let m of listaMetodosPago" [value]="m.idMetodoPago">
-            {{ m.nombreMetodoPago }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="f['idMetodoPago'].hasError('required')">
-          Debes seleccionar un método de pago
-        </mat-error>
-      </mat-form-field>
+      <div>
+        <h1 class="tc-hero-title">{{ edicion ? 'Editar pedido' : 'Nuevo pedido' }}</h1>
+        <p class="tc-hero-subtitle">Registra estado, fechas, usuarios y método de pago.</p>
+      </div>
     </div>
 
-    <!-- Error general cuando vendedor == comprador -->
-    <div class="form-error" *ngIf="form.hasError('mismoUsuarioPedido') && form.touched">
-      El vendedor y el comprador no pueden ser la misma persona.
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
+
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <div class="buttons">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? 'Guardar cambios' : 'Guardar' }}
-      </button>
-      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
-    </div>
-  </form>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid">
+        <!-- Estado -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Estado</mat-label>
+          <input matInput formControlName="estadoPedido" />
+          <mat-error *ngIf="f['estadoPedido'].hasError('required')">
+            El estado es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Total -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Total</mat-label>
+          <input matInput type="number" formControlName="totalPedido" />
+          <mat-error *ngIf="f['totalPedido'].hasError('required')">
+            El total es obligatorio
+          </mat-error>
+          <mat-error *ngIf="f['totalPedido'].hasError('min')">
+            El total no puede ser negativo
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Fecha creación -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Fecha creación</mat-label>
+          <input matInput [matDatepicker]="pickerCreacion" formControlName="fechaCreacionPedido" />
+          <mat-datepicker-toggle matIconSuffix [for]="pickerCreacion"></mat-datepicker-toggle>
+          <mat-datepicker #pickerCreacion></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Fecha pago -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Fecha pago</mat-label>
+          <input matInput [matDatepicker]="pickerPago" formControlName="fechaPagoPedido" />
+          <mat-datepicker-toggle matIconSuffix [for]="pickerPago"></mat-datepicker-toggle>
+          <mat-datepicker #pickerPago></mat-datepicker>
+        </mat-form-field>
+
+        <!-- Vendedor -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Vendedor</mat-label>
+          <mat-select formControlName="idVendedor" panelClass="tc-select-panel">
+            <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+              {{ u.nombreUsuario }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f['idVendedor'].hasError('required')">
+            Debes seleccionar un vendedor
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Comprador -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Comprador</mat-label>
+          <mat-select formControlName="idComprador" panelClass="tc-select-panel">
+            <mat-option *ngFor="let u of listaUsuarios" [value]="u.idUsuario">
+              {{ u.nombreUsuario }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f['idComprador'].hasError('required')">
+            Debes seleccionar un comprador
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Método de pago -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Método de pago</mat-label>
+          <mat-select formControlName="idMetodoPago" panelClass="tc-select-panel">
+            <mat-option *ngFor="let m of listaMetodosPago" [value]="m.idMetodoPago">
+              {{ m.nombreMetodoPago }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="f['idMetodoPago'].hasError('required')">
+            Debes seleccionar un método de pago
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Error general: vendedor == comprador -->
+        <div class="tc-span-2">
+          <div class="tc-form-error" *ngIf="form.hasError('mismoUsuarioPedido') && form.touched">
+            El vendedor y el comprador no pueden ser la misma persona.
+          </div>
+        </div>
+      </div>
+
+      <!-- BOTONES -->
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ edicion ? 'Guardar cambios' : 'Guardar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

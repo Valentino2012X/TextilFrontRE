@@ -14,6 +14,7 @@ import { MatButtonModule } from '@angular/material/button';
 
 import { TipoDocumento } from '../../../models/Tipo-documento';
 import { TipoDocumentoService } from '../../../services/tipo-documento-service';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -26,6 +27,7 @@ import { TipoDocumentoService } from '../../../services/tipo-documento-service';
     MatInputModule,
     MatFormFieldModule,
     MatButtonModule,
+    MatIconModule
   ],
 })
 export class TipoDocumentoInsertarComponent implements OnInit {

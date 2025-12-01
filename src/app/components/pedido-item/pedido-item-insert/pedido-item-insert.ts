@@ -6,6 +6,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { PedidoItemService } from '../../../services/pedido-item-service';
@@ -27,6 +29,8 @@ import { PedidoItem } from '../../../models/Pedido-item';
     MatButtonModule,
     MatSelectModule,
     MatFormFieldModule,
+    MatIconModule,
+    MatCardModule,
   ],
 })
 export class PedidoItemInsertComponent implements OnInit {
@@ -56,6 +60,7 @@ export class PedidoItemInsertComponent implements OnInit {
       precioPedidoItem: [0, [Validators.required, Validators.min(0)]],
       pedido: ['', Validators.required],
       producto: ['', Validators.required],
+      imagenUrl: [''], // 👈 URL de imagen
     });
 
     // 2. Cargar combos
@@ -75,6 +80,7 @@ export class PedidoItemInsertComponent implements OnInit {
             precioPedidoItem: data.precioPedidoItem,
             pedido: data.idPedido ?? '',
             producto: data.idProducto ?? '',
+            imagenUrl: data.imagenUrl ?? '',
           });
         });
       }
@@ -99,6 +105,7 @@ export class PedidoItemInsertComponent implements OnInit {
       precioPedidoItem: this.form.value.precioPedidoItem,
       idPedido: this.form.value.pedido,
       idProducto: this.form.value.producto,
+      imagenUrl: this.form.value.imagenUrl, // 👈 se envía al backend
     };
 
     const obs = this.edicion ? this.piS.update(body) : this.piS.insert(body);
@@ -108,6 +115,7 @@ export class PedidoItemInsertComponent implements OnInit {
       this.router.navigate(['pedido-item']);
     });
   }
+
   cancelar(): void {
     this.router.navigate(['pedido-item']);
   }

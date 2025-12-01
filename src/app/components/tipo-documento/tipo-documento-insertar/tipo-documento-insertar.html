@@ -1,55 +1,86 @@
-<div class="container">
-  <h2>{{ edicion ? 'Editar tipo de documento' : 'Registrar tipo de documento' }}</h2>
+<!-- src/app/components/tipo-documento/tipo-documento-insert/tipo-documento-insert.html -->
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <mat-form-field appearance="outline" class="full-width-table">
-      <mat-label>Nombre del tipo de documento</mat-label>
-      <input matInput formControlName="nombre" />
-      <mat-error *ngIf="form.get('nombre')?.hasError('required')">
-        El nombre del tipo de documento es obligatorio
-      </mat-error>
-    </mat-form-field>
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">description</span>
+      </div>
 
-    <mat-form-field appearance="outline" class="full-width-table">
-      <mat-label>Descripción</mat-label>
-      <textarea matInput formControlName="descripcionTipoDocumento" rows="4"></textarea>       
-       <mat-error *ngIf="form.get('descripcionTipoDocumento')?.hasError('required')">
-       La descripción es obligatorio
-      </mat-error>
-      <mat-error *ngIf="form.get('descripcionTipoDocumento')?.hasError('maxlength')">
-        La descripción no puede tener más de 200 caracteres
-      </mat-error>
-      <mat-error *ngIf="form.get('descripcionTipoDocumento')?.hasError('minlength')">
-        La descripción no puede tener menos de 10 caracteres
-      </mat-error>
-    </mat-form-field>
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">
+          {{ edicion ? 'Editar tipo de documento' : 'Nuevo tipo de documento' }}
+        </h1>
+        <p class="tc-hero-subtitle">Registra nombre, descripción y RUC asociado.</p>
+      </div>
+    </div>
 
-    <mat-form-field appearance="outline" class="full-width-table">
-      <mat-label>RUC</mat-label>
-      <input matInput type="text" formControlName="rucTipoDocumento" maxlength="9" />
-        <mat-error *ngIf="form.get('rucTipoDocumento')?.hasError('required')">
-        El número de RUC es obligatorio
-      </mat-error>
-      <mat-error *ngIf="form.get('rucTipoDocumento')?.hasError('minlength')">
-         El RUC debe tener exactamente 9 dígitos
-      </mat-error>
-      <mat-error *ngIf="form.get('rucTipoDocumento')?.hasError('pattern')">
-        Solo se permiten números
-      </mat-error>
-    </mat-form-field>
+    <div class="tc-hero-right">
+      <span class="tc-pill">{{ edicion ? 'Edición' : 'Registro' }}</span>
+    </div>
+  </section>
 
-    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
-      {{ edicion ? 'Actualizar' : 'Registrar' }}
-    </button>
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
+    </div>
 
-    <button
-      mat-stroked-button
-      color="warn"
-      type="button"
-      (click)="cancelar()"
-      style="margin-left: 8px"
-    >
-      Cancelar
-    </button>
-  </form>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid">
+        <!-- NOMBRE -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Nombre del tipo de documento</mat-label>
+          <input matInput formControlName="nombre" />
+          <mat-error *ngIf="form.get('nombre')?.hasError('required')">
+            El nombre del tipo de documento es obligatorio
+          </mat-error>
+        </mat-form-field>
+
+        <!-- DESCRIPCIÓN -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Descripción</mat-label>
+          <textarea matInput formControlName="descripcionTipoDocumento" rows="4"></textarea>
+          <mat-error *ngIf="form.get('descripcionTipoDocumento')?.hasError('required')">
+            La descripción es obligatoria
+          </mat-error>
+          <mat-error *ngIf="form.get('descripcionTipoDocumento')?.hasError('maxlength')">
+            La descripción no puede tener más de 200 caracteres
+          </mat-error>
+          <mat-error *ngIf="form.get('descripcionTipoDocumento')?.hasError('minlength')">
+            La descripción no puede tener menos de 10 caracteres
+          </mat-error>
+        </mat-form-field>
+
+        <!-- RUC -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>RUC</mat-label>
+          <input matInput type="text" formControlName="rucTipoDocumento" maxlength="9" />
+          <mat-error *ngIf="form.get('rucTipoDocumento')?.hasError('required')">
+            El número de RUC es obligatorio
+          </mat-error>
+          <mat-error *ngIf="form.get('rucTipoDocumento')?.hasError('minlength')">
+            El RUC debe tener exactamente 9 dígitos
+          </mat-error>
+          <mat-error *ngIf="form.get('rucTipoDocumento')?.hasError('pattern')">
+            Solo se permiten números
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- BOTONES -->
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

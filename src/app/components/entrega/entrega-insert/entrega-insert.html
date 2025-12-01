@@ -1,113 +1,136 @@
 <!-- src/app/components/entrega/entrega-insert/entrega-insert.html -->
-<div class="form-container">
-  <h1>{{ edicion ? 'Editar entrega' : 'Nueva entrega' }}</h1>
 
-  <form [formGroup]="form" (ngSubmit)="aceptar()">
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Tipo de entrega</mat-label>
-        <input matInput formControlName="tipoEntrega" />
-        <mat-error
-          *ngIf="tipoEntregaField.invalid && (tipoEntregaField.dirty || tipoEntregaField.touched)"
-        >
-          El tipo de entrega es obligatorio.
-        </mat-error>
-      </mat-form-field>
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <span class="material-icons">local_shipping</span>
+      </div>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Estado</mat-label>
-        <input matInput formControlName="estadoEntrega" />
-        <mat-error
-          *ngIf="
-            estadoEntregaField.invalid && (estadoEntregaField.dirty || estadoEntregaField.touched)
-          "
-        >
-          El estado de la entrega es obligatorio.
-        </mat-error>
-      </mat-form-field>
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">{{ edicion ? 'Editar entrega' : 'Nueva entrega' }}</h1>
+        <p class="tc-hero-subtitle">Registra el detalle de la entrega y el pedido asociado.</p>
+      </div>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Dirección de entrega</mat-label>
-        <input matInput formControlName="direccionEntrega" />
-        <mat-error
-          *ngIf="
-            direccionEntregaField.invalid &&
-            (direccionEntregaField.dirty || direccionEntregaField.touched)
-          "
-        >
-          La dirección es obligatoria.
-        </mat-error>
-      </mat-form-field>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
+
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Formulario</span>
     </div>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Latitud</mat-label>
-        <input matInput type="number" step="0.01" formControlName="latitudEntrega" />
-        <mat-error
-          *ngIf="
-            latitudEntregaField.invalid &&
-            (latitudEntregaField.dirty || latitudEntregaField.touched)
-          "
-        >
-          La latitud es obligatoria.
-        </mat-error>
-      </mat-form-field>
+    <form class="tc-form" [formGroup]="form" (ngSubmit)="aceptar()">
+      <div class="tc-grid">
+        <!-- Tipo entrega -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Tipo de entrega</mat-label>
+          <input matInput formControlName="tipoEntrega" />
+          <mat-error *ngIf="tipoEntregaField.invalid && (tipoEntregaField.dirty || tipoEntregaField.touched)">
+            El tipo de entrega es obligatorio.
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Longitud</mat-label>
-        <input matInput type="number" step="0.01" formControlName="longitudEntrega" />
-        <mat-error
-          *ngIf="
-            longitudEntregaField.invalid &&
-            (longitudEntregaField.dirty || longitudEntregaField.touched)
-          "
-        >
-          La longitud es obligatoria.
-        </mat-error>
-      </mat-form-field>
-    </div>
+        <!-- Estado -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Estado</mat-label>
+          <input matInput formControlName="estadoEntrega" />
+          <mat-error *ngIf="estadoEntregaField.invalid && (estadoEntregaField.dirty || estadoEntregaField.touched)">
+            El estado de la entrega es obligatorio.
+          </mat-error>
+        </mat-form-field>
 
-    <div class="row">
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Fecha de entrega</mat-label>
-        <input
-          matInput
-          [matDatepicker]="pickerEntrega"
-          formControlName="fechaEntrega"
-          [min]="minEntrega"
-        />
-        <mat-datepicker-toggle matIconSuffix [for]="pickerEntrega"> </mat-datepicker-toggle>
-        <mat-datepicker #pickerEntrega></mat-datepicker>
-        <mat-error
-          *ngIf="
-            fechaEntregaField.invalid && (fechaEntregaField.dirty || fechaEntregaField.touched)
-          "
-        >
-          La fecha de entrega es obligatoria.
-        </mat-error>
-      </mat-form-field>
+        <!-- Dirección -->
+        <mat-form-field appearance="outline" class="full tc-span-2">
+          <mat-label>Dirección de entrega</mat-label>
+          <input matInput formControlName="direccionEntrega" />
+          <mat-error *ngIf="direccionEntregaField.invalid && (direccionEntregaField.dirty || direccionEntregaField.touched)">
+            La dirección es obligatoria.
+          </mat-error>
+        </mat-form-field>
 
-      <mat-form-field appearance="outline" class="full-width">
-        <mat-label>Pedido</mat-label>
-        <mat-select formControlName="pedido">
-          <mat-option *ngFor="let p of listaPedidos" [value]="p.idPedido">
-            {{ p.idPedido }} - {{ p.estadoPedido }}
-          </mat-option>
-        </mat-select>
-        <mat-error *ngIf="pedidoField.invalid && (pedidoField.dirty || pedidoField.touched)">
-          Debes seleccionar un pedido.
-        </mat-error>
-      </mat-form-field>
-    </div>
+        <!-- Latitud -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Latitud</mat-label>
+          <input matInput type="number" step="0.01" formControlName="latitudEntrega" />
+          <mat-error *ngIf="latitudEntregaField.invalid && (latitudEntregaField.dirty || latitudEntregaField.touched)">
+            La latitud es obligatoria.
+          </mat-error>
+        </mat-form-field>
 
-    <div class="buttons">
-      <button mat-raised-button color="primary" type="submit">
-        {{ edicion ? 'Guardar cambios' : 'Registrar' }}
-      </button>
-      <button mat-raised-button type="button" (click)="cancelar()">Cancelar</button>
-    </div>
-  </form>
+        <!-- Longitud -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Longitud</mat-label>
+          <input matInput type="number" step="0.01" formControlName="longitudEntrega" />
+          <mat-error *ngIf="longitudEntregaField.invalid && (longitudEntregaField.dirty || longitudEntregaField.touched)">
+            La longitud es obligatoria.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- ✅ MAPA (click para llenar lat/long) -->
+        <div class="full tc-span-2 tc-map-wrap">
+          <google-map
+            [height]="'320px'"
+            [width]="'100%'"
+            [zoom]="zoom"
+            [center]="center"
+            (mapClick)="onMapClick($event)"
+          >
+            <map-marker *ngIf="markerPosition" [position]="markerPosition"></map-marker>
+          </google-map>
+
+          <div class="tc-map-hint">
+            Haz clic en el mapa para seleccionar la ubicación. Se llenará Latitud y Longitud automáticamente.
+          </div>
+        </div>
+
+        <!-- Fecha entrega -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Fecha de entrega</mat-label>
+          <input
+            matInput
+            [matDatepicker]="pickerEntrega"
+            formControlName="fechaEntrega"
+            [min]="minEntrega"
+          />
+          <mat-datepicker-toggle matIconSuffix [for]="pickerEntrega"></mat-datepicker-toggle>
+          <mat-datepicker #pickerEntrega></mat-datepicker>
+          <mat-error *ngIf="fechaEntregaField.invalid && (fechaEntregaField.dirty || fechaEntregaField.touched)">
+            La fecha de entrega es obligatoria.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Pedido -->
+        <mat-form-field appearance="outline" class="full">
+          <mat-label>Pedido</mat-label>
+          <mat-select formControlName="pedido" panelClass="tc-select-panel">
+            <mat-option *ngFor="let p of listaPedidos" [value]="p.idPedido">
+              #{{ p.idPedido }} - {{ p.estadoPedido }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="pedidoField.invalid && (pedidoField.dirty || pedidoField.touched)">
+            Debes seleccionar un pedido.
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+      <!-- BOTONES (sin disabled frío) -->
+      <div class="tc-actions-row">
+        <button mat-raised-button class="tc-btn-primary" type="submit">
+          <mat-icon>save</mat-icon>
+          {{ edicion ? 'Guardar cambios' : 'Registrar' }}
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="cancelar()">
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+      </div>
+    </form>
+  </section>
 </div>

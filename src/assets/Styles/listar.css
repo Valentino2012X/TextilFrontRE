@@ -1,0 +1,222 @@
+/* =============== TextilConnect - LISTAR BASE (PEGAR EN TODOS) =============== */
+:host{
+  --tc-green: #8DAE5F;
+  --tc-green-dark: #3D6B3B;
+  --tc-white: #FFFFFF;
+  --tc-text: #1C1C1C;
+  --tc-beige: #F5F5DC;
+
+  --tc-border: rgba(28, 28, 28, 0.14);
+  --tc-shadow: 0 14px 34px rgba(0, 0, 0, 0.10);
+}
+
+.tc-page{
+  font-family: "Poppins", Arial, Helvetica, sans-serif;
+  max-width: 1100px;         /* ✅ MISMO TAMAÑO SIEMPRE */
+  margin: 0 auto;            /* ✅ CENTRADO */
+  padding: 18px 18px 26px;
+}
+
+/* ---------------- HERO (header) ---------------- */
+.tc-hero{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:14px;
+  padding:18px;
+  border-radius:18px;
+  background:#F2F5DD;
+  border:1px solid rgba(61,107,59,.18);
+  box-shadow:0 10px 22px rgba(0,0,0,.06);
+}
+
+.tc-hero-left{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  min-width: 280px;
+}
+
+.tc-hero-icon{
+  width:54px;
+  height:54px;
+  border-radius:16px;
+  background: rgba(141,174,95,.35);
+  border:1px solid rgba(61,107,59,.20);
+  display:grid;
+  place-items:center;
+  color: var(--tc-green-dark);
+}
+
+.tc-hero-icon mat-icon,
+.tc-hero-icon .material-icons{
+  font-size:26px;
+  width:26px;
+  height:26px;
+  line-height:26px;
+}
+
+.tc-hero-title{
+  margin:0;
+  font-size:34px;
+  line-height:1.1;
+  font-weight:800;
+  color: var(--tc-text);
+}
+
+.tc-hero-subtitle{
+  margin:4px 0 0;
+  font-size:14px;
+  color: rgba(28,28,28,.72);
+}
+
+.tc-hero-right{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.tc-total{
+  padding:8px 12px;
+  border-radius:999px;
+  background: rgba(255,255,255,.7);
+  border:1px solid rgba(61,107,59,.18);
+  color: rgba(28,28,28,.8);
+  font-weight:700;
+}
+
+.tc-btn-primary{
+  border-radius:999px !important;
+  background: var(--tc-green-dark) !important;
+  color: var(--tc-white) !important;
+  font-weight:800 !important;
+  padding:10px 16px !important;
+  box-shadow:0 10px 22px rgba(61,107,59,.26) !important;
+}
+.tc-btn-primary mat-icon{ margin-right:6px; }
+
+/* ---------------- CARD (contenedor) ---------------- */
+.tc-card{
+  margin-top:14px;
+  border-radius:18px;
+  background: var(--tc-white);
+  border:1px solid var(--tc-border);
+  box-shadow: var(--tc-shadow);
+  overflow:hidden;
+}
+
+.tc-card-top{
+  padding:14px 16px;
+  background: rgba(245,245,220,.45);
+  border-bottom:1px solid rgba(61,107,59,.15);
+}
+
+.tc-pill{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 14px;
+  border-radius:999px;
+  background:#fff;
+  border:1px solid rgba(61,107,59,.18);
+  color: var(--tc-green-dark);
+  font-weight:800;
+  font-size:14px;
+}
+
+/* ---------------- TABLE ---------------- */
+.tc-table-wrap{
+  overflow-x:auto; /* si hay muchas columnas, scroll horizontal */
+}
+
+.tc-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:auto; /* ✅ se adapta a contenido (usuarios tiene muchas cols) */
+  background:#fff;
+}
+
+.tc-table th{
+  font-weight:800;
+  color: var(--tc-text);
+  border-bottom:1px solid rgba(28,28,28,.12);
+  background:#fff;
+}
+
+.tc-table td{
+  border-bottom:1px solid rgba(28,28,28,.06);
+  color: rgba(28,28,28,.88);
+}
+
+.tc-table th,
+.tc-table td{
+  padding:16px 14px;
+  text-align:left;
+  vertical-align:middle;
+  white-space:nowrap;
+}
+
+/* Hover suave */
+.tc-table tr.mat-mdc-row:hover td{
+  background: rgba(141,174,95,.08);
+}
+
+/* Chips (rol, estado, etc.) */
+.tc-chip{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:8px 14px;
+  border-radius:999px;
+  background: rgba(141,174,95,.22);
+  border:1px solid rgba(61,107,59,.18);
+  color: var(--tc-green-dark);
+  font-weight:800;
+  letter-spacing:.2px;
+}
+
+/* Acciones */
+.tc-actions{
+  display:flex;
+  justify-content:center; /* ✅ balanceado (no extremo derecha) */
+  gap:10px;
+  white-space:nowrap;
+}
+
+.tc-icon-btn{
+  width:44px;
+  height:44px;
+  border-radius:14px !important;
+}
+
+.tc-edit{ background: rgba(61,107,59,.10); }
+.tc-del{  background: rgba(239,68,68,.12); }
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 920px){
+  .tc-page{ max-width:100%; padding: 14px; }
+  .tc-hero{ flex-direction:column; align-items:stretch; }
+  .tc-hero-right{ justify-content:space-between; flex-wrap:wrap; }
+}
+/* ✅ VARIANTE: tabla con TODO centrado (como Tipo producto) */
+.tc-table.tc-table-center th,
+.tc-table.tc-table-center td{
+  text-align: center !important;
+}
+
+/* Angular Material MDC: celdas suelen ser flex -> hay que centrar también con justify */
+.tc-table.tc-table-center .mat-mdc-header-cell,
+.tc-table.tc-table-center .mat-mdc-cell{
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* ✅ Acciones: el contenedor debe ocupar todo el ancho para centrar real */
+.tc-table.tc-table-center .tc-actions{
+  width: 100%;
+  flex: 1 1 auto;
+  justify-content: center;
+  align-items: center;
+}
+

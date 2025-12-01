@@ -4,13 +4,14 @@ import { FormsModule } from '@angular/forms';
 import { Chart, ChartConfiguration, BarController, BarElement, CategoryScale, LinearScale, Legend, Tooltip } from 'chart.js';
 import { ComprobanteService } from '../../../services/comprobante-service';
 import { PedidoService } from '../../../services/pedido-service';
+import { MatIconModule } from '@angular/material/icon';
 
 Chart.register(BarController, BarElement, CategoryScale, LinearScale, Legend, Tooltip);
 
 @Component({
   selector: 'app-pedido-reporte',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,MatIconModule,],
   templateUrl: './pedido-reporte.html',
   styleUrls: ['./pedido-reporte.css']
 })

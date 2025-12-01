@@ -1,12 +1,18 @@
-<!-- src/app/components/dashboard/navbar/navbar.component.html -->
 <header class="nav-root">
   <div class="nav-left">
-    <div class="nav-logo">TC</div>
-    <div>
-      <div class="nav-title">TextilConnect</div>
+<img
+  class="nav-brand-logo"
+  src="/assets/Logo2.png"
+  alt="TextilConnect"
+  (click)="goHome()"
+/>
+
+    <div class="nav-brand-text">
       <div class="nav-subtitle">Panel</div>
     </div>
   </div>
+
+  <div class="nav-center">Dashboard</div>
 
   <div class="nav-right">
     <span class="nav-role">Rol: {{ rol }}</span>

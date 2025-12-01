@@ -14,6 +14,7 @@ import { UsuarioService } from '../../../services/usuario-service';
 import { Proyecto } from '../../../models/Proyecto';
 import { Usuario } from '../../../models/Usuario';
 import { ComentarioProyecto } from '../../../models/Comentario-proyecto';
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   standalone: true,
@@ -27,6 +28,7 @@ import { ComentarioProyecto } from '../../../models/Comentario-proyecto';
     MatButtonModule,
     MatSelectModule,
     MatOptionModule,
+    MatIconModule,
   ],
 })
 export class ComentarioProyectoInsertarComponent implements OnInit {

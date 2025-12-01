@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, NgIf } from '@angular/common';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +13,7 @@ import { Favorito } from '../../../models/favorito';
   selector: 'app-favorito-listar',
   templateUrl: './favorito-listar.html',
   styleUrl: './favorito-listar.css',
-  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink],
+  imports: [CommonModule, MatTableModule, MatButtonModule, MatIconModule, RouterLink, NgIf],
 })
 export class FavoritoListarComponent implements OnInit {
   dataSource: MatTableDataSource<Favorito> = new MatTableDataSource<Favorito>();

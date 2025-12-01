@@ -1,17 +1,51 @@
-<div class="reporte-container">
-  <h2>El total de soles por fecha</h2>
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>bar_chart</mat-icon>
+      </div>
 
-  <div class="form">
-    <label>Fecha:</label>
-    <input type="date" [(ngModel)]="fecha">
-    <button (click)="buscar()">Buscar</button>
-  </div>
+      <div>
+        <h1 class="tc-hero-title">Reporte de pedidos</h1>
+        <p class="tc-hero-subtitle">Total de soles por fecha (S/.)</p>
+      </div>
+    </div>
 
-  <div *ngIf="hasData">
-    <canvas #barCanvas></canvas>
-  </div>
+    <div class="tc-hero-right">
+      <span class="tc-pill">Reporte</span>
+    </div>
+  </section>
 
-  <div *ngIf="!hasData">
-    <p>No hay datos para mostrar.</p>
-  </div>
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Filtros</span>
+    </div>
+
+    <div class="tc-report-body">
+      <!-- FILTRO -->
+      <div class="tc-filter">
+        <div class="tc-field">
+          <label class="tc-label">Fecha</label>
+          <input class="tc-input" type="date" [(ngModel)]="fecha" />
+        </div>
+
+        <button class="tc-btn-primary-soft" type="button" (click)="buscar()">
+          <mat-icon>search</mat-icon>
+          Buscar
+        </button>
+      </div>
+
+      <!-- CHART -->
+      <div *ngIf="hasData" class="tc-chart-wrap">
+        <canvas #barCanvas></canvas>
+      </div>
+
+      <!-- EMPTY -->
+      <div *ngIf="!hasData" class="tc-empty">
+        <p>No hay datos para mostrar.</p>
+      </div>
+    </div>
+  </section>
 </div>

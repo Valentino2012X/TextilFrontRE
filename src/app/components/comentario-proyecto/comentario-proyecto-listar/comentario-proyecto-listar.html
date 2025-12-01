@@ -1,69 +1,104 @@
-<div class="container">
-  <button mat-raised-button color="primary" routerLink="/comentarioproyecto/new">
-    <mat-icon>add</mat-icon>
-    Nuevo comentario
-  </button>
+<!-- src/app/components/comentarioproyecto/comentarioproyecto-listar/comentarioproyecto-listar.html -->
 
-  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 full-width-table">
-    <!-- ID -->
-    <ng-container matColumnDef="idComentarioProyecto">
-      <th mat-header-cell *matHeaderCellDef>ID</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.idComentarioProyecto }}
-      </td>
-    </ng-container>
+<div class="tc-page">
+  <!-- HERO -->
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>comment</mat-icon>
+      </div>
 
-    <!-- Comentario -->
-    <ng-container matColumnDef="comentarioProyecto">
-      <th mat-header-cell *matHeaderCellDef>Comentario</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.comentarioProyecto }}
-      </td>
-    </ng-container>
+      <div>
+        <h1 class="tc-hero-title">Comentario proyecto</h1>
+        <p class="tc-hero-subtitle">Gestiona los comentarios registrados por proyecto.</p>
+      </div>
+    </div>
 
-    <!-- Fecha -->
-    <ng-container matColumnDef="fechaComentario">
-      <th mat-header-cell *matHeaderCellDef>Fecha</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.fechaComentario | date : 'yyyy-MM-dd HH:mm' }}
-      </td>
-    </ng-container>
+    <div class="tc-hero-right">
+      <span class="tc-total">Total: {{ dataSource.data.length || 0 }}</span>
 
-    <!-- Proyecto: mostrar NOMBRE del proyecto -->
-    <ng-container matColumnDef="proyecto">
-      <th mat-header-cell *matHeaderCellDef>Proyecto</th>
-      <td mat-cell *matCellDef="let row">
-        {{ row.proyecto?.tituloProyecto || '—' }}
-      </td>
-    </ng-container>
+      <button mat-raised-button class="tc-btn-primary" routerLink="/comentarioproyecto/new">
+        <mat-icon>add</mat-icon>
+        Nuevo comentario
+      </button>
+    </div>
+  </section>
 
-    <!-- Usuario: mostrar NOMBRE del usuario -->
-    <ng-container matColumnDef="usuario">
-      <th mat-header-cell *matHeaderCellDef>Usuario</th>
+  <!-- CARD -->
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Listado</span>
+    </div>
 
-      <td mat-cell *matCellDef="let row">
-        {{ row.usuario?.nombreUsuario || '—' }}
-      </td>
-    </ng-container>
+    <div class="tc-table-wrap">
+      <table mat-table [dataSource]="dataSource" class="tc-table tc-table-center mat-elevation-z0">
+        <!-- ID -->
+        <ng-container matColumnDef="idComentarioProyecto">
+          <th mat-header-cell *matHeaderCellDef>ID</th>
+          <td mat-cell *matCellDef="let row">{{ row.idComentarioProyecto }}</td>
+        </ng-container>
 
-    <!-- Acciones -->
-    <ng-container matColumnDef="acciones">
-      <th mat-header-cell *matHeaderCellDef>Acciones</th>
-      <td mat-cell *matCellDef="let row">
-        <button
-          mat-icon-button
-          color="primary"
-          [routerLink]="['/comentarioproyecto/edit', row.idComentarioProyecto]"
-        >
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="eliminar(row.idComentarioProyecto)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </td>
-    </ng-container>
+        <!-- Comentario -->
+        <ng-container matColumnDef="comentarioProyecto">
+          <th mat-header-cell *matHeaderCellDef>Comentario</th>
+          <td mat-cell *matCellDef="let row">
+            <span class="tc-chip">{{ row.comentarioProyecto }}</span>
+          </td>
+        </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+        <!-- Fecha -->
+        <ng-container matColumnDef="fechaComentario">
+          <th mat-header-cell *matHeaderCellDef>Fecha</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.fechaComentario | date:'yyyy-MM-dd HH:mm' }}
+          </td>
+        </ng-container>
+
+        <!-- Proyecto -->
+        <ng-container matColumnDef="proyecto">
+          <th mat-header-cell *matHeaderCellDef>Proyecto</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.proyecto?.tituloProyecto || '—' }}
+          </td>
+        </ng-container>
+
+        <!-- Usuario -->
+        <ng-container matColumnDef="usuario">
+          <th mat-header-cell *matHeaderCellDef>Usuario</th>
+          <td mat-cell *matCellDef="let row">
+            {{ row.usuario?.nombreUsuario || '—' }}
+          </td>
+        </ng-container>
+
+        <!-- Acciones -->
+        <ng-container matColumnDef="acciones">
+          <th mat-header-cell *matHeaderCellDef>Acciones</th>
+          <td mat-cell *matCellDef="let row">
+            <div class="tc-actions">
+              <button
+                mat-icon-button
+                class="tc-icon-btn tc-edit"
+                [routerLink]="['/comentarioproyecto/edit', row.idComentarioProyecto]"
+                aria-label="Editar"
+              >
+                <mat-icon>edit</mat-icon>
+              </button>
+
+              <button
+                mat-icon-button
+                class="tc-icon-btn tc-del"
+                (click)="eliminar(row.idComentarioProyecto)"
+                aria-label="Eliminar"
+              >
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+  </section>
 </div>

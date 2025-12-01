@@ -1,31 +1,20 @@
 /* src/app/components/pedido-item/pedido-item-insert/pedido-item-insert.css */
-.form-container {
-  max-width: 1200px;
-  margin: 24px auto;
-  padding: 24px;
-  background: #ffffff;
-  border-radius: 16px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-}
+@import url("../../../../assets/Styles/insert.css");
 
-.form-container h1 {
-  margin-bottom: 24px;
-  font-size: 26px;
-  font-weight: 600;
-}
-
-.row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.full-width {
-  flex: 1 1 0;
-}
-
-.btn-guardar {
+.preview-wrapper {
   margin-top: 16px;
-  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.preview-card {
+  max-width: 320px;
+}
+
+.preview-placeholder {
+  border-radius: 12px;
+  border: 1px dashed #ccc;
+  padding: 12px;
+  font-size: 14px;
+  color: #777;
 }

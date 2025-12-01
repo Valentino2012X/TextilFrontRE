@@ -1,6 +1,1 @@
-.row {
-  display: flex;
-  gap: 16px;
-  flex-wrap: wrap;
-}
-
+@import url("../../../../assets/Styles/insert.css");
