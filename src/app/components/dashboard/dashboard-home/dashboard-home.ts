@@ -1,27 +1,32 @@
-// src/app/components/dashboard/dashboard-home.component.ts
-import { Component, OnInit } from '@angular/core';
-import { CommonModule, NgIf } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { LoginService } from '../../../services/login-service';
 
-type Rol = 'ADMIN' | 'VENDEDOR' | 'COMPRADOR';
+type RolKey = 'ADMIN' | 'VENDEDOR' | 'ESTUDIANTE' | 'UNKNOWN';
 
 @Component({
   selector: 'app-dashboard-home',
   standalone: true,
-  imports: [CommonModule, NgIf,RouterLink],
+  imports: [CommonModule, RouterLink], // ✅ IMPORTANTE para routerLink en el HTML
   templateUrl: './dashboard-home.html',
   styleUrl: './dashboard-home.css',
 })
 export class DashboardHomeComponent implements OnInit {
-  rol: Rol = 'COMPRADOR';
+  private loginService = inject(LoginService);
+
+  rol: RolKey = 'UNKNOWN';
 
   ngOnInit(): void {
-    const raw =
-      sessionStorage.getItem('rol') || localStorage.getItem('rol') || 'COMPRADOR';
+    const roleFromStorage = localStorage.getItem('rol');
+    const roleFromToken = this.loginService.showRole();
+    this.rol = this.normalizeRole(roleFromStorage || roleFromToken || null);
+  }
 
-    const upper = raw.toUpperCase();
-    if (upper.includes('ADMIN')) this.rol = 'ADMIN';
-    else if (upper.includes('VENDEDOR')) this.rol = 'VENDEDOR';
-    else this.rol = 'COMPRADOR';
+  private normalizeRole(raw: string | null): RolKey {
+    if (!raw) return 'UNKNOWN';
+    const r = raw.toUpperCase().replace('ROLE_', '').trim();
+    if (r === 'ADMIN' || r === 'VENDEDOR' || r === 'ESTUDIANTE') return r;
+    return 'UNKNOWN';
   }
 }
