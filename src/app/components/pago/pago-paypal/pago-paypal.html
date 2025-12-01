@@ -1,0 +1,77 @@
+<!-- src/app/components/pago/pago-paypal/pago-paypal.html -->
+<div class="tc-page">
+  <section class="tc-hero">
+    <div class="tc-hero-left">
+      <div class="tc-hero-icon">
+        <mat-icon>payments</mat-icon>
+      </div>
+
+      <div class="tc-hero-text">
+        <h1 class="tc-hero-title">Pago</h1>
+        <p class="tc-hero-subtitle">
+          Pedido #{{ pedidoId || '—' }} — Total: {{ total | number:'1.2-2' }} (USD)
+        </p>
+      </div>
+    </div>
+
+    <div class="tc-hero-right">
+      <span class="tc-pill">Registro</span>
+    </div>
+  </section>
+
+  <section class="tc-card">
+    <div class="tc-card-top">
+      <span class="tc-pill">Checkout</span>
+    </div>
+
+    <div class="tc-form">
+      <div class="tc-grid tc-grid-2">
+        <div class="full tc-span-2">
+          <p style="margin: 0 0 10px;">
+            <strong>Estado:</strong>
+            <span class="tc-pill"
+              [ngClass]="{
+                'tc-pill--ok': estado === 'APPROVED',
+                'tc-pill--bad': estado === 'REJECTED' || estado === 'ERROR',
+                'tc-pill--pending': estado === 'PENDING'
+              }"
+            >
+              {{ estado }}
+            </span>
+          </p>
+
+          <p style="margin: 0;">
+            {{ mensaje }}
+          </p>
+        </div>
+      </div>
+
+      <!-- ✅ PayPal botones SOLO cuando está PENDING -->
+      <div class="paypal-box" *ngIf="estado === 'PENDING'">
+        <div class="paypal-inner">
+          <div id="paypal-buttons"></div>
+        </div>
+      </div>
+
+      <!-- ✅ Acciones -->
+      <div class="tc-actions-row" *ngIf="estado !== 'PENDING'">
+        <button mat-raised-button class="tc-btn-primary" type="button" (click)="reiniciar()">
+          <mat-icon>restart_alt</mat-icon>
+          Reintentar
+        </button>
+
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="volverPedidos()">
+          <mat-icon>list</mat-icon>
+          Ir a pedidos
+        </button>
+      </div>
+
+      <div class="tc-actions-row" *ngIf="estado === 'PENDING'">
+        <button mat-raised-button class="tc-btn-ghost" type="button" (click)="volverPedidos()">
+          <mat-icon>arrow_back</mat-icon>
+          Volver a pedidos
+        </button>
+      </div>
+    </div>
+  </section>
+</div>
