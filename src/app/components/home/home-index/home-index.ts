@@ -1,11 +1,10 @@
-// src/app/components/home/home/home-index.ts
-import { Component, inject } from '@angular/core';
+// src/app/components/home/home-index/home-index.ts
+import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive, Router } from '@angular/router';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-
-type SupportType = '' | 'bug' | 'suggestion' | 'account' | 'purchase' | 'community' | 'general';
+import { LoginService } from '../../../services/login-service';
 
 interface CardItem {
   title: string;
@@ -27,46 +26,81 @@ interface TrendItem {
   templateUrl: './home-index.html',
   styleUrls: ['./home-index.css'],
 })
-export class HomeIndexComponent {
+export class HomeIndexComponent implements OnInit {
   private router = inject(Router);
   private fb = inject(FormBuilder);
   private sanitizer = inject(DomSanitizer);
+  private loginService = inject(LoginService);
 
   mobileMenuOpen = false;
 
   isLoggedIn = false;
   userMenuOpen = false;
   userName = 'Usuario';
-  notificationCount = 3;
+  notificationCount = 0;
 
-  // Mensajes UI
   successMsg = '';
   errorMsg = '';
 
-  // Data
   products: CardItem[] = this.buildProducts();
   trends: TrendItem[] = this.buildTrends();
 
-  // Form (reactivo)
   commentForm = this.fb.group({
     name: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(80)]],
     email: ['', [Validators.required, Validators.email, Validators.maxLength(120)]],
     comment: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
   });
 
-  constructor() {
+  ngOnInit(): void {
     this.loadSession();
   }
 
   private loadSession(): void {
-    const token = localStorage.getItem('token');
-    this.isLoggedIn = !!token;
+    // ✅ no basta con que exista token, debe ser válido (no expirado)
+    this.isLoggedIn = this.loginService.verificar();
 
-    const storedName = localStorage.getItem('username') || localStorage.getItem('nombreUsuario');
-    if (storedName) this.userName = storedName;
+    if (!this.isLoggedIn) {
+      this.userName = 'Usuario';
+      this.notificationCount = 0;
+      this.userMenuOpen = false;
+      return;
+    }
+
+    const storedName =
+      localStorage.getItem('username') || localStorage.getItem('nombreUsuario') || 'Usuario';
+    this.userName = storedName;
 
     const notif = localStorage.getItem('notificationCount');
-    if (notif && !Number.isNaN(Number(notif))) this.notificationCount = Number(notif);
+    this.notificationCount = notif && !Number.isNaN(Number(notif)) ? Number(notif) : 3;
+  }
+
+  toggleMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+  }
+
+  toggleUserMenu(): void {
+    this.userMenuOpen = !this.userMenuOpen;
+  }
+
+  logout(): void {
+    this.loginService.clear(); // ✅ borra token, rol, username, etc.
+    this.isLoggedIn = false;
+    this.userMenuOpen = false;
+    this.router.navigate(['/home']);
+  }
+
+  submitComment(): void {
+    this.successMsg = '';
+    this.errorMsg = '';
+
+    if (this.commentForm.invalid) {
+      this.commentForm.markAllAsTouched();
+      this.errorMsg = 'Completa correctamente el formulario antes de enviar.';
+      return;
+    }
+
+    this.successMsg = '¡Comentario enviado! Gracias por unirte a la conversación.';
+    this.commentForm.reset();
   }
 
   private buildProducts(): CardItem[] {
@@ -115,50 +149,24 @@ export class HomeIndexComponent {
       {
         title: 'Sostenibilidad Textil',
         desc: 'Innovaciones en textiles sostenibles y producción eco-friendly.',
-        safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/9CfHd8TFL-c'),
+        safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl(
+          'https://www.youtube.com/embed/9CfHd8TFL-c'
+        ),
       },
       {
         title: 'Tecnología Inteligente',
         desc: 'Cómo la tecnología transforma los textiles con fibras inteligentes.',
-        safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/NEqPGdNnLIE'),
+        safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl(
+          'https://www.youtube.com/embed/NEqPGdNnLIE'
+        ),
       },
       {
         title: 'Diseño Contemporáneo',
         desc: 'Tendencias que definen el futuro de la moda y decoración textil.',
-        safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl('https://www.youtube.com/embed/IPV5P8m1QU8'),
+        safeUrl: this.sanitizer.bypassSecurityTrustResourceUrl(
+          'https://www.youtube.com/embed/IPV5P8m1QU8'
+        ),
       },
     ];
-  }
-
-  toggleMenu(): void {
-    this.mobileMenuOpen = !this.mobileMenuOpen;
-  }
-
-  toggleUserMenu(): void {
-    this.userMenuOpen = !this.userMenuOpen;
-  }
-
-  logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('nombreUsuario');
-    this.isLoggedIn = false;
-    this.userMenuOpen = false;
-    this.router.navigate(['/autenticador']);
-  }
-
-  submitComment(): void {
-    this.successMsg = '';
-    this.errorMsg = '';
-
-    if (this.commentForm.invalid) {
-      this.commentForm.markAllAsTouched();
-      this.errorMsg = 'Completa correctamente el formulario antes de enviar.';
-      return;
-    }
-
-    // Aquí luego lo conectas a tu backend si quieres
-    this.successMsg = '¡Comentario enviado! Gracias por unirte a la conversación.';
-    this.commentForm.reset();
   }
 }

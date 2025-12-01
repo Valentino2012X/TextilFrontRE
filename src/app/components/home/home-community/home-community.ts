@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { LoginService } from '../../../services/login-service';
 
 type DemoKey = 'follow' | 'projects' | 'share' | 'challenges';
 
@@ -11,19 +12,41 @@ type DemoKey = 'follow' | 'projects' | 'share' | 'challenges';
   templateUrl: './home-community.html',
   styleUrls: ['./home-community.css'],
 })
-export class HomeCommunityComponent {
+export class HomeCommunityComponent implements OnInit {
+  private router = inject(Router);
+  private loginService = inject(LoginService);
+
   mobileMenuOpen = false;
 
-  isLoggedIn = !!localStorage.getItem('token');
+  isLoggedIn = false;
   userMenuOpen = false;
 
-  userName = localStorage.getItem('username') ?? 'Usuario';
-  notificationCount = 3;
+  userName = 'Usuario';
+  notificationCount = 0;
 
   activeDemo: DemoKey | null = null;
   demoText = '';
 
-  constructor(private router: Router) {}
+  ngOnInit(): void {
+    this.loadSession();
+  }
+
+  private loadSession(): void {
+    this.isLoggedIn = this.loginService.verificar();
+
+    if (!this.isLoggedIn) {
+      this.userName = 'Usuario';
+      this.notificationCount = 0;
+      this.userMenuOpen = false;
+      return;
+    }
+
+    this.userName =
+      localStorage.getItem('username') || localStorage.getItem('nombreUsuario') || 'Usuario';
+
+    const notif = localStorage.getItem('notificationCount');
+    this.notificationCount = notif && !Number.isNaN(Number(notif)) ? Number(notif) : 3;
+  }
 
   get userInitials(): string {
     const parts = (this.userName || 'U').trim().split(/\s+/);
@@ -42,6 +65,7 @@ export class HomeCommunityComponent {
 
   toggleNotifications(): void {
     this.notificationCount = 0;
+    localStorage.setItem('notificationCount', '0');
   }
 
   activateDemo(key: DemoKey): void {
@@ -62,10 +86,9 @@ export class HomeCommunityComponent {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    this.loginService.clear();
     this.isLoggedIn = false;
     this.userMenuOpen = false;
-    this.router.navigate(['/autenticador']);
+    this.router.navigate(['/home']);
   }
 }

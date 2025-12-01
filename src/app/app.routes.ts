@@ -12,20 +12,28 @@ import { UsuarioComponent } from './components/usuario/usuario';
 import { UsuarioInsertComponent } from './components/usuario/usuario-insert/usuario-insert';
 
 export const routes: Routes = [
-  // Arranque
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  // ✅ Arranque: mostrar Landing a cualquiera
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
 
-  // Login (público)
+  // ✅ Login (público)
   { path: 'login', component: Autenticador },
 
-  // ✅ LANDING (después de login)
-  // Nota: Si quieres que sea pública, quita canActivate.
-  // Si quieres que solo se vea logueado, déjalo con seguridadGuard.
+  // ✅ Alias para no romper routerLinks antiguos (/autenticador)
+  { path: 'autenticador', redirectTo: 'login', pathMatch: 'full' },
+
+  // ✅ Registro (público)
+  {
+  path: 'registro',
+  loadComponent: () =>
+    import('./components/registro/registro').then((m) => m.RegistroComponent),
+},
+
+
+  // ✅ LANDING PÚBLICO (SIN GUARD)
   {
     path: 'home',
     loadComponent: () =>
       import('./components/home/home/home').then((m) => m.HomeComponent),
-    canActivate: [seguridadGuard],
     children: [
       {
         path: '',
@@ -555,13 +563,13 @@ export const routes: Routes = [
       {
         path: 'tarjeta/reporte2',
         loadComponent: () =>
-          import('./components/tarjeta/tarjeta-reporte2/tarjeta-reporte2').then(
-            (m) => m.TarjetaReporteComponent
-          ),
+          import(
+            './components/tarjeta/tarjeta-reporte2/tarjeta-reporte2'
+          ).then((m) => m.TarjetaReporteComponent),
       },
     ],
   },
 
-  // fallback
-  { path: '**', redirectTo: 'login' },
+  // ✅ fallback
+  { path: '**', redirectTo: 'home' },
 ];

@@ -1,4 +1,4 @@
-<!-- src/app/components/home/home/home-index.html -->
+<!-- src/app/components/home/home-index/home-index.html -->
 <div class="landing">
   <!-- Navegación -->
   <section class="index-header">
@@ -14,9 +14,12 @@
             >Home</a
           >
         </li>
-        <li>
+
+        <!-- ✅ SOLO LOGUEADO -->
+        <li *ngIf="isLoggedIn">
           <a routerLink="/dashboard" routerLinkActive="active">Dashboard</a>
         </li>
+
         <li><a routerLink="/home/about" routerLinkActive="active">Nosotros</a></li>
         <li><a routerLink="/home/products" routerLinkActive="active">Productos</a></li>
         <li><a routerLink="/home/community" routerLinkActive="active">Comunidad</a></li>
@@ -28,7 +31,7 @@
       <div class="auth-section">
         <!-- No logueado -->
         <div class="auth-buttons" *ngIf="!isLoggedIn">
-          <a class="auth-btn login-btn" routerLink="/autenticador">Iniciar Sesión</a>
+          <a class="auth-btn login-btn" routerLink="/login">Iniciar Sesión</a>
           <a class="auth-btn register-btn" routerLink="/registro">Registrarse</a>
         </div>
 
@@ -36,12 +39,13 @@
         <div class="user-menu" *ngIf="isLoggedIn">
           <div class="notification-icon" (click)="toggleUserMenu()">
             <i class="fas fa-bell"></i>
-            <span class="notification-badge">{{ notificationCount }}</span>
+            <span class="notification-badge" *ngIf="notificationCount > 0">{{
+              notificationCount
+            }}</span>
           </div>
 
           <div class="user-info" (click)="toggleUserMenu()">
-            <div class="user-avatar">{{ userName.charAt(0) || 'U' | uppercase }}</div>
-
+            <div class="user-avatar">{{ (userName.charAt(0) || 'U') | uppercase }}</div>
             <span>{{ userName }}</span>
             <i class="fas fa-chevron-down"></i>
           </div>
@@ -112,8 +116,7 @@
               [title]="t.title"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowfullscreen
-            >
-            </iframe>
+            ></iframe>
           </div>
           <div class="trend-content">
             <h3>{{ t.title }}</h3>

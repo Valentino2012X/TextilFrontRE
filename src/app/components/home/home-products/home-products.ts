@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+import { LoginService } from '../../../services/login-service';
 
 type Category = 'all' | 'tejidos' | 'hilos' | 'adornos' | 'organicos';
 
@@ -26,19 +27,23 @@ interface TestimonialItem {
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './home-products.html',
-  styleUrls: ['./home-products.css'], // ✅ CORRECTO
+  styleUrls: ['./home-products.css'],
 })
-export class HomeProductsComponent {
+export class HomeProductsComponent implements OnInit {
+  private router = inject(Router);
+  private loginService = inject(LoginService);
+
   mobileMenuOpen = false;
 
-  isLoggedIn = !!localStorage.getItem('token');
+  isLoggedIn = false;
   userMenuOpen = false;
 
-  userName = localStorage.getItem('username') ?? 'Usuario';
-  notificationCount = 3;
+  userName = 'Usuario';
+  notificationCount = 0;
 
   selectedCategory: Category = 'all';
 
+  // ====== TU DATA (igual) ======
   products: ProductItem[] = [
     {
       title: 'Algodón Blanco Premium',
@@ -134,8 +139,28 @@ export class HomeProductsComponent {
         "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23764ba2'/><text x='50' y='60' text-anchor='middle' font-family='Arial' font-size='40' fill='white'>D</text></svg>",
     },
   ];
+  // ====== FIN TU DATA ======
 
-  constructor(private router: Router) {}
+  ngOnInit(): void {
+    this.loadSession();
+  }
+
+  private loadSession(): void {
+    this.isLoggedIn = this.loginService.verificar();
+
+    if (!this.isLoggedIn) {
+      this.userName = 'Usuario';
+      this.notificationCount = 0;
+      this.userMenuOpen = false;
+      return;
+    }
+
+    this.userName =
+      localStorage.getItem('username') || localStorage.getItem('nombreUsuario') || 'Usuario';
+
+    const notif = localStorage.getItem('notificationCount');
+    this.notificationCount = notif && !Number.isNaN(Number(notif)) ? Number(notif) : 3;
+  }
 
   get filteredProducts(): ProductItem[] {
     if (this.selectedCategory === 'all') return this.products;
@@ -159,12 +184,10 @@ export class HomeProductsComponent {
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
-    localStorage.removeItem('nombreUsuario');
+    this.loginService.clear();
     this.isLoggedIn = false;
     this.userMenuOpen = false;
-    this.router.navigate(['/autenticador']);
+    this.router.navigate(['/home']);
   }
 
   trackByTitle(_: number, item: ProductItem): string {

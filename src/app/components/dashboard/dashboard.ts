@@ -1,28 +1,74 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Router } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
+import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { MatButtonModule } from '@angular/material/button';
-import { NavbarComponent } from "./navbar/navbar";
+
+import { LoginService } from '../../services/login-service';
+import { NavbarComponent } from './navbar/navbar';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [CommonModule, RouterModule, MatIconModule, MatButtonModule, NavbarComponent],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    RouterLink,
+    RouterLinkActive,
+    MatButtonModule,
+    NavbarComponent,
+  ],
   templateUrl: './dashboard.html',
   styleUrl: './dashboard.css',
 })
 export class DashboardComponent implements OnInit {
-  rolActual: string = '';
+  private router = inject(Router);
+  private loginService = inject(LoginService);
 
-  constructor(private router: Router) {}
+  nombreActual = 'Usuario';
+  rolActual: string | null = null;
 
   ngOnInit(): void {
-    this.rolActual = sessionStorage.getItem('rol') || '';
+    if (!this.loginService.verificar()) {
+      this.loginService.clear();
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    this.cargarSesion();
+  }
+
+  private cargarSesion(): void {
+    const nombre =
+      localStorage.getItem('nombreUsuario') ||
+      localStorage.getItem('username') ||
+      'Usuario';
+
+    this.nombreActual = nombre;
+
+    const rolGuardado = localStorage.getItem('rol');
+    const rolToken = this.loginService.showRole();
+
+    this.rolActual = this.normalizarRol(rolGuardado || rolToken);
+  }
+
+  private normalizarRol(rol: string | null): string | null {
+    if (!rol) return null;
+    return rol
+      .replace(/^ROLE_/, '')
+      .replace(/[\[\]"]/g, '')
+      .trim()
+      .toUpperCase();
+  }
+
+  get userInitials(): string {
+    const parts = (this.nombreActual || 'U').trim().split(/\s+/);
+    const a = parts[0]?.[0] ?? 'U';
+    const b = parts[1]?.[0] ?? '';
+    return (a + b).toUpperCase();
   }
 
   logout(): void {
-    sessionStorage.clear();
-    this.router.navigate(['/login']);
+    this.loginService.clear();
+    this.router.navigate(['/home']); // o /login si quieres
   }
 }

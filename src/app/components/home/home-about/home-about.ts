@@ -1,7 +1,7 @@
-// src/app/components/home/home-about/home-about.ts
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
+import { LoginService } from '../../../services/login-service';
 
 @Component({
   selector: 'app-home-about',
@@ -10,16 +10,38 @@ import { Router, RouterModule } from '@angular/router';
   templateUrl: './home-about.html',
   styleUrls: ['./home-about.css'],
 })
-export class HomeAboutComponent {
+export class HomeAboutComponent implements OnInit {
+  private router = inject(Router);
+  private loginService = inject(LoginService);
+
   mobileMenuOpen = false;
 
-  isLoggedIn = !!localStorage.getItem('token');
+  isLoggedIn = false;
   userMenuOpen = false;
 
-  userName = localStorage.getItem('username') ?? 'Usuario';
-  notificationCount = 3;
+  userName = 'Usuario';
+  notificationCount = 0;
 
-  constructor(private router: Router) {}
+  ngOnInit(): void {
+    this.loadSession();
+  }
+
+  private loadSession(): void {
+    this.isLoggedIn = this.loginService.verificar();
+
+    if (!this.isLoggedIn) {
+      this.userName = 'Usuario';
+      this.notificationCount = 0;
+      this.userMenuOpen = false;
+      return;
+    }
+
+    this.userName =
+      localStorage.getItem('username') || localStorage.getItem('nombreUsuario') || 'Usuario';
+
+    const notif = localStorage.getItem('notificationCount');
+    this.notificationCount = notif && !Number.isNaN(Number(notif)) ? Number(notif) : 3;
+  }
 
   get userInitials(): string {
     const parts = (this.userName || 'U').trim().split(/\s+/);
@@ -38,13 +60,13 @@ export class HomeAboutComponent {
 
   toggleNotifications(): void {
     this.notificationCount = 0;
+    localStorage.setItem('notificationCount', '0');
   }
 
   logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('username');
+    this.loginService.clear();
     this.isLoggedIn = false;
     this.userMenuOpen = false;
-    this.router.navigate(['/autenticador']);
+    this.router.navigate(['/home']);
   }
 }

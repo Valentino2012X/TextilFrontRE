@@ -1,8 +1,7 @@
-// src/app/components/autenticador/autenticador.ts
 import { Component, OnInit } from '@angular/core';
 import { JwtRequestDTO } from '../../models/jwtRequestDTO';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { LoginService } from '../../services/login-service';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
@@ -13,14 +12,7 @@ import { NgIf } from '@angular/common';
 @Component({
   selector: 'app-autenticador',
   standalone: true,
-  imports: [
-    MatFormFieldModule,
-    FormsModule,
-    MatInputModule,
-    MatButtonModule,
-    NgIf,
-    RouterLink,
-  ],
+  imports: [MatFormFieldModule, FormsModule, MatInputModule, MatButtonModule, RouterLink],
   templateUrl: './autenticador.html',
   styleUrl: './autenticador.css',
 })
@@ -29,21 +21,25 @@ export class Autenticador implements OnInit {
   password: string = '';
   mensaje: string = '';
 
+  private redirectUrl: string | null = null;
+
   constructor(
     private loginService: LoginService,
     private router: Router,
+    private route: ActivatedRoute,
     private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    sessionStorage.clear();
+    // si venías de una ruta protegida, el guard envía ?redirect=/algo
+    this.redirectUrl = this.route.snapshot.queryParamMap.get('redirect');
   }
 
-  cerrar() {
-    this.router.navigate(['/login']); // ✅ mejor: volver al login
+  cerrar(): void {
+    this.router.navigate(['/home']);
   }
 
-  login() {
+  login(): void {
     const u = (this.username || '').trim();
     const p = (this.password || '').trim();
 
@@ -66,19 +62,33 @@ export class Autenticador implements OnInit {
 
     this.loginService.login(request).subscribe(
       (data: any) => {
-        sessionStorage.setItem('token', data.jwttoken);
+        const token = data?.jwttoken;
+        if (!token) {
+          this.snackBar.open('No se recibió token del backend.', 'Aviso', { duration: 2500 });
+          return;
+        }
 
-        if (data.rol) sessionStorage.setItem('rol', data.rol);
+        // ✅ Guardar token usando el servicio (localStorage)
+        this.loginService.setToken(token);
 
-        const authorities = data.authorities || data.roles;
+        // username para el landing
+        localStorage.setItem('username', data?.username || u);
+        if (data?.nombreUsuario) localStorage.setItem('nombreUsuario', data.nombreUsuario);
+
+        // rol (si llega)
+        if (data?.rol) localStorage.setItem('rol', data.rol);
+
+        const authorities = data?.authorities || data?.roles;
         if (authorities?.length) {
           const first = authorities[0];
           const rol =
-            typeof first === 'string' ? first : first.authority || first.nombreRol || '';
-          if (rol) sessionStorage.setItem('rol', rol);
+            typeof first === 'string' ? first : first?.authority || first?.nombreRol || '';
+          if (rol) localStorage.setItem('rol', rol);
         }
 
-        this.router.navigate(['/home']); // ✅ ANTES: ['/usuarios']
+        // ✅ ir a donde pedía el guard, o a dashboard
+        if (this.redirectUrl) this.router.navigateByUrl(this.redirectUrl);
+        else this.router.navigate(['/dashboard']);
       },
       () => {
         this.mensaje = 'Usuario o contraseña incorrectos.';
