@@ -2,16 +2,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { environment } from '../../environments/enviroment';
+import { environment } from '../../environments/enviroment'; // 👈 corregido
 import { Calificacion } from '../models/calificacion';
 
-const base_url = environment.base;
+// Usamos apiUrl, que en prod apunta a https://g5-textilconnect.onrender.com
+const base_url = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',
 })
 export class CalificacionService {
+  // Ajusta el path según tu backend: /calificaciones o /calificacion
   private url = `${base_url}/calificaciones`;
+
   private listaCambio = new Subject<Calificacion[]>();
 
   constructor(private http: HttpClient) {}
@@ -20,7 +23,7 @@ export class CalificacionService {
     return this.http.get<Calificacion[]>(this.url);
   }
 
-  insert(body: any) {
+  insert(body: Calificacion) {
     return this.http.post(this.url, body);
   }
 
@@ -28,7 +31,7 @@ export class CalificacionService {
     return this.http.get<Calificacion>(`${this.url}/${id}`);
   }
 
-  update(body: any) {
+  update(body: Calificacion) {
     return this.http.put(this.url, body, { responseType: 'text' });
   }
 

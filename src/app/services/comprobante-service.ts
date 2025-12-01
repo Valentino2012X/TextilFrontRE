@@ -4,8 +4,7 @@ import { Subject } from 'rxjs';
 import { Comprobante } from '../models/Comprobante';
 import { environment } from '../../environments/enviroment';
 
-const base_url = environment.base;
-
+const base_url = environment.apiUrl;
 @Injectable({
   providedIn: 'root',
 })

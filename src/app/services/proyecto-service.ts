@@ -5,7 +5,7 @@ import { environment } from '../../environments/enviroment';
 import { Proyecto } from '../models/Proyecto';
 import { Observable } from 'rxjs';
 
-const base_url = environment.base;
+const base_url = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',

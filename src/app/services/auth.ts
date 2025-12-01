@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-export type Rol = 'ADMIN' | 'VENDEDOR' | 'COMPRADOR';
+export type Rol = 'ADMIN' | 'VENDEDOR' | 'ESTUDIANTE';
 
 @Injectable({
   providedIn: 'root',
@@ -16,14 +16,14 @@ export class AuthService {
   getRoleFromToken(): Rol {
     const token = this.getToken();
     if (!token) {
-      // por defecto, podría ser COMPRADOR invitado, ajusta si quieres
-      return 'COMPRADOR';
+      // por defecto, podría ser ESTUDIANTE invitado
+      return 'ESTUDIANTE';
     }
 
     // JWT = header.payload.signature → decodificamos el payload
     const payloadPart = token.split('.')[1];
     if (!payloadPart) {
-      return 'COMPRADOR';
+      return 'ESTUDIANTE';
     }
 
     try {
@@ -39,13 +39,13 @@ export class AuthService {
 
       if (upper.includes('ADMIN')) return 'ADMIN';
       if (upper.includes('VENDEDOR')) return 'VENDEDOR';
-      if (upper.includes('COMPRADOR')) return 'COMPRADOR';
+      if (upper.includes('ESTUDIANTE')) return 'ESTUDIANTE';
 
       // fallback
-      return 'COMPRADOR';
+      return 'ESTUDIANTE';
     } catch (e) {
       console.error('Error decodificando token JWT', e);
-      return 'COMPRADOR';
+      return 'ESTUDIANTE';
     }
   }
 }

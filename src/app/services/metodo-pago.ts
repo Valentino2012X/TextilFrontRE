@@ -4,7 +4,7 @@ import { environment } from '../../environments/enviroment';
 import { Observable, Subject } from 'rxjs';
 import { MetodoPago } from '../models/Metodo-pago';
 
-const base_url = environment.base;
+const base_url = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',

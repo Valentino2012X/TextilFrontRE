@@ -1,10 +1,13 @@
+// src/app/services/calificacion-service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { environment } from '../../environments/enviroment';
+import { environment } from '../../environments/enviroment'; // 👈 corregido
+import { Calificacion } from '../models/calificacion';
 import { ComentarioProyecto } from '../models/Comentario-proyecto';
 
-const base_url = environment.base;
+// Usamos apiUrl, que en prod apunta a https://g5-textilconnect.onrender.com
+const base_url = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',

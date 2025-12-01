@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { environment } from '../../environments/enviroment';
 import { Tarjeta } from '../models/tarjeta';
 
-const base_url = environment.base;
+const base_url = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',

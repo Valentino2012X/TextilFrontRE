@@ -1,8 +1,10 @@
+// src/app/services/login-service.ts
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtRequestDTO } from '../models/jwtRequestDTO';
 import { isPlatformBrowser } from '@angular/common';
+import { environment } from '../../environments/enviroment'; // 👈 OJO: environment bien escrito
 
 export type AppRole = 'ADMIN' | 'VENDEDOR' | 'ESTUDIANTE';
 
@@ -23,7 +25,9 @@ export class LoginService {
 
   // ========= AUTH API =========
   login(request: JwtRequestDTO) {
-    return this.http.post('http://localhost:8080/login', request);
+    // En prod (Vercel) va a usar https://g5-textilconnect.onrender.com
+    // En dev usa http://localhost:8080 (según tus environments)
+    return this.http.post(`${environment.apiUrl}/login`, request);
   }
 
   // ========= TOKEN =========
@@ -60,7 +64,7 @@ export class LoginService {
   }
 
   // ========= ROLE / USER =========
-  /** Convierte cualquier formato a ADMIN|VENDEDOR|COMPRADOR */
+  /** Convierte cualquier formato a ADMIN | VENDEDOR | ESTUDIANTE */
   private normalizeRole(raw: string | null | undefined): AppRole | null {
     if (!raw) return null;
 
@@ -68,9 +72,6 @@ export class LoginService {
       .trim()
       .toUpperCase()
       .replace(/^ROLE_/, '');
-
-    // alias por tu caso: ESTUDIANTE == COMPRADOR
-    if (r === 'ESTUDIANTE') return 'ESTUDIANTE';
 
     if (r === 'ADMIN' || r === 'VENDEDOR' || r === 'ESTUDIANTE') return r;
     return null;

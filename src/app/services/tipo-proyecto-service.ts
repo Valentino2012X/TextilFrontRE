@@ -6,7 +6,7 @@ import { TipoProyecto } from '../models/Tipo-proyecto';
 
 
 
-const base_url = environment.base;
+const base_url = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',

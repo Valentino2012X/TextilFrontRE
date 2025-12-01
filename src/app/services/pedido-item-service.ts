@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { PedidoItem } from '../models/Pedido-item';
 import { environment } from '../../environments/enviroment';
 
-const base_url = environment.base;
+const base_url = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',

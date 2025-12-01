@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  base: 'http://localhost:8080',
+  production: true,
+  apiUrl: 'https://g5-textilconnect.onrender.com', // backend en Render
 };

@@ -4,7 +4,7 @@ import { Usuario } from '../models/Usuario';
 import { Subject } from 'rxjs';
 import { environment } from '../../environments/enviroment';
 
-const base_url = environment.base;
+const base_url = environment.apiUrl;
 
 @Injectable({
   providedIn: 'root',

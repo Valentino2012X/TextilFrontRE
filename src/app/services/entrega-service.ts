@@ -5,8 +5,7 @@
   import { Entrega } from '../models/Entrega';
   import { environment } from '../../environments/enviroment';
 
-  const base_url = environment.base;
-
+const base_url = environment.apiUrl;
   @Injectable({
     providedIn: 'root',
   })
