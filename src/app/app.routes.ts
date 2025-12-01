@@ -38,16 +38,12 @@ export const routes: Routes = [
       {
         path: '',
         loadComponent: () =>
-          import('./components/home/home-index/home-index').then(
-            (m) => m.HomeIndexComponent
-          ),
+          import('./components/home/home-index/home-index').then((m) => m.HomeIndexComponent),
       },
       {
         path: 'about',
         loadComponent: () =>
-          import('./components/home/home-about/home-about').then(
-            (m) => m.HomeAboutComponent
-          ),
+          import('./components/home/home-about/home-about').then((m) => m.HomeAboutComponent),
       },
       {
         path: 'products',
@@ -66,16 +62,12 @@ export const routes: Routes = [
       {
         path: 'contact',
         loadComponent: () =>
-          import('./components/home/home-contact/home-contact').then(
-            (m) => m.HomeContactComponent
-          ),
+          import('./components/home/home-contact/home-contact').then((m) => m.HomeContactComponent),
       },
       {
         path: 'story',
         loadComponent: () =>
-          import('./components/home/home-story/home-story').then(
-            (m) => m.HomeStoryComponent
-          ),
+          import('./components/home/home-story/home-story').then((m) => m.HomeStoryComponent),
       },
     ],
   },
@@ -105,27 +97,33 @@ export const routes: Routes = [
         ],
       },
 
+      {
+        path: 'pago/paypal',
+        loadComponent: () =>
+          import('./components/pago/pago-paypal/pago-paypal').then((m) => m.PagoPaypalComponent),
+      },
+
       // ========= TIPO PRODUCTO =========
       {
         path: 'tipoproducto',
         loadComponent: () =>
-          import(
-            './components/tipo-producto/tipo-producto-listar/tipo-producto-listar'
-          ).then((m) => m.TipoProductoListarComponent),
+          import('./components/tipo-producto/tipo-producto-listar/tipo-producto-listar').then(
+            (m) => m.TipoProductoListarComponent
+          ),
       },
       {
         path: 'tipoproducto/new',
         loadComponent: () =>
-          import(
-            './components/tipo-producto/tipo-producto-insert/tipo-producto-insert'
-          ).then((m) => m.TipoProductoInsertarComponent),
+          import('./components/tipo-producto/tipo-producto-insert/tipo-producto-insert').then(
+            (m) => m.TipoProductoInsertarComponent
+          ),
       },
       {
         path: 'tipoproducto/edit/:id',
         loadComponent: () =>
-          import(
-            './components/tipo-producto/tipo-producto-insert/tipo-producto-insert'
-          ).then((m) => m.TipoProductoInsertarComponent),
+          import('./components/tipo-producto/tipo-producto-insert/tipo-producto-insert').then(
+            (m) => m.TipoProductoInsertarComponent
+          ),
       },
 
       // ========= PRODUCTO =========
@@ -162,69 +160,63 @@ export const routes: Routes = [
       {
         path: 'roles',
         loadComponent: () =>
-          import('./components/rol/rol-listar/rol-listar').then(
-            (m) => m.RolListarComponent
-          ),
+          import('./components/rol/rol-listar/rol-listar').then((m) => m.RolListarComponent),
       },
       {
         path: 'roles/new',
         loadComponent: () =>
-          import('./components/rol/rol-insert/rol-insert').then(
-            (m) => m.RolInsertarComponent
-          ),
+          import('./components/rol/rol-insert/rol-insert').then((m) => m.RolInsertarComponent),
       },
       {
         path: 'roles/edit/:id',
         loadComponent: () =>
-          import('./components/rol/rol-insert/rol-insert').then(
-            (m) => m.RolInsertarComponent
-          ),
+          import('./components/rol/rol-insert/rol-insert').then((m) => m.RolInsertarComponent),
       },
 
       // ========= MÉTODO PAGO =========
       {
         path: 'metodopago',
         loadComponent: () =>
-          import(
-            './components/metodo-pago/metodo-pago-listar/metodo-pago-listar'
-          ).then((m) => m.MetodoPagoListarComponent),
+          import('./components/metodo-pago/metodo-pago-listar/metodo-pago-listar').then(
+            (m) => m.MetodoPagoListarComponent
+          ),
       },
       {
         path: 'metodopago/new',
         loadComponent: () =>
-          import(
-            './components/metodo-pago/metodo-pago-insertar/metodo-pago-insertar'
-          ).then((m) => m.MetodoPagoInsertarComponent),
+          import('./components/metodo-pago/metodo-pago-insertar/metodo-pago-insertar').then(
+            (m) => m.MetodoPagoInsertarComponent
+          ),
       },
       {
         path: 'metodopago/edit/:id',
         loadComponent: () =>
-          import(
-            './components/metodo-pago/metodo-pago-insertar/metodo-pago-insertar'
-          ).then((m) => m.MetodoPagoInsertarComponent),
+          import('./components/metodo-pago/metodo-pago-insertar/metodo-pago-insertar').then(
+            (m) => m.MetodoPagoInsertarComponent
+          ),
       },
 
       // ========= TIPO PROYECTO =========
       {
         path: 'tipoproyecto',
         loadComponent: () =>
-          import(
-            './components/tipo-proyecto/tipo-proyecto-listar/tipo-proyecto-listar'
-          ).then((m) => m.TipoProyectoListarComponent),
+          import('./components/tipo-proyecto/tipo-proyecto-listar/tipo-proyecto-listar').then(
+            (m) => m.TipoProyectoListarComponent
+          ),
       },
       {
         path: 'tipoproyecto/new',
         loadComponent: () =>
-          import(
-            './components/tipo-proyecto/tipo-proyecto-insert/tipo-proyecto-insert'
-          ).then((m) => m.TipoProyectoInsertarComponent),
+          import('./components/tipo-proyecto/tipo-proyecto-insert/tipo-proyecto-insert').then(
+            (m) => m.TipoProyectoInsertarComponent
+          ),
       },
       {
         path: 'tipoproyecto/edit/:id',
         loadComponent: () =>
-          import(
-            './components/tipo-proyecto/tipo-proyecto-insert/tipo-proyecto-insert'
-          ).then((m) => m.TipoProyectoInsertarComponent),
+          import('./components/tipo-proyecto/tipo-proyecto-insert/tipo-proyecto-insert').then(
+            (m) => m.TipoProyectoInsertarComponent
+          ),
       },
 
       // ========= PROYECTO =========
@@ -254,9 +246,9 @@ export const routes: Routes = [
       {
         path: 'tipodocumento',
         loadComponent: () =>
-          import(
-            './components/tipo-documento/tipo-documento-listar/tipo-documento-listar'
-          ).then((m) => m.TipoDocumentoListarComponent),
+          import('./components/tipo-documento/tipo-documento-listar/tipo-documento-listar').then(
+            (m) => m.TipoDocumentoListarComponent
+          ),
       },
       {
         path: 'tipodocumento/new',
@@ -307,37 +299,37 @@ export const routes: Routes = [
       {
         path: 'comprobante',
         loadComponent: () =>
-          import(
-            './components/comprobante/comprobante-listar/comprobante-listar'
-          ).then((m) => m.ComprobanteListarComponent),
+          import('./components/comprobante/comprobante-listar/comprobante-listar').then(
+            (m) => m.ComprobanteListarComponent
+          ),
       },
       {
         path: 'comprobante/new',
         loadComponent: () =>
-          import(
-            './components/comprobante/comprobante-insert/comprobante-insert'
-          ).then((m) => m.ComprobanteInsertarComponent),
+          import('./components/comprobante/comprobante-insert/comprobante-insert').then(
+            (m) => m.ComprobanteInsertarComponent
+          ),
       },
       {
         path: 'comprobante/edit/:id',
         loadComponent: () =>
-          import(
-            './components/comprobante/comprobante-insert/comprobante-insert'
-          ).then((m) => m.ComprobanteInsertarComponent),
+          import('./components/comprobante/comprobante-insert/comprobante-insert').then(
+            (m) => m.ComprobanteInsertarComponent
+          ),
       },
       {
         path: 'comprobante/reporte',
         loadComponent: () =>
-          import(
-            './components/comprobante/comprobante-reporte/comprobante-reporte'
-          ).then((m) => m.ComprobanteReporteComponent),
+          import('./components/comprobante/comprobante-reporte/comprobante-reporte').then(
+            (m) => m.ComprobanteReporteComponent
+          ),
       },
       {
         path: 'comprobante/reporte2',
         loadComponent: () =>
-          import(
-            './components/comprobante/comprobante-reporte2/comprobante-reporte2'
-          ).then((m) => m.ComprobanteIgvReporteComponent),
+          import('./components/comprobante/comprobante-reporte2/comprobante-reporte2').then(
+            (m) => m.ComprobanteIgvReporteComponent
+          ),
       },
 
       // ========= PEDIDO =========
@@ -365,32 +357,30 @@ export const routes: Routes = [
       {
         path: 'pedido/reporte',
         loadComponent: () =>
-          import('./components/pedido/pedido-reporte/pedido-reporte').then(
-            (m) => m.PedidoReporte
-          ),
+          import('./components/pedido/pedido-reporte/pedido-reporte').then((m) => m.PedidoReporte),
       },
 
       // ========= PEDIDO ITEM =========
       {
         path: 'pedido-item',
         loadComponent: () =>
-          import(
-            './components/pedido-item/pedido-item-listar/pedido-item-listar'
-          ).then((m) => m.PedidoItemListarComponent),
+          import('./components/pedido-item/pedido-item-listar/pedido-item-listar').then(
+            (m) => m.PedidoItemListarComponent
+          ),
       },
       {
         path: 'pedido-item/new',
         loadComponent: () =>
-          import(
-            './components/pedido-item/pedido-item-insert/pedido-item-insert'
-          ).then((m) => m.PedidoItemInsertComponent),
+          import('./components/pedido-item/pedido-item-insert/pedido-item-insert').then(
+            (m) => m.PedidoItemInsertComponent
+          ),
       },
       {
         path: 'pedido-item/edit/:id',
         loadComponent: () =>
-          import(
-            './components/pedido-item/pedido-item-insert/pedido-item-insert'
-          ).then((m) => m.PedidoItemInsertComponent),
+          import('./components/pedido-item/pedido-item-insert/pedido-item-insert').then(
+            (m) => m.PedidoItemInsertComponent
+          ),
       },
 
       // ========= PRESUPUESTO MENSUAL =========
@@ -420,23 +410,23 @@ export const routes: Routes = [
       {
         path: 'notificacion',
         loadComponent: () =>
-          import(
-            './components/notificacion/notificacion-listar/notificacion-listar'
-          ).then((m) => m.NotificacionListarComponent),
+          import('./components/notificacion/notificacion-listar/notificacion-listar').then(
+            (m) => m.NotificacionListarComponent
+          ),
       },
       {
         path: 'notificacion/new',
         loadComponent: () =>
-          import(
-            './components/notificacion/notificacion-insert/notificacion-insert'
-          ).then((m) => m.NotificacionInsertarComponent),
+          import('./components/notificacion/notificacion-insert/notificacion-insert').then(
+            (m) => m.NotificacionInsertarComponent
+          ),
       },
       {
         path: 'notificacion/edit/:id',
         loadComponent: () =>
-          import(
-            './components/notificacion/notificacion-insert/notificacion-insert'
-          ).then((m) => m.NotificacionInsertarComponent),
+          import('./components/notificacion/notificacion-insert/notificacion-insert').then(
+            (m) => m.NotificacionInsertarComponent
+          ),
       },
 
       // ========= ENTREGA =========
@@ -473,23 +463,23 @@ export const routes: Routes = [
       {
         path: 'calificacion',
         loadComponent: () =>
-          import(
-            './components/calificacion/calificacion-listar/calificacion-listar'
-          ).then((m) => m.CalificacionListarComponent),
+          import('./components/calificacion/calificacion-listar/calificacion-listar').then(
+            (m) => m.CalificacionListarComponent
+          ),
       },
       {
         path: 'calificacion/new',
         loadComponent: () =>
-          import(
-            './components/calificacion/calificacion-insertar/calificacion-insertar'
-          ).then((m) => m.CalificacionInsertarComponent),
+          import('./components/calificacion/calificacion-insertar/calificacion-insertar').then(
+            (m) => m.CalificacionInsertarComponent
+          ),
       },
       {
         path: 'calificacion/edit/:id',
         loadComponent: () =>
-          import(
-            './components/calificacion/calificacion-insertar/calificacion-insertar'
-          ).then((m) => m.CalificacionInsertarComponent),
+          import('./components/calificacion/calificacion-insertar/calificacion-insertar').then(
+            (m) => m.CalificacionInsertarComponent
+          ),
       },
 
       // ========= FAVORITO =========
@@ -519,23 +509,23 @@ export const routes: Routes = [
       {
         path: 'productofoto',
         loadComponent: () =>
-          import(
-            './components/producto-foto/producto-foto-listar/producto-foto-listar'
-          ).then((m) => m.ProductoFotoListarComponent),
+          import('./components/producto-foto/producto-foto-listar/producto-foto-listar').then(
+            (m) => m.ProductoFotoListarComponent
+          ),
       },
       {
         path: 'productofoto/new',
         loadComponent: () =>
-          import(
-            './components/producto-foto/producto-foto-insert/producto-foto-insert'
-          ).then((m) => m.ProductoFotoInsertarComponent),
+          import('./components/producto-foto/producto-foto-insert/producto-foto-insert').then(
+            (m) => m.ProductoFotoInsertarComponent
+          ),
       },
       {
         path: 'productofoto/edit/:id',
         loadComponent: () =>
-          import(
-            './components/producto-foto/producto-foto-insert/producto-foto-insert'
-          ).then((m) => m.ProductoFotoInsertarComponent),
+          import('./components/producto-foto/producto-foto-insert/producto-foto-insert').then(
+            (m) => m.ProductoFotoInsertarComponent
+          ),
       },
 
       // ========= TARJETA =========
