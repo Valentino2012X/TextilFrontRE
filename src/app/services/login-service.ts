@@ -1,16 +1,19 @@
-// src/app/services/login-service.ts
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { JwtRequestDTO } from '../models/jwtRequestDTO';
+import { environment } from '../../environments/enviroment';
 
 export type AppRole = 'ADMIN' | 'VENDEDOR' | 'ESTUDIANTE';
+
+const base_url = environment.base;
 
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:8080';
+  // Ahora apuntando al backend desplegado (Render) vía environment.base
+  private apiUrl = base_url;
   private jwtHelper = new JwtHelperService();
 
   constructor(private http: HttpClient) {}

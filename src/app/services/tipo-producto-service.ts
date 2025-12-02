@@ -11,7 +11,6 @@ const base_url = environment.base;
 })
 export class TipoProductoService {
   private url = `${base_url}/tiposproductos`;
-
   private listaCambio = new Subject<TipoProducto[]>();
 
   constructor(private http: HttpClient) {}

@@ -11,7 +11,6 @@ const base_url = environment.base;
 })
 export class PedidoItemService {
   private url = `${base_url}/pedidositems`;
-
   private listaCambio = new Subject<PedidoItem[]>();
 
   constructor(private http: HttpClient) {}
@@ -20,10 +19,9 @@ export class PedidoItemService {
     return this.http.get<PedidoItem[]>(this.url);
   }
 
-  // pedido-item-service.ts
   insert(body: any) {
     return this.http.post(this.url, body, {
-      responseType: 'text' as 'json', // 👈 IMPORTANTE
+      responseType: 'text' as 'json', // backend devuelve texto
     });
   }
 
@@ -33,13 +31,13 @@ export class PedidoItemService {
 
   update(body: any) {
     return this.http.put(this.url, body, {
-      responseType: 'text' as 'json', // también texto
+      responseType: 'text' as 'json',
     });
   }
 
   delete(id: number) {
     return this.http.delete(`${this.url}/${id}`, {
-      responseType: 'text' as 'json', // y aquí igual
+      responseType: 'text' as 'json',
     });
   }
 

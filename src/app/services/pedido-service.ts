@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Subject } from 'rxjs';
-import { environment } from '../../environments/enviroment';
 import { Pedido } from '../models/Pedido';
+import { environment } from '../../environments/enviroment';
 
 const base_url = environment.base;
 
@@ -28,15 +28,16 @@ export class PedidoService {
   }
 
   update(body: any) {
-    // necesitas agregar un @PutMapping en tu PedidoController
+    // requiere @PutMapping en PedidoController
     return this.http.put(this.url, body, { responseType: 'text' });
   }
 
   delete(id: number) {
     return this.http.delete(`${this.url}/${id}`, {
-      responseType: 'text' as 'json', // para no intentar parsear JSON
+      responseType: 'text' as 'json',
     });
   }
+
   getList() {
     return this.listaCambio.asObservable();
   }
@@ -44,9 +45,11 @@ export class PedidoService {
   setList(listaNueva: Pedido[]) {
     this.listaCambio.next(listaNueva);
   }
+
+  // GET /pedidos/total?fecha=YYYY-MM-DD
   sumarTotalPorFecha(fecha: string) {
-    return this.http.get<{fecha: string, total: number}>(`${this.url}/total`, {
-      params: { fecha }
+    return this.http.get<{ fecha: string; total: number }>(`${this.url}/total`, {
+      params: { fecha },
     });
   }
 }
